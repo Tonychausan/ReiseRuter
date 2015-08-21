@@ -35,9 +35,9 @@ public class MainActivity extends AppCompatActivity /*implements OnTabChangeList
     TabPagerAdapter pagerAdapter;
     ActionBar actionBar;*/
 
-    /*@Override
+    @Override
     protected void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
+        /*super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
@@ -78,10 +78,10 @@ public class MainActivity extends AppCompatActivity /*implements OnTabChangeList
 
         // Set listner for tabs and pager
         tabHost.setOnTabChangedListener(this);
-        viewPager.setOnPageChangeListener(this);
+        viewPager.setOnPageChangeListener(this);*/
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
