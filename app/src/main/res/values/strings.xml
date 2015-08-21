@@ -4,9 +4,9 @@
     <!-- MainActivity -->
         <!-- Tab label list -->
         <string-array name="MainActivity_tabLabels">
-            <item>Plan Travel</item>
+            <item>Travel</item>
             <item>Real-time</item>
-            <item>Search by map</item>
+            <item>Map</item>
         </string-array>
 
 </resources>
