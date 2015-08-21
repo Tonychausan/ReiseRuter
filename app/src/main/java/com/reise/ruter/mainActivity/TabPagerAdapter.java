@@ -22,13 +22,15 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
 		Fragment fragment = null;
 		switch(position){
 		case 0:
+			fragment = new MapSearchFragment();
 			//fragment = new TravelPlannerFragment();
 			break;
 		case 1:
+			fragment = new MapSearchFragment();
 			//fragment = new RealTimeFragment();
 			break;
 		default:
-			// fragment = new MapSearchFragment();
+			fragment = new MapSearchFragment();
 			break;
 		}
 		return fragment;

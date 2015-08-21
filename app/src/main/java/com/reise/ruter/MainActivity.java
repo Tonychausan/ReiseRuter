@@ -30,22 +30,20 @@ import com.reise.ruter.mainActivity.*;
 public class MainActivity extends AppCompatActivity implements OnTabChangeListener, OnPageChangeListener{
     private String[] tabLabels;
     private TabHost tabHost;
-    ViewPager viewPager;
-    TabPagerAdapter pagerAdapter;
-    ActionBar actionBar;
+    private ViewPager viewPager;
+    private TabPagerAdapter pagerAdapter;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-
         // ActionBar
         actionBar = getSupportActionBar();
 
-
         // Setup labels for tabs
-        String[] tabLabels = getResources().getStringArray(R.array.MainActivity_tabLabels);
+        tabLabels = getResources().getStringArray(R.array.MainActivity_tabLabels);
         tabHost = (TabHost)findViewById(android.R.id.tabhost);
         tabHost.setup();
 
@@ -62,10 +60,11 @@ public class MainActivity extends AppCompatActivity implements OnTabChangeListen
 
         for(int i = 0; i < widget.getChildCount(); i++) {
             View v = widget.getChildAt(i);
-            // Look for the title view to ensure this is an indicator and not a divider.
             TextView tv = (TextView)v.findViewById(android.R.id.title);
-            tv.setTextColor(Color.WHITE);
-            tv.setBackgroundColor(Color.TRANSPARENT);
+
+            //TODO Design tabs
+            //tv.setTextColor(Color.WHITE);
+            //tv.setBackgroundColor(Color.TRANSPARENT);
             //widget.getChildAt(i).setBackgroundResource(R.drawable.tab_indicator_holo);
         }
 
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements OnTabChangeListen
 
         // Set listner for tabs and pager
         tabHost.setOnTabChangedListener(this);
-        viewPager.setOnPageChangeListener(this);
+        viewPager.addOnPageChangeListener(this);
     }
 
     @Override
