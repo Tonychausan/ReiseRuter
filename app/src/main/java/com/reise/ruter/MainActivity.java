@@ -7,13 +7,10 @@ package com.reise.ruter;
 import android.support.v7.app.AppCompatActivity;
 
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 
 import android.view.Menu;
 import android.view.View;
@@ -23,22 +20,24 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
+import com.reise.ruter.mainActivity.*;
+
 
 /*
- * MainActivity contains a TabPagerAdapter which contain Trip Planer, Real-Time and Map View.
+ * main_activity contains a TabPagerAdapter which contain Trip Planer, Real-Time and Map View.
  */
 
-public class MainActivity extends AppCompatActivity /*implements OnTabChangeListener, OnPageChangeListener*/{
-    /*private String[] tabLabels;
+public class MainActivity extends AppCompatActivity implements OnTabChangeListener, OnPageChangeListener{
+    private String[] tabLabels;
     private TabHost tabHost;
     ViewPager viewPager;
     TabPagerAdapter pagerAdapter;
-    ActionBar actionBar;*/
+    ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
-        /*super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main_activity);
 
 
         // ActionBar
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity /*implements OnTabChangeList
 
 
         // Setup labels for tabs
-        tabLabels = getResources().getStringArray(R.array.tab_labels);
+        String[] tabLabels = getResources().getStringArray(R.array.MainActivity_tabLabels);
         tabHost = (TabHost)findViewById(android.R.id.tabhost);
         tabHost.setup();
 
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity /*implements OnTabChangeList
             TextView tv = (TextView)v.findViewById(android.R.id.title);
             tv.setTextColor(Color.WHITE);
             tv.setBackgroundColor(Color.TRANSPARENT);
-            widget.getChildAt(i).setBackgroundResource(R.drawable.tab_indicator_holo);
+            //widget.getChildAt(i).setBackgroundResource(R.drawable.tab_indicator_holo);
         }
 
         // Setup PageAdapter for tabs
@@ -78,10 +77,10 @@ public class MainActivity extends AppCompatActivity /*implements OnTabChangeList
 
         // Set listner for tabs and pager
         tabHost.setOnTabChangedListener(this);
-        viewPager.setOnPageChangeListener(this);*/
+        viewPager.setOnPageChangeListener(this);
     }
 
-    /*@Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
@@ -117,6 +116,6 @@ public class MainActivity extends AppCompatActivity /*implements OnTabChangeList
     public void onPageSelected(int position) {
         // Change tab selected when scrolling horizontal
         tabHost.setCurrentTab(position);
-    }*/
+    }
 }
 
