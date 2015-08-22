@@ -1,9 +1,5 @@
 package com.reise.ruter;
 
-/**
- * Created by Tony Chau on 22/08/2015.
- */
-
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
@@ -28,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             SlidingTabFragment fragment = new SlidingTabFragment();
-            transaction.replace(R.id.sample_content_fragment, fragment);
+            transaction.replace(R.id.content_fragment, fragment);
             transaction.commit();
         }
     }

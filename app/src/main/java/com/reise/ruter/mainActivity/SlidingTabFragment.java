@@ -27,8 +27,6 @@ import com.reise.ruter.supportClass.SlidingTabLayout;
 import com.reise.ruter.R;
 
 public class SlidingTabFragment extends Fragment {
-    private SlidingTabLayout mSlidingTabLayout;
-    private ViewPager mViewPager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,11 +36,11 @@ public class SlidingTabFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        mViewPager.setAdapter(new TabPagerAdapter(this.getFragmentManager(), this.getActivity()));
+        ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
+        viewPager.setAdapter(new MainPagerAdapter(this.getFragmentManager(), this.getActivity()));
 
-        mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
-        mSlidingTabLayout.setDistributeEvenly(true);
-        mSlidingTabLayout.setViewPager(mViewPager);
+        SlidingTabLayout slidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
+        slidingTabLayout.setDistributeEvenly(true);
+        slidingTabLayout.setViewPager(viewPager);
     }
 }

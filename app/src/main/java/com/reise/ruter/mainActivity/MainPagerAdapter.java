@@ -7,13 +7,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.reise.ruter.R;
 
-public class TabPagerAdapter extends FragmentPagerAdapter {
-	private Context mContext;
+public class MainPagerAdapter extends FragmentPagerAdapter {
 	private String[] mTabLabels;
 
-    public TabPagerAdapter(FragmentManager fm, Context c) {
+    public MainPagerAdapter(FragmentManager fm, Context c) {
 		super(fm);
-		mContext = c;
 		mTabLabels = c.getResources().getStringArray(R.array.MainActivity_tabLabels);
 	}
     
@@ -24,15 +22,15 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     
 	@Override
 	public Fragment getItem(int position) {
-		Fragment fragment = null;
+		Fragment fragment;
 		switch(position){
 		case 0:
 			fragment = new MapFragment();
-			//fragment = new TravelPlannerFragment();
+			//fragment = new RealTimeFragment();
 			break;
 		case 1:
 			fragment = new MapFragment();
-			//fragment = new RealTimeFragment();
+			//fragment = new TravelPlannerFragment();
 			break;
 		default:
 			fragment = new MapFragment();

@@ -18,7 +18,6 @@ package com.reise.ruter.supportClass;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -73,7 +72,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
     private boolean mDistributeEvenly;
 
     private ViewPager mViewPager;
-    private SparseArray<String> mContentDescriptions = new SparseArray<String>();
+    private SparseArray<String> mContentDescriptions = new SparseArray<>();
     private ViewPager.OnPageChangeListener mViewPagerPageChangeListener;
 
     private final SlidingTabStrip mTabStrip;
@@ -107,6 +106,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
      * {@link #setSelectedIndicatorColors(int...)} to achieve
      * similar effects.
      */
+    @SuppressWarnings("unused")
     public void setCustomTabColorizer(TabColorizer tabColorizer) {
         mTabStrip.setCustomTabColorizer(tabColorizer);
     }
@@ -119,6 +119,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
      * Sets the colors to be used for indicating the selected tab. These colors are treated as a
      * circular array. Providing one color will mean that all tabs are indicated with the same color.
      */
+    @SuppressWarnings("unused")
     public void setSelectedIndicatorColors(int... colors) {
         mTabStrip.setSelectedIndicatorColors(colors);
     }
@@ -130,6 +131,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
      *
      * @see ViewPager#setOnPageChangeListener(ViewPager.OnPageChangeListener)
      */
+    @SuppressWarnings("unused")
     public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
         mViewPagerPageChangeListener = listener;
     }
@@ -140,6 +142,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
      * @param layoutResId Layout id to be inflated
      * @param textViewId id of the {@link TextView} in the inflated view
      */
+    @SuppressWarnings("unused")
     public void setCustomTabView(int layoutResId, int textViewId) {
         mTabViewLayoutId = layoutResId;
         mTabViewTextViewId = textViewId;
@@ -212,7 +215,9 @@ public class SlidingTabLayout extends HorizontalScrollView {
                 lp.weight = 1;
             }
 
-            tabTitleView.setText(adapter.getPageTitle(i));
+            if (tabTitleView != null) {
+                tabTitleView.setText(adapter.getPageTitle(i));
+            }
             tabView.setOnClickListener(tabClickListener);
             String desc = mContentDescriptions.get(i, null);
             if (desc != null) {
@@ -226,6 +231,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
         }
     }
 
+    @SuppressWarnings("unused")
     public void setContentDescription(int i, String desc) {
         mContentDescriptions.put(i, desc);
     }

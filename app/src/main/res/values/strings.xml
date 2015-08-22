@@ -4,8 +4,8 @@
     <!-- MainActivity -->
         <!-- Tab label list -->
         <string-array name="MainActivity_tabLabels">
-            <item>Travel</item>
             <item>Real-time</item>
+            <item>Travel</item>
             <item>Map</item>
         </string-array>
 
