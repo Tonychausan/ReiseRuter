@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <color name="actionBarColor">#272727</color>
+    <color name="actionBarTitleColor">#E60000</color>
+    <color name="windowColor">#e0e0e0</color>
+    <color name="buttonDefault">#272727</color>
+    <color name="buttonPressed">#a7a7a7</color>
+    <color name="redRealTime">#E60000</color>
+    <color name="realTimeTableTitleText">#FFFFFF</color>
+    <color name="platformTitle">#000</color>
+    <color name="realTimeWindow">#FFFFFF</color>
+    <color name="searchButtonPressed">#999999</color>
+
+    <color name="searchButtonfocused">#b9b9b9</color>
+    <color name="flatButtonText">#ff4285f4</color>
+
+</resources>

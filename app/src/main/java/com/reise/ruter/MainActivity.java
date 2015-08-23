@@ -1,7 +1,7 @@
 package com.reise.ruter;
 
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBarActivity;
 
 import android.os.Bundle;
 
@@ -15,7 +15,7 @@ import com.reise.ruter.mainActivity.*;
  * main_activity contains a TabPagerAdapter which contain Trip Planer, Real-Time and Map View.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

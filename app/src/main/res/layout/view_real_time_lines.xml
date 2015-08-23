@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:layout_marginBottom="5dp"
+        >
+
+        <TextView
+            android:id="@+id/text_line_ref"
+            android:layout_width="30dp"
+            android:layout_height="fill_parent"
+            android:text="2"
+            android:gravity="center"
+            style="@style/realTimeLineTitleTextView"
+            />
+
+        <TextView
+            android:id="@+id/text_line_name"
+            android:paddingLeft="5dp"
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:text="Ellingsrudåsen"
+            android:gravity="center_vertical"
+            style="@style/realTimeLineTitleTextView"/>
+        
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/scrollview_time_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/layout_time_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+        
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</LinearLayout>

@@ -17,6 +17,16 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.reise.ruter.RealTime.Tables.GetRealTimeActivity"
+            android:label="@string/title_activity_realtime"
+            android:parentActivityName="com.reise.ruter.MainActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.reise.ruter.MainActivity" />
+        </activity>
+
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyByEJ8JtQCL0M-9uZxEhkKzY0fQ2qVpxmQ" />

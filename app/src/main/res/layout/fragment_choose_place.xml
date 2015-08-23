@@ -1,0 +1,129 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:minHeight="400dp" >
+    
+    <LinearLayout
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="right"
+            android:background="@drawable/real_time_line_list_background"
+            android:layout_margin="5dp">
+
+
+
+            <ImageButton
+                android:id="@+id/imagebutton_search_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_search"
+                android:layout_alignParentRight="true"
+                style="@style/search_buttons"
+                android:padding="5dp"
+                android:clickable="false"/>
+
+            <EditText
+                android:id="@+id/edittext_search_place"
+                style="@style/PlaceSearchEditTextView"
+                android:layout_toLeftOf="@id/imagebutton_search_place"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:singleLine="true"
+                android:hint="@string/search"
+                android:layout_margin="@dimen/blockMargin">
+            </EditText>
+
+        </RelativeLayout>
+
+        <TextView
+	        android:id="@+id/textView_search_info"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:text="@string/search_info"
+	        android:textSize="10sp"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginTop="-7dp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layout_place_list"
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+        android:background="@drawable/real_time_line_list_background"
+        android:paddingBottom="2dp"
+        android:layout_margin="@dimen/blockMargin"
+        >
+
+        <Spinner
+            android:id="@+id/spinner_search_main"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"/>
+
+
+	    <ListView
+	        android:id="@+id/list_search_stops"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+    	</ListView>
+
+        <LinearLayout
+            android:id="@+id/layout_no_search_match"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_vertical|center_horizontal"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_search_match"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="center_horizontal"
+                android:padding="20dp"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_search_progress"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/search_progress_bar"
+                />
+            <TextView
+                android:id="@+id/text_progressInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/search_progress_bar"
+                android:text="@string/search_progress_info"
+                android:gravity="center_horizontal"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+    
+    
+    
+    <include layout="@layout/view_no_connection"/>
+
+   
+    
+    
+</LinearLayout>

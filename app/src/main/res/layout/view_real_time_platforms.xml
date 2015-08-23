@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_platforms"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="15dp">
+
+    <TextView
+        android:id="@+id/text_platform_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Platform 1"
+        style="@style/realTimePlatformTitleTextView"/>
+
+    <LinearLayout
+        android:id="@+id/layout_line_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/real_time_line_list_background">
+    </LinearLayout>
+
+</LinearLayout>
