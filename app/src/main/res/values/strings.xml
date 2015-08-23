@@ -9,4 +9,9 @@
             <item>Map</item>
         </string-array>
 
+    <!-- No connection view -->
+    <string name="no_connection_header">No network connection</string>
+    <string name="no_connection_info">Please check your connection or find a location with better coverage, and try again</string>
+    <string name="no_connection_button">Try again</string>
+
 </resources>

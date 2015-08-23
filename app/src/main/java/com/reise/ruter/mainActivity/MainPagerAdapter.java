@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.reise.ruter.R;
+import com.reise.ruter.RealTime.RealTimeFragment;
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
 	private String[] mTabLabels;
@@ -25,8 +26,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 		Fragment fragment;
 		switch(position){
 		case 0:
-			fragment = new MapFragment();
-			//fragment = new RealTimeFragment();
+			fragment = new RealTimeFragment();
 			break;
 		case 1:
 			fragment = new MapFragment();
