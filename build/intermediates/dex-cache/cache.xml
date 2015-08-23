@@ -2,32 +2,18 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.0\jars\classes.jar"
+        jar="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.5.87\jars\classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="8413c27b45b7fe61dca4a98159f65e2cee215f5a">
-        <dex dex="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\build\intermediates\pre-dexed\debug\classes-0b9954eda39d1b34b179b31abc5ae2b43e5bb305.jar" />
+        sha1="dd9247ea0fabe8ee479638c4b4a23e93752be256">
+        <dex dex="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\build\intermediates\pre-dexed\debug\classes-ea7a57d482252e09514d1fac0c841ded89072d14.jar" />
     </item>
     <item
-        jar="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.0\jars\classes.jar"
+        jar="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\libs\maps.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="4fcf0b1879f8caf497c073e1432d398e9e2988c1">
-        <dex dex="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\build\intermediates\pre-dexed\debug\classes-4fcd213599e25eb11578b53ea5029db62d4063e9.jar" />
-    </item>
-    <item
-        jar="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.0\jars\libs\internal_impl-23.0.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="8bd336eeae661e8311330284897ee07f8ebaa297">
-        <dex dex="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.0-b2c19c9ccd28f29fec6119cf79da8f313ee1b41b.jar" />
-    </item>
-    <item
-        jar="C:\Users\Tony Chau\Development\Android\SDK\extras\android\m2repository\com\android\support\support-annotations\23.0.0\support-annotations-23.0.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="990e7f98a7bad86a40b1f0bcfeb039023afd0839">
-        <dex dex="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.0-8410015746f753dd5e7a102d199995d54a8604f9.jar" />
+        sha1="b7d8f7d00f7e80a23eb7c750ea657cc95c227962">
+        <dex dex="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\build\intermediates\pre-dexed\debug\maps-15eab255d156e845c85a98b162102f451b836efb.jar" />
     </item>
 
 </items>

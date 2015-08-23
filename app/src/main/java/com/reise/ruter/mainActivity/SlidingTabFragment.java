@@ -38,6 +38,7 @@ public class SlidingTabFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         viewPager.setAdapter(new MainPagerAdapter(this.getFragmentManager(), this.getActivity()));
+        viewPager.setOffscreenPageLimit(2);
 
         SlidingTabLayout slidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
         slidingTabLayout.setDistributeEvenly(true);
