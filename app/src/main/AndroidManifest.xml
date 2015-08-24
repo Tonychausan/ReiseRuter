@@ -26,6 +26,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.reise.ruter.MainActivity" />
         </activity>
+        <activity
+            android:name="com.reise.ruter.TravelPlanner.TravelPlannerPlaceChooserActivity"
+            android:label="@string/title_activity_choose_place"
+            android:theme="@android:style/Theme.Holo.Light.Dialog">
+        </activity>
+        <activity
+            android:name=".TravelPlanner.TripListActivity"
+            android:label="@string/title_activity_realtime"
+            android:parentActivityName="com.reise.ruter.MainActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.reise.ruter.MainActivity" />
+        </activity>
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"

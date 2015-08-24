@@ -236,9 +236,8 @@ public class GetRealTimeActivity extends ActionBarActivity {
 
 	            			
 	            			Button buttonRealTime = (Button) viewRealTimeObject.findViewById(R.id.button_real_time);
-                            buttonRealTime.setBackground(getResources().getDrawable(R.drawable.realtime_button_style));
 	            			TextView textOrginTime = (TextView) viewRealTimeObject.findViewById(R.id.text_orgin_time);
-	            			
+
 	            			//Add button text
 	            			Calendar realTime = GregorianCalendar.getInstance(); // creates a new calendar instance
 	            			realTime.setTime(realTimeTableObject.getExpectedDepartureTime());   // assigns calendar to given date 

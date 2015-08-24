@@ -1,6 +1,5 @@
 package com.reise.ruter.RealTime;
 
-import com.reise.ruter.MainActivity;
 import com.reise.ruter.RealTime.PickStopInAreaFragment.OnPlaceSelectListener;
 import com.reise.ruter.RealTime.Tables.GetRealTimeActivity;
 import com.reise.ruter.PlaceChooserFragment;
@@ -10,15 +9,12 @@ import com.reise.ruter.support.Variables.PlaceType;
 
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 public class RealTimeFragment extends PlaceChooserFragment implements OnPlaceSelectListener{
 	public static final String KEY_STRING = "RealTimeFragment";
@@ -27,7 +23,7 @@ public class RealTimeFragment extends PlaceChooserFragment implements OnPlaceSel
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
-		this.setView(inflater.inflate(R.layout.fragment_choose_place, container, false));
+		this.setView(inflater.inflate(R.layout.place_chooser_fragment, container, false));
 		this.setup();
 		this.showStreets = false; //Don't show street on search
 		this.showPOI = false;
@@ -38,7 +34,7 @@ public class RealTimeFragment extends PlaceChooserFragment implements OnPlaceSel
 
 	@Override
 	protected void selectPlace(int position){
-		Place place = adapter.getItem(position);
+		Place place = mPlaceAdapter.getItem(position);
 
 		//if place is an AREA open dialog to choose a stop in area
 		if(place.getPlaceType().equals(PlaceType.AREA)){
@@ -48,7 +44,7 @@ public class RealTimeFragment extends PlaceChooserFragment implements OnPlaceSel
 			// Hide soft keyboard
 			InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(
 					Context.INPUT_METHOD_SERVICE);
-			imm.hideSoftInputFromWindow(this.editSearchBar.getWindowToken(), 0);
+			imm.hideSoftInputFromWindow(this.mSearchBar.getWindowToken(), 0);
 
 
 			//Give user a list of stops at chosen area

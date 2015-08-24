@@ -40,40 +40,48 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-
-/*
- * 
- */
-
-public abstract class PlaceChooserFragment extends Fragment implements
-		ConnectionCallbacks, OnConnectionFailedListener {
+public abstract class PlaceChooserFragment extends Fragment implements ConnectionCallbacks, OnConnectionFailedListener {
     protected GoogleApiClient mGoogleApiClient;
 
-	protected EditText editSearchBar;
-	private ListView viewPlaceList;
-	private RelativeLayout layoutProgressBar;
-	private LinearLayout layoutNoConnection;
-	private LinearLayout layoutNoMatch;
-    private LinearLayout layoutPlaceList;
-	protected PlaceListAdapter adapter;
-	private Button buttonTryAgainConnection;
-	private TextView textSearchInfo;
-	private Spinner spinnerMainList;
-    private ImageButton imgbtn_search_edit;
+	// Adapter for the places
+	protected PlaceListAdapter mPlaceAdapter;
 
-    //Loaction support variables
+	// Nearby or Favorite
+	private Spinner mListChooser;
+
+	// No connection layout
+	private LinearLayout mNoConnectionLayout;
+	private Button mTryAgainConnectionButton;
+
+	// RealTime Search
+	protected EditText mSearchBar;
+	private ImageButton mSearchButton;
+	private TextView mSearchInfo;
+	private ListView mPlaceListView;
+	private RelativeLayout mProgressBar;
+	private LinearLayout mPlaceListLayout;
+
+	// No result Layouts
+	private LinearLayout mNoMatchLayout;
+
+    // Loaction support variables
     private Location mLastLocation = null;
-    private Boolean locationUpdated = false;
+    private Boolean mLocationUpdated = false;
 
 	private Fragment thisFragment = this;
-	private int lastSearchLength = Variables.SEARCH_TRESHOLD;
+	private int mLastSearchLength = Variables.SEARCH_THRESHOLD;
 
-	private ArrayList<Place> places = new ArrayList<Place>();
+	// List of places with the given search, or from nearby/favorite
+	private ArrayList<Place> mPlaces = new ArrayList<Place>();
+
+	// The asynchronous search task done in the background
 	private AsyncTask<String, String, JSONArray> mSearchTask = null;
-	private ConnectionDetector connectionDetector;
+
+	private ConnectionDetector mConnectionDetector;
 
 	protected View view;
 
+	// Variables to determine what to list
 	protected Boolean showStreets = true; //if true streets are shown on search
 	protected Boolean showPOI = true;
 	protected Boolean isRealTime = false;
@@ -92,91 +100,94 @@ public abstract class PlaceChooserFragment extends Fragment implements
     public void setup(){
         buildGoogleApiClient();
 
-    	//Setup no connecntion view
-    	layoutNoConnection = (LinearLayout) view.findViewById(R.id.layout_no_internet);
-    	
-		connectionDetector = new ConnectionDetector(getActivity().getApplicationContext());
-        buttonTryAgainConnection = (Button) view.findViewById(R.id.button_try_again);
-        buttonTryAgainConnection.setOnClickListener(new OnClickListener(){
+		// Nearby or Favorite
+		mListChooser = (Spinner) view.findViewById(R.id.spinner_search_main);
+
+		// No result Layouts
+    	mNoConnectionLayout = (LinearLayout) view.findViewById(R.id.layout_no_internet);
+		mTryAgainConnectionButton = (Button) view.findViewById(R.id.button_try_again);
+
+		// RealTime Search
+		mSearchBar = (EditText) view.findViewById(R.id.edittext_search_place);
+		mSearchButton = (ImageButton) view.findViewById(R.id.imagebutton_search_place);
+		mSearchInfo = (TextView) view.findViewById(R.id.textView_search_info);
+		mPlaceListLayout = (LinearLayout) view.findViewById(R.id.layout_place_list);
+		mProgressBar = (RelativeLayout) view.findViewById(R.id.layout_search_progress);
+
+
+		mNoMatchLayout = (LinearLayout) view.findViewById(R.id.layout_no_search_match);
+
+		// Setup connection-related code
+		mConnectionDetector = new ConnectionDetector(getActivity().getApplicationContext());
+        mTryAgainConnectionButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startSearch();
+				placeSearch();
 			}
-             });
+		});
 
+		// Make initial search progressbar invisible
+        mProgressBar.setVisibility(View.GONE);
 
-        
-        textSearchInfo = (TextView) view.findViewById(R.id.textView_search_info);
-        
-        layoutNoMatch = (LinearLayout) view.findViewById(R.id.layout_no_search_match);
-        
-        layoutProgressBar = (RelativeLayout) view.findViewById(R.id.layout_search_progress);
-        layoutProgressBar.setVisibility(View.GONE);
-
-        layoutPlaceList = (LinearLayout) view.findViewById(R.id.layout_place_list);
-        
-        editSearchBar = (EditText) view.findViewById(R.id.edittext_search_place);
-		editSearchBar.addTextChangedListener(new TextWatcher(){
+		// Add TextChangedListener to the Search-bar
+		mSearchBar.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void afterTextChanged(Editable s) {
-				startSearch();	
+				placeSearch();
 			}
 
 			@Override
 			public void beforeTextChanged(CharSequence s, int start,
-					int count, int after) {
+										  int count, int after) {
 			}
 
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {			
+									  int count) {
 			}
 		});
 
-        imgbtn_search_edit = (ImageButton) view.findViewById(R.id.imagebutton_search_place);
-        imgbtn_search_edit.setOnClickListener(new OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                editSearchBar.setText("");
-            }
-        });
-		
-		String[] dataList = {Variables.NEARBY_SEARCH, Variables.FAVORIT_SEARCH};
-       	spinnerMainList = (Spinner) view.findViewById(R.id.spinner_search_main);
+		// Make search button empty the search-bar when the pushed
+        mSearchButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mSearchBar.setText("");
+			}
+		});
+
+		// Add alternatives as NEARBY and FAVORITE for the realtime list
+		String[] dataList = {Variables.NEARBY_SEARCH, Variables.FAVORITE_SEARCH};
        	ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, dataList);
        	arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-       	spinnerMainList.setAdapter(arrayAdapter);
+       	mListChooser.setAdapter(arrayAdapter);
 
+		// Setup the place list adapter
+		mPlaceAdapter = new PlaceListAdapter(this.getActivity(), mPlaces);
+        mListChooser.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+				if (mSearchTask != null) {
+					mSearchTask.cancel(true);
+				}
+				mPlaceAdapter.clear();
+				mSearchTask = new SyncTask().execute("", mListChooser.getSelectedItem().toString());
+				mPlaceAdapter.notifyDataSetChanged();
+			}
 
+			@Override
+			public void onNothingSelected(AdapterView<?> parentView) {
 
-		adapter = new PlaceListAdapter(this.getActivity(), places);
-        spinnerMainList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (mSearchTask != null) {
-                    mSearchTask.cancel(true);
-                }
-                adapter.clear();
-                mSearchTask = new SyncTask().execute("", spinnerMainList.getSelectedItem().toString());
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
-
-        });
+			}
+		});
     }
 
-    protected synchronized void buildGoogleApiClient() {
+    private synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
     }
-
 
     @Override
     public void onStart() {
@@ -198,7 +209,7 @@ public abstract class PlaceChooserFragment extends Fragment implements
     @Override
     public void onConnected(Bundle connectionHint) {
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        locationUpdated = true;
+        mLocationUpdated = true;
     }
 
     @Override
@@ -214,60 +225,77 @@ public abstract class PlaceChooserFragment extends Fragment implements
 
     public void onActivityCreated(Bundle savedInstanceState) {
 		 super.onActivityCreated(savedInstanceState);
-		 
-		 
-		 viewPlaceList = (ListView) view.findViewById(R.id.list_search_stops);
-	     
-		 viewPlaceList.setAdapter(adapter);
-		 viewPlaceList.setOnItemClickListener(new OnItemClickListener(){
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				selectPlace(position);
-			}
-			 
+		 // Setup the listview for places
+		 mPlaceListView = (ListView) view.findViewById(R.id.list_search_stops);
+		 mPlaceListView.setAdapter(mPlaceAdapter);
+		 mPlaceListView.setOnItemClickListener(new OnItemClickListener() {
+			 @Override
+			 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				 selectPlace(position);
+			 }
 		 });
 	}
     
-    /*
-     * Update the search list
+    /**
+     * Connect to the Ruter API to search for places with the current given search in the search-bar
      */
-    public void startSearch(){
-    	layoutNoConnection.setVisibility(View.GONE);
-		layoutNoMatch.setVisibility(View.GONE);
-		String searchText = editSearchBar.getText().toString();
+    public void placeSearch(){
+		// Assume there is connection, so remove no connection layouts
+    	mNoConnectionLayout.setVisibility(View.GONE);
+		mNoMatchLayout.setVisibility(View.GONE);
+
+		// Get search text from the search-bar
+		String searchText = mSearchBar.getText().toString();
+
+		// Search have to be longer than the SEARCH_THRESHOLD to give results
 		int searchLength = searchText.length();
 		if(mSearchTask != null){
+			// IF there is another search task running in the background cancel it
 			mSearchTask.cancel(true);
 		}
-		if(searchLength >= Variables.SEARCH_TRESHOLD){
-            imgbtn_search_edit.setEnabled(true);
-            imgbtn_search_edit.setImageResource(R.drawable.ic_action_remove);
+		if(searchLength >= Variables.SEARCH_THRESHOLD){
+			// IF the search text is longer than the given threshold, start search
+			// enable remove current search text button
+            mSearchButton.setEnabled(true);
+            mSearchButton.setImageResource(R.drawable.ic_action_remove);
 
-			textSearchInfo.setVisibility(View.GONE);
-			spinnerMainList.setVisibility(View.GONE);
-			adapter.clear();
+			// make Nearby/Favorite list invisible
+			mSearchInfo.setVisibility(View.GONE);
+			mListChooser.setVisibility(View.GONE);
+
+			// clean/empty the list adapter
+			mPlaceAdapter.clear();
+
+			// Start a new search task, with the current search text
 			mSearchTask = new SyncTask().execute(searchText);
-
 		}
 		else{
             if(searchLength >= 1){
-                imgbtn_search_edit.setEnabled(true);
-                imgbtn_search_edit.setImageResource(R.drawable.ic_action_remove);
+				// enable remove current search text button
+                mSearchButton.setEnabled(true);
+                mSearchButton.setImageResource(R.drawable.ic_action_remove);
             }
-            else{
-                imgbtn_search_edit.setEnabled(false);
-                imgbtn_search_edit.setImageResource(R.drawable.ic_action_search);
+            else{ // if searchLength = 0
+				// disable remove current search text button, because search is empty anyway...
+                mSearchButton.setEnabled(false);
+                mSearchButton.setImageResource(R.drawable.ic_action_search);
             }
-            if (lastSearchLength  >= Variables.SEARCH_TRESHOLD){
-                textSearchInfo.setVisibility(View.VISIBLE);
-                spinnerMainList.setVisibility(View.VISIBLE);
-                layoutProgressBar.setVisibility(View.GONE);
-                adapter.clear();
-                mSearchTask = new SyncTask().execute("", spinnerMainList.getSelectedItem().toString());
-                adapter.notifyDataSetChanged();
+            if (mLastSearchLength >= Variables.SEARCH_THRESHOLD){
+				// IF search before edit was longer than threshold
+				// enable search info and nearby/favorite list, and remove progressbar
+                mSearchInfo.setVisibility(View.VISIBLE);
+                mListChooser.setVisibility(View.VISIBLE);
+                mProgressBar.setVisibility(View.GONE);
+
+				// clean/empty the list adapter
+                mPlaceAdapter.clear();
+
+				// Start search task for nearby/favorite
+                mSearchTask = new SyncTask().execute("", mListChooser.getSelectedItem().toString());
+                mPlaceAdapter.notifyDataSetChanged();
             }
 		}
-        lastSearchLength = searchLength;
+        mLastSearchLength = searchLength;
     }
 
     private class SyncTask extends AsyncTask<String, String, JSONArray> {
@@ -275,7 +303,7 @@ public abstract class PlaceChooserFragment extends Fragment implements
     	protected void onPreExecute() {
     		super.onPreExecute();
 
-    		layoutProgressBar.setVisibility(View.VISIBLE);
+    		mProgressBar.setVisibility(View.VISIBLE);
     	}
 	
     	@Override
@@ -285,10 +313,9 @@ public abstract class PlaceChooserFragment extends Fragment implements
     			jArrayPlaces  = RuterApiReader.getPlaces(args[0]);
     		}
     		else if(args.length > 1){
-                //TODO
     			if(args[1].equals(Variables.NEARBY_SEARCH)){
                     while(args.length > 1 && args[1].equals(Variables.NEARBY_SEARCH)){
-                        if (locationUpdated)
+                        if (mLocationUpdated)
                             break;
                     }
                     if(mLastLocation != null) {
@@ -297,34 +324,22 @@ public abstract class PlaceChooserFragment extends Fragment implements
                         String xyCord = "(x=" + utm[2] + ",y=" + utm[3] + ")";
                         jArrayPlaces = RuterApiReader.getClosestStops(xyCord);
                     }
-                    else{
-                        /*Context context = getActivity().getApplicationContext();
-                        CharSequence text = "Location not enabled";
-                        int duration = Toast.LENGTH_SHORT;
-
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();*/
-                    }
     			}
-                //Favorits
-                else if(args[1].equals(Variables.FAVORIT_SEARCH)){
-
+                else if(args[1].equals(Variables.FAVORITE_SEARCH)){
+					// TODO add favorite alternative
                 }
-
-
     		}
-    			
     		return jArrayPlaces;
     	}
 
     	@Override
     	protected void onPostExecute(JSONArray jArray) {
-            layoutPlaceList.setVisibility(View.VISIBLE);
+            mPlaceListLayout.setVisibility(View.VISIBLE);
     		if(jArray == null){
-    			if(!connectionDetector.isConnectingToInternet()){
-    				layoutNoConnection.setVisibility(View.VISIBLE);
-                    lastSearchLength=Variables.SEARCH_TRESHOLD;
-                    layoutPlaceList.setVisibility(View.GONE);
+    			if(!mConnectionDetector.isConnectingToInternet()){
+    				mNoConnectionLayout.setVisibility(View.VISIBLE);
+                    mLastSearchLength =Variables.SEARCH_THRESHOLD;
+                    mPlaceListLayout.setVisibility(View.GONE);
     			}
     		}
     		else{
@@ -332,7 +347,7 @@ public abstract class PlaceChooserFragment extends Fragment implements
 				Place place;
 				int nrOfPlaces = jArray.length();
 				if(nrOfPlaces == 0){
-					layoutNoMatch.setVisibility(View.VISIBLE);
+					mNoMatchLayout.setVisibility(View.VISIBLE);
 				}
 				else {
 		    		try {
@@ -375,20 +390,20 @@ public abstract class PlaceChooserFragment extends Fragment implements
 		    					}
 		    				}
 		    				
-		    				adapter.add(place);
-		    	    		adapter.notifyDataSetChanged();
+		    				mPlaceAdapter.add(place);
+		    	    		mPlaceAdapter.notifyDataSetChanged();
 		    			}
 		    		} catch (JSONException e) {
 		    			e.printStackTrace();
 		    		}
 
-                    if(adapter.isEmpty()) {
-                        layoutNoMatch.setVisibility(View.VISIBLE);
+                    if(mPlaceAdapter.isEmpty()) {
+                        mNoMatchLayout.setVisibility(View.VISIBLE);
                     }
 	    		}
     		}
     		
-    		layoutProgressBar.setVisibility(View.GONE);
+    		mProgressBar.setVisibility(View.GONE);
     	}
     	
     	private Place getPlace(JSONObject jObject) throws JSONException {

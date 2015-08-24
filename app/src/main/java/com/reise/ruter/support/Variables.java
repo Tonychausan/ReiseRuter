@@ -1,15 +1,15 @@
 package com.reise.ruter.support;
 
 public class Variables {
-	public static int SEARCH_TRESHOLD = 2;
+	public static int SEARCH_THRESHOLD = 2;
 	public static int SEARCH_LIST_UPDATE = 15;
 	public static String SPACE_IN_URL = "%20";
 	public static String PLATFORM = "Platform ";
 	public static String REFRESH_TOAST = "Refreshing";
 	public static String NEARBY_SEARCH = "Nearby";
-    public static String FAVORIT_SEARCH = "Favorits";
+    public static String FAVORITE_SEARCH = "Favorits";
 	
-	public static int NUMBUER_OF_WEEKDAYS = 7;
+	public static int NUMBER_OF_WEEKDAYS = 7;
 
     public static String TransportTypeList[] = {
             "Walking", "AirprtBus", "Bus", "Dummy", "AirportTrain", "Boat", "Train", "Tram", "Metro"
