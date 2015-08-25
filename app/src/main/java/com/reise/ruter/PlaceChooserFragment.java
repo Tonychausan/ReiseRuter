@@ -30,7 +30,6 @@ import com.reise.ruter.data.RuterApiReader;
 import com.reise.ruter.list.PlaceListAdapter;
 import com.reise.ruter.support.ConnectionDetector;
 import com.reise.ruter.support.CoordinateConversion;
-import com.reise.ruter.support.Variables;
 import com.reise.ruter.support.Variables.PlaceField;
 import com.reise.ruter.support.Variables.PlaceType;
 
@@ -41,6 +40,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public abstract class PlaceChooserFragment extends Fragment implements ConnectionCallbacks, OnConnectionFailedListener {
+	private static String NEARBY_SEARCH = "Nearby";
+	private static String FAVORITE_SEARCH = "Favorits";
+	private static int SEARCH_THRESHOLD = 2;
+
+	public enum listTypes {
+		SEARCH, NEARBY, FAVORITE
+	}
+
     protected GoogleApiClient mGoogleApiClient;
 
 	// Adapter for the places
@@ -69,7 +76,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
     private Boolean mLocationUpdated = false;
 
 	private Fragment thisFragment = this;
-	private int mLastSearchLength = Variables.SEARCH_THRESHOLD;
+	private int mLastSearchLength = SEARCH_THRESHOLD;
 
 	// List of places with the given search, or from nearby/favorite
 	private ArrayList<Place> mPlaces = new ArrayList<Place>();
@@ -156,7 +163,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 		});
 
 		// Add alternatives as NEARBY and FAVORITE for the realtime list
-		String[] dataList = {Variables.NEARBY_SEARCH, Variables.FAVORITE_SEARCH};
+		String[] dataList = {NEARBY_SEARCH, FAVORITE_SEARCH};
        	ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, dataList);
        	arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
        	mListChooser.setAdapter(arrayAdapter);
@@ -253,7 +260,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 			// IF there is another search task running in the background cancel it
 			mSearchTask.cancel(true);
 		}
-		if(searchLength >= Variables.SEARCH_THRESHOLD){
+		if(searchLength >= SEARCH_THRESHOLD){
 			// IF the search text is longer than the given threshold, start search
 			// enable remove current search text button
             mSearchButton.setEnabled(true);
@@ -280,7 +287,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
                 mSearchButton.setEnabled(false);
                 mSearchButton.setImageResource(R.drawable.ic_action_search);
             }
-            if (mLastSearchLength >= Variables.SEARCH_THRESHOLD){
+            if (mLastSearchLength >= SEARCH_THRESHOLD){
 				// IF search before edit was longer than threshold
 				// enable search info and nearby/favorite list, and remove progressbar
                 mSearchInfo.setVisibility(View.VISIBLE);
@@ -302,7 +309,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
     	@Override
     	protected void onPreExecute() {
     		super.onPreExecute();
-
+			// Before search, set progressbar visible
     		mProgressBar.setVisibility(View.VISIBLE);
     	}
 	
@@ -310,11 +317,13 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
     	protected JSONArray doInBackground(String... args) {
     		JSONArray jArrayPlaces = null;
     		if(args.length == 1){
+				// Make search in Ruter API
     			jArrayPlaces  = RuterApiReader.getPlaces(args[0]);
     		}
     		else if(args.length > 1){
-    			if(args[1].equals(Variables.NEARBY_SEARCH)){
-                    while(args.length > 1 && args[1].equals(Variables.NEARBY_SEARCH)){
+				// IF nearby or favorite
+    			if(args[1].equals(NEARBY_SEARCH)){
+                    while(args.length > 1 && args[1].equals(NEARBY_SEARCH)){
                         if (mLocationUpdated)
                             break;
                     }
@@ -325,7 +334,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
                         jArrayPlaces = RuterApiReader.getClosestStops(xyCord);
                     }
     			}
-                else if(args[1].equals(Variables.FAVORITE_SEARCH)){
+                else if(args[1].equals(FAVORITE_SEARCH)){
 					// TODO add favorite alternative
                 }
     		}
@@ -338,7 +347,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
     		if(jArray == null){
     			if(!mConnectionDetector.isConnectingToInternet()){
     				mNoConnectionLayout.setVisibility(View.VISIBLE);
-                    mLastSearchLength =Variables.SEARCH_THRESHOLD;
+                    mLastSearchLength = SEARCH_THRESHOLD;
                     mPlaceListLayout.setVisibility(View.GONE);
     			}
     		}

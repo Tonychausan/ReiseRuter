@@ -9,92 +9,15 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f6995465-11b6-4be9-be30-338a71827960" name="Default" comment="Commit ahmg">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/TravelPlanner/TimePickerFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/TravelPlanner/TimePickerFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/TravelPlanner/TravelPlannerFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/TravelPlanner/TravelPlannerFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/TravelPlanner/TravelPlannerPlaceChooserActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/TravelPlanner/TravelPlannerPlaceChooserActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/TravelPlanner/TravelPlannerPlaceChooserFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/TravelPlanner/TravelPlannerPlaceChooserFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/TravelPlanner/TripListActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/TravelPlanner/TripListActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_choose_place.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/advance_settings_layout.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_travel_planner.xml" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-hdpi\realtime_btn_default_disabled_focused_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-hdpi\realtime_btn_default_disabled_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-hdpi\realtime_btn_default_focused_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-hdpi\realtime_btn_default_normal_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-hdpi\realtime_btn_default_pressed_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-hdpi\tab_selected_focused_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-hdpi\tab_selected_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-hdpi\tab_selected_pressed_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-hdpi\tab_unselected_focused_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-hdpi\tab_unselected_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-hdpi\tab_unselected_pressed_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-mdpi\realtime_btn_default_disabled_focused_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-mdpi\realtime_btn_default_disabled_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-mdpi\realtime_btn_default_focused_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-mdpi\realtime_btn_default_normal_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-mdpi\realtime_btn_default_pressed_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-mdpi\tab_selected_focused_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-mdpi\tab_selected_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-mdpi\tab_selected_pressed_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-mdpi\tab_unselected_focused_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-mdpi\tab_unselected_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-mdpi\tab_unselected_pressed_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xhdpi\realtime_btn_default_disabled_focused_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xhdpi\realtime_btn_default_disabled_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xhdpi\realtime_btn_default_focused_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xhdpi\realtime_btn_default_normal_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xhdpi\realtime_btn_default_pressed_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xhdpi\tab_selected_focused_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xhdpi\tab_selected_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xhdpi\tab_selected_pressed_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xhdpi\tab_unselected_focused_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xhdpi\tab_unselected_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xhdpi\tab_unselected_pressed_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xxhdpi\realtime_btn_default_disabled_focused_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xxhdpi\realtime_btn_default_disabled_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xxhdpi\realtime_btn_default_focused_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xxhdpi\realtime_btn_default_normal_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xxhdpi\realtime_btn_default_pressed_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xxhdpi\tab_selected_focused_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xxhdpi\tab_selected_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xxhdpi\tab_selected_pressed_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xxhdpi\tab_unselected_focused_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xxhdpi\tab_unselected_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xxhdpi\tab_unselected_pressed_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable\button_background_default.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable\button_background_focused.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable\button_background_pressed.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable\button_default_style.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable\flat_button.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable\real_time_buttons.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable\realtime_button_style.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable\tab_indicator_holo.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\layout\no_connection_view.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\layout\real_time_fragment.xml" afterPath="" />
-      <change type="MOVED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\layout\fragment_choose_place.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/place_chooser_fragment.xml" />
+    <list default="true" id="f6995465-11b6-4be9-be30-338a71827960" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/cache.properties.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/gradle_project_sync_data.bin" afterPath="$PROJECT_DIR$/build/intermediates/gradle_project_sync_data.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/RealTime/Tables/GetRealTimeActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/RealTime/Tables/GetRealTimeActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/mainActivity/MainPagerAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/mainActivity/MainPagerAdapter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/PlaceChooserFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/PlaceChooserFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/RealTime/RealTimeFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/RealTime/RealTimeFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/support/Variables.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/support/Variables.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/color.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/color.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/list_search_default_item.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/list_search_default_item.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local.properties" afterPath="$PROJECT_DIR$/local.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_v4_21_0_3.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_21_0_3.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ReiseRuter.iws" />
@@ -123,34 +46,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="search_button_style.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="search_button_style.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/search_button_style.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48732084">
+            <state vertical-scroll-proportion="0.0">
               <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GetRealTimeActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/RealTime/Tables/GetRealTimeActivity.java">
+      <file leaf-file-name="PlaceChooserFragment.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/PlaceChooserFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="250" column="108" selection-start-line="250" selection-start-column="108" selection-end-line="250" selection-end-column="108" />
-              <folding />
+            <state vertical-scroll-proportion="0.255">
+              <caret line="175" column="42" selection-start-line="175" selection-start-column="42" selection-end-line="175" selection-end-column="42" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#buildGoogleApiClient#0;class#PlaceChooserFragment#0" expanded="false" />
+                <element signature="method#onStart#0;class#PlaceChooserFragment#0" expanded="false" />
+                <element signature="method#onStop#0;class#PlaceChooserFragment#0" expanded="false" />
+                <element signature="method#onConnected#0;class#PlaceChooserFragment#0" expanded="false" />
+                <element signature="method#onConnectionFailed#0;class#PlaceChooserFragment#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fragment_travel_planner.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_travel_planner.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
+      <file leaf-file-name="Variables.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/support/Variables.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="131" column="44" selection-start-line="131" selection-start-column="44" selection-end-line="131" selection-end-column="44" />
+              <caret line="11" column="72" selection-start-line="11" selection-start-column="72" selection-end-line="11" selection-end-column="72" />
               <folding />
             </state>
           </provider>
@@ -164,26 +91,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="actionbar_get_realtime.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/actionbar_get_realtime.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/main.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -1669,8 +1576,6 @@
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/list/PlaceListAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/list_search_default_item.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/PlaceChooserFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/support/Variables.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_choose_place.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/flat_button.xml" />
@@ -1681,6 +1586,8 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/RealTime/Tables/GetRealTimeActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/color.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/search_button_style.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/support/Variables.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/PlaceChooserFragment.java" />
       </list>
     </option>
   </component>
@@ -1716,6 +1623,62 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ReiseRuter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1784,98 +1747,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="ReiseRuter" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ReiseRuter" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ReiseRuter" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ruter" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ReiseRuter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -2137,7 +2008,13 @@
       <option name="project" value="LOCAL" />
       <updated>1440328908263</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Commit ahmg">
+      <created>1440416747878</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1440416747878</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2151,9 +2028,9 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32834226" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32834226" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32834226" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296582" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -2162,14 +2039,14 @@
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32834226" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32941177" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -2185,6 +2062,8 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="Working&#10;" />
     <MESSAGE value="Cleaning&#10;" />
     <MESSAGE value="Cleaning&#10;sdf" />
@@ -2199,14 +2078,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2319,6 +2190,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.8983333">
           <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2389,13 +2261,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/TravelPlanner/TravelPlannerFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="167" column="92" selection-start-line="167" selection-start-column="92" selection-end-line="167" selection-end-column="92" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/TravelPlanner/TripListActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.53833336">
@@ -2439,6 +2304,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2446,6 +2314,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2468,20 +2339,6 @@
         <state vertical-scroll-proportion="-8.551724">
           <caret line="29" column="70" selection-start-line="29" selection-start-column="70" selection-end-line="29" selection-end-column="70" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/RealTime/RealTimeFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="21" selection-start-line="26" selection-start-column="21" selection-end-line="26" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/support/Variables.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="30" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -2516,13 +2373,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/PlaceChooserFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.24138">
-          <caret line="250" column="47" selection-start-line="250" selection-start-column="47" selection-end-line="250" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/main.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2546,25 +2396,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="131" column="44" selection-start-line="131" selection-start-column="44" selection-end-line="131" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/place_chooser_fragment.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/RealTime/Tables/GetRealTimeActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="250" column="108" selection-start-line="250" selection-start-column="108" selection-end-line="250" selection-end-column="108" />
           <folding />
         </state>
       </provider>
@@ -2600,11 +2431,76 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/RealTime/Tables/GetRealTimeActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.7111356">
+          <caret line="247" column="76" selection-start-line="247" selection-start-column="76" selection-end-line="247" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/TravelPlanner/TimePickerFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/TravelPlanner/TravelPlannerFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.030871">
+          <caret line="167" column="58" selection-start-line="167" selection-start-column="58" selection-end-line="167" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/RealTime/RealTimeFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.025358325">
+          <caret line="26" column="21" selection-start-line="26" selection-start-column="21" selection-end-line="26" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/support/Variables.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="72" selection-start-line="11" selection-start-column="72" selection-end-line="11" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/place_chooser_fragment.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/search_button_style.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48732084">
+        <state vertical-scroll-proportion="0.0">
           <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/PlaceChooserFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.255">
+          <caret line="175" column="42" selection-start-line="175" selection-start-column="42" selection-end-line="175" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#buildGoogleApiClient#0;class#PlaceChooserFragment#0" expanded="false" />
+            <element signature="method#onStart#0;class#PlaceChooserFragment#0" expanded="false" />
+            <element signature="method#onStop#0;class#PlaceChooserFragment#0" expanded="false" />
+            <element signature="method#onConnected#0;class#PlaceChooserFragment#0" expanded="false" />
+            <element signature="method#onConnectionFailed#0;class#PlaceChooserFragment#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
