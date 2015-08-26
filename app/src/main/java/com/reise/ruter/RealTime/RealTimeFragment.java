@@ -25,9 +25,9 @@ public class RealTimeFragment extends PlaceChooserFragment implements OnPlaceSel
 							 Bundle savedInstanceState) {
 		this.setView(inflater.inflate(R.layout.place_chooser_fragment, container, false));
 		this.setup();
-		this.showStreets = false; //Don't show street on search
-		this.showPOI = false;
-		this.isRealTime = true;
+		this.mShowStreets = false; //Don't show street on search
+		this.mShowPOI = false;
+		this.mIsRealTime = true;
 
 		return view;
 	}

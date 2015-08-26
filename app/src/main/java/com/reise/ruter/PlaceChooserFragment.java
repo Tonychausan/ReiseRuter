@@ -1,3 +1,5 @@
+//TODO make loaction change listner, Make arrayadapter for nearby and favorite (si it dosn't need to load each time)
+
 package com.reise.ruter;
 
 import android.location.Location;
@@ -40,8 +42,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public abstract class PlaceChooserFragment extends Fragment implements ConnectionCallbacks, OnConnectionFailedListener {
-	private static String NEARBY_SEARCH = "Nearby";
-	private static String FAVORITE_SEARCH = "Favorits";
 	private static int SEARCH_THRESHOLD = 2;
 
 	private String[] mListChooserValues;
@@ -75,7 +75,6 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 
     // Loaction support variables
     private Location mLastLocation = null;
-    private Boolean mLocationUpdated = false;
 
 	private Fragment thisFragment = this;
 	private int mLastSearchLength = SEARCH_THRESHOLD;
@@ -91,12 +90,12 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 	protected View view;
 
 	// Variables to determine what to list
-	protected Boolean showStreets = true; //if true streets are shown on search
-	protected Boolean showPOI = true;
-	protected Boolean isRealTime = false;
+	protected Boolean mShowStreets = true;
+	protected Boolean mShowPOI = true;
+	protected Boolean mIsRealTime = false;
 	
 	protected abstract void selectPlace(int position);
-	
+
 	protected void setView(View view){
 		this.view = view;
 	}
@@ -217,7 +216,6 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
     @Override
     public void onConnected(Bundle connectionHint) {
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        mLocationUpdated = true;
     }
 
     @Override
@@ -400,17 +398,17 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 		    				}
 		    				else if(place.getPlaceType().equals(PlaceType.STREET)){	
 		    					//TODO implement street alternative
-		    					if(!showStreets){
+		    					if(!mShowStreets){
 		    						continue;
 		    					}
 		    					else{
 		    						//TODO
 		    					}
 		    				}
-		    				else if (place.getPlaceType().equals(PlaceType.POI) && !showPOI){
+		    				else if (place.getPlaceType().equals(PlaceType.POI) && !mShowPOI){
 		    					continue;
 		    				}
-		    				else if(place.getPlaceType().equals(PlaceType.STOP) && isRealTime){
+		    				else if(place.getPlaceType().equals(PlaceType.STOP) && mIsRealTime){
 		    					Boolean realTimeStop = json.getBoolean(PlaceField.REAL_TIME_STOP);
 		    					place.setRealTimeStop(realTimeStop);
 		    					if (!place.isRealTimeStop()){
@@ -430,7 +428,6 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
                     }
 	    		}
     		}
-    		
     		mProgressBar.setVisibility(View.GONE);
     	}
     	
@@ -439,7 +436,31 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 					jObject.getString(PlaceField.NAME),
 					jObject.getString(PlaceField.DISTRICT),
 					jObject.getString(PlaceField.PLACE_TYPE));
-    		
     	}
     }
+
+	// getters and setters
+	public Boolean getmIsRealTime() {
+		return mIsRealTime;
+	}
+
+	public void setmIsRealTime(Boolean mIsRealTime) {
+		this.mIsRealTime = mIsRealTime;
+	}
+
+	public Boolean getmShowPOI() {
+		return mShowPOI;
+	}
+
+	public void setmShowPOI(Boolean mShowPOI) {
+		this.mShowPOI = mShowPOI;
+	}
+
+	public Boolean getmShowStreets() {
+		return mShowStreets;
+	}
+
+	public void setmShowStreets(Boolean mShowStreets) {
+		this.mShowStreets = mShowStreets;
+	}
 }
