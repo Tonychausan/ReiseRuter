@@ -47,14 +47,6 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 	private String[] mListChooserValues;
 	private enum ListType {
 		NEARBY, FAVORITE, SEARCH;
-		public ListType getValueFromString(String s, String[] validStrings){
-			if (s.equals(validStrings[1]))
-				return NEARBY;
-			else if (s.equals(validStrings[2]))
-				return FAVORITE;
-			else
-				return null;
-		}
 	}
 	private ListType mShowListType;
 
@@ -185,7 +177,8 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 					mSearchTask.cancel(true);
 				}
 				mPlaceAdapter.clear();
-				mSearchTask = new SyncTask().execute("", mListChooser.getSelectedItem().toString());
+				mShowListType = getValueFromListChooser(mListChooser.getSelectedItem().toString(), mListChooserValues);
+				mSearchTask = new SyncTask().execute("");
 				mPlaceAdapter.notifyDataSetChanged();
 			}
 
@@ -286,6 +279,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 
 			// Start a new search task, with the current search text
 			mSearchTask = new SyncTask().execute(searchText);
+			mPlaceAdapter.notifyDataSetChanged();
 		}
 		else{
             if(searchLength >= 1){
@@ -307,12 +301,23 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
                 mPlaceAdapter.clear();
 
 				// Start search task for nearby/favorite
-                mSearchTask = new SyncTask().execute("", mListChooser.getSelectedItem().toString());
+				mShowListType = getValueFromListChooser(mListChooser.getSelectedItem().toString(), mListChooserValues);
+                mSearchTask = new SyncTask().execute("");
                 mPlaceAdapter.notifyDataSetChanged();
             }
 		}
         mLastSearchLength = searchLength;
     }
+
+	public ListType getValueFromListChooser(String s, String[] validStrings){
+		if (s.equals(validStrings[0].toString()))
+			return ListType.NEARBY;
+		else if (s.equals(validStrings[1].toString()))
+			return ListType.FAVORITE;
+		else
+			return null;
+	}
+
 
 	public void enableSearchButton(Boolean enable){
 		mSearchButton.setEnabled(enable);
@@ -337,25 +342,21 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 				// Make search in Ruter API
     			jArrayPlaces  = RuterApiReader.getPlaces(args[0]);
     		}
-    		else if(args.length > 1){
-				// IF nearby or favorite
-    			if(args[1].equals(NEARBY_SEARCH)){
-                    while(args.length > 1 && args[1].equals(NEARBY_SEARCH)){
-                        if (mLastLocation != null)
-                            break;
-                    }
-                    if(mLastLocation != null) {
-                        CoordinateConversion coordConv = new CoordinateConversion();
-                        String utm[] = coordConv.latLon2UTM(mLastLocation.getLatitude(), mLastLocation.getLongitude()).split(" ");
-                        String xyCord = "(x=" + utm[2] + ",y=" + utm[3] + ")";
-                        jArrayPlaces = RuterApiReader.getClosestStops(xyCord);
-                    }
-    			}
-                else if(args[1].equals(FAVORITE_SEARCH)){
-					// TODO add favorite alternative
-                }
-    		}
-			mShowListType = null;
+			else if(mShowListType == ListType.NEARBY){
+				while(mLastLocation == null){
+					continue;
+				}
+				if(mLastLocation != null) {
+					CoordinateConversion coordConv = new CoordinateConversion();
+					String utm[] = coordConv.latLon2UTM(mLastLocation.getLatitude(), mLastLocation.getLongitude()).split(" ");
+					String xyCord = "(x=" + utm[2] + ",y=" + utm[3] + ")";
+					jArrayPlaces = RuterApiReader.getClosestStops(xyCord);
+				}
+			}
+			else if(mShowListType == ListType.FAVORITE){
+				// TODO add favorite alternative
+			}
+
     		return jArrayPlaces;
     	}
 
