@@ -1,7 +1,7 @@
 package com.reise.ruter.RealTime;
 
 import com.reise.ruter.RealTime.PickStopInAreaFragment.OnPlaceSelectListener;
-import com.reise.ruter.RealTime.Tables.GetRealTimeActivity;
+import com.reise.ruter.RealTime.Tables.RealTimeTableActivity;
 import com.reise.ruter.PlaceChooserFragment;
 import com.reise.ruter.R;
 import com.reise.ruter.data.Place;
@@ -23,11 +23,12 @@ public class RealTimeFragment extends PlaceChooserFragment implements OnPlaceSel
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
-		this.setView(inflater.inflate(R.layout.place_chooser_fragment, container, false));
-		this.setup();
-		this.mShowStreets = false; //Don't show street on search
-		this.mShowPOI = false;
-		this.mIsRealTime = true;
+		setView(inflater.inflate(R.layout.place_chooser_fragment, container, false));
+		setup();
+
+		setShowStreets(false);
+		setShowPOI(false);
+		setIsRealTime(true);
 
 		return view;
 	}
@@ -46,7 +47,6 @@ public class RealTimeFragment extends PlaceChooserFragment implements OnPlaceSel
 					Context.INPUT_METHOD_SERVICE);
 			imm.hideSoftInputFromWindow(this.mSearchBar.getWindowToken(), 0);
 
-
 			//Give user a list of stops at chosen area
 			Bundle args = new Bundle();
 			args.putParcelable(PickStopInAreaFragment.PLACE, place);
@@ -61,7 +61,7 @@ public class RealTimeFragment extends PlaceChooserFragment implements OnPlaceSel
 	}
 
 	public void startRealTimeTabels(Place place){
-		Intent i = new Intent(getActivity(), GetRealTimeActivity.class);
+		Intent i = new Intent(getActivity(), RealTimeTableActivity.class);
 		i.putExtra(KEY_STRING, place);
 		startActivity(i);
 	}

@@ -24,9 +24,8 @@ public class TravelPlannerPlaceChooserFragment extends PlaceChooserFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        setView(inflater.inflate(R.layout.place_chooser_fragment, container, false));
-        
-        this.setup();
+        this.setView(inflater.inflate(R.layout.place_chooser_fragment, container, false));
+        setup();
         
         return view;
     }

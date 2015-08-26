@@ -42,7 +42,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class GetRealTimeActivity extends ActionBarActivity {
+public class RealTimeTableActivity extends ActionBarActivity {
 	private Place place;
 	private Activity thisActivity = this;
     ActionBar actionBar;
@@ -108,7 +108,7 @@ public class GetRealTimeActivity extends ActionBarActivity {
         actionBar.setTitle(place.getName());
         actionBar.setSubtitle(place.getDistrict());
 
-        setContentView(R.layout.activity_get_real_time_table);
+        setContentView(R.layout.real_time_table_activity);
 		viewMain = (ViewGroup) findViewById(R.id.layout_platform_list);
 		
 		//No connection layout

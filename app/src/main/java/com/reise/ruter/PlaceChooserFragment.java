@@ -90,9 +90,9 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 	protected View view;
 
 	// Variables to determine what to list
-	protected Boolean mShowStreets = true;
-	protected Boolean mShowPOI = true;
-	protected Boolean mIsRealTime = false;
+	private Boolean mShowStreets = true;
+	private Boolean mShowPOI = true;
+	private Boolean mIsRealTime = false;
 	
 	protected abstract void selectPlace(int position);
 
@@ -440,27 +440,27 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
     }
 
 	// getters and setters
-	public Boolean getmIsRealTime() {
+	public Boolean getIsRealTime() {
 		return mIsRealTime;
 	}
 
-	public void setmIsRealTime(Boolean mIsRealTime) {
+	public void setIsRealTime(Boolean mIsRealTime) {
 		this.mIsRealTime = mIsRealTime;
 	}
 
-	public Boolean getmShowPOI() {
+	public Boolean getShowPOI() {
 		return mShowPOI;
 	}
 
-	public void setmShowPOI(Boolean mShowPOI) {
+	public void setShowPOI(Boolean mShowPOI) {
 		this.mShowPOI = mShowPOI;
 	}
 
-	public Boolean getmShowStreets() {
+	public Boolean getShowStreets() {
 		return mShowStreets;
 	}
 
-	public void setmShowStreets(Boolean mShowStreets) {
+	public void setShowStreets(Boolean mShowStreets) {
 		this.mShowStreets = mShowStreets;
 	}
 }

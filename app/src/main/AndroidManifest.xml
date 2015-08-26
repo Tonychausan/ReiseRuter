@@ -18,7 +18,7 @@
         </activity>
 
         <activity
-            android:name="com.reise.ruter.RealTime.Tables.GetRealTimeActivity"
+            android:name=".RealTime.Tables.RealTimeTableActivity"
             android:label="@string/title_activity_realtime"
             android:parentActivityName="com.reise.ruter.MainActivity" >
             <!-- Parent activity meta-data to support 4.0 and lower -->
