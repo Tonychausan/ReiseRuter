@@ -44,9 +44,19 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 	private static String FAVORITE_SEARCH = "Favorits";
 	private static int SEARCH_THRESHOLD = 2;
 
-	public enum listTypes {
-		SEARCH, NEARBY, FAVORITE
+	private String[] mListChooserValues;
+	private enum ListType {
+		NEARBY, FAVORITE, SEARCH;
+		public ListType getValueFromString(String s, String[] validStrings){
+			if (s.equals(validStrings[1]))
+				return NEARBY;
+			else if (s.equals(validStrings[2]))
+				return FAVORITE;
+			else
+				return null;
+		}
 	}
+	private ListType mShowListType;
 
     protected GoogleApiClient mGoogleApiClient;
 
@@ -144,13 +154,11 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start,
-										  int count, int after) {
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 			}
 
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-									  int count) {
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
 			}
 		});
 
@@ -163,8 +171,8 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 		});
 
 		// Add alternatives as NEARBY and FAVORITE for the realtime list
-		String[] dataList = {NEARBY_SEARCH, FAVORITE_SEARCH};
-       	ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, dataList);
+		mListChooserValues= getResources().getStringArray(R.array.PlaceChooserFragment_listChooserSpinnerValues);
+       	ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mListChooserValues);
        	arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
        	mListChooser.setAdapter(arrayAdapter);
 
@@ -262,9 +270,9 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 		}
 		if(searchLength >= SEARCH_THRESHOLD){
 			// IF the search text is longer than the given threshold, start search
-			// enable remove current search text button
-            mSearchButton.setEnabled(true);
-            mSearchButton.setImageResource(R.drawable.ic_action_remove);
+
+			// enable "remove search text" button
+			enableSearchButton(true);
 
 			// make Nearby/Favorite list invisible
 			mSearchInfo.setVisibility(View.GONE);
@@ -273,20 +281,21 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 			// clean/empty the list adapter
 			mPlaceAdapter.clear();
 
+			// Show search from search text
+			mShowListType = ListType.SEARCH;
+
 			// Start a new search task, with the current search text
 			mSearchTask = new SyncTask().execute(searchText);
 		}
 		else{
             if(searchLength >= 1){
 				// enable remove current search text button
-                mSearchButton.setEnabled(true);
-                mSearchButton.setImageResource(R.drawable.ic_action_remove);
-            }
+				enableSearchButton(true);
+			}
             else{ // if searchLength = 0
 				// disable remove current search text button, because search is empty anyway...
-                mSearchButton.setEnabled(false);
-                mSearchButton.setImageResource(R.drawable.ic_action_search);
-            }
+				enableSearchButton(false);
+			}
             if (mLastSearchLength >= SEARCH_THRESHOLD){
 				// IF search before edit was longer than threshold
 				// enable search info and nearby/favorite list, and remove progressbar
@@ -305,6 +314,14 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
         mLastSearchLength = searchLength;
     }
 
+	public void enableSearchButton(Boolean enable){
+		mSearchButton.setEnabled(enable);
+		if(enable)
+			mSearchButton.setImageResource(R.drawable.ic_action_remove);
+		else
+			mSearchButton.setImageResource(R.drawable.ic_action_search);
+	}
+
     private class SyncTask extends AsyncTask<String, String, JSONArray> {
     	@Override
     	protected void onPreExecute() {
@@ -316,7 +333,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
     	@Override
     	protected JSONArray doInBackground(String... args) {
     		JSONArray jArrayPlaces = null;
-    		if(args.length == 1){
+    		if(mShowListType == ListType.SEARCH){
 				// Make search in Ruter API
     			jArrayPlaces  = RuterApiReader.getPlaces(args[0]);
     		}
@@ -324,7 +341,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 				// IF nearby or favorite
     			if(args[1].equals(NEARBY_SEARCH)){
                     while(args.length > 1 && args[1].equals(NEARBY_SEARCH)){
-                        if (mLocationUpdated)
+                        if (mLastLocation != null)
                             break;
                     }
                     if(mLastLocation != null) {
@@ -338,6 +355,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 					// TODO add favorite alternative
                 }
     		}
+			mShowListType = null;
     		return jArrayPlaces;
     	}
 

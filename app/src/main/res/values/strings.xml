@@ -15,10 +15,21 @@
         <string name="search_info">*At least two letters</string>
         <string name="search_progress_info">Search in progress</string>
 
+        <!-- Spinner values -->
+        <string-array name="PlaceChooserFragment_listChooserSpinnerValues">
+            <item>Nearby</item>
+            <item>Favorites</item>
+        </string-array>
+
     <!-- No connection view -->
     <string name="no_connection_header">No network connection</string>
     <string name="no_connection_info">Please check your connection or find a location with better coverage, and try again</string>
     <string name="no_connection_button">Try again</string>
+
+
+
+
+
 
     <!-- String to edit -->
     <string name="action_settings">Settings</string>
