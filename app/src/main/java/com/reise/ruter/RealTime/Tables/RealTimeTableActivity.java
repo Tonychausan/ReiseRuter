@@ -25,7 +25,7 @@ import com.reise.ruter.LineStops;
 import com.reise.ruter.R;
 import com.reise.ruter.RealTime.RealTimeFragment;
 import com.reise.ruter.DataObjects.Place;
-import com.reise.ruter.DataObjects.RealTimeTableObjects;
+import com.reise.ruter.DataObjects.RealTimeTableObject;
 import com.reise.ruter.SupportClasses.ReiseRuterDbHelper;
 import com.reise.ruter.SupportClasses.RuterApiReader;
 import com.reise.ruter.SupportClasses.ConnectionDetector;
@@ -38,6 +38,7 @@ import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -46,11 +47,17 @@ import java.util.TreeMap;
 public class RealTimeTableActivity extends ActionBarActivity {
 	public static final String KEY_STRING = "RealTimeTableActivity";
 
+	// ButtonID incrementer
+	private int mButtonID;
+
+	// MAP from buttonID -> RealTimeObject
+	private Map<Integer, RealTimeTableObject> mRealTimeobjects;
+
 	// Place to fetch REAL_TIME data from
 	private Place mPlace;
 
 	// Realtime object
-	private RealTimeTableObjects mRealTimeTableObject;
+	private com.reise.ruter.DataObjects.RealTimeTableObject RealTimeTableObject;
 
     private ActionBar mActionBar;
 
@@ -77,7 +84,7 @@ public class RealTimeTableActivity extends ActionBarActivity {
 	private int mLineID;
 
 	// platformKey -> lineRefKey -> lineKey -> time
-	Map<String, Map<Integer, Map<String, LinkedList<RealTimeTableObjects>>>> mRealTimeMap;
+	Map<String, Map<Integer, Map<String, LinkedList<com.reise.ruter.DataObjects.RealTimeTableObject>>>> mRealTimeMap;
 	
 	private AsyncTask<Place, Place, JSONArray> mTask;
 
@@ -153,6 +160,8 @@ public class RealTimeTableActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		mButtonID = 0;
+
 		db = new ReiseRuterDbHelper(this);
 
 		Intent intent = getIntent();
@@ -188,8 +197,9 @@ public class RealTimeTableActivity extends ActionBarActivity {
 				onBackPressed();
 			}
 		});
-		
-		mRealTimeMap = new TreeMap<String, Map<Integer, Map<String, LinkedList<RealTimeTableObjects>>>>();
+
+		mRealTimeobjects = new HashMap<>();
+		mRealTimeMap = new TreeMap<>();
 
 		mProgressBarLayout.setVisibility(View.VISIBLE);
 		addList(mPlace);
@@ -257,7 +267,7 @@ public class RealTimeTableActivity extends ActionBarActivity {
     		mProgressBarLayout.setVisibility(View.GONE);
         	mMainView.removeAllViews();
     		for (String platformKey : mRealTimeMap.keySet()) {
-    			Map<Integer, Map<String, LinkedList<RealTimeTableObjects>>> lineRefMap = mRealTimeMap.get(platformKey);
+    			Map<Integer, Map<String, LinkedList<com.reise.ruter.DataObjects.RealTimeTableObject>>> lineRefMap = mRealTimeMap.get(platformKey);
     			
     			viewPlatforms = LayoutInflater.from(RealTimeTableActivity.this).inflate(R.layout.view_real_time_platforms, null);
         		TextView textPlatformHeader = (TextView) viewPlatforms.findViewById(R.id.text_platform_header);
@@ -267,36 +277,37 @@ public class RealTimeTableActivity extends ActionBarActivity {
 
 				// lineRefKey = LineID
         		for (Integer lineRefKey : lineRefMap.keySet()){
-        			Map<String, LinkedList<RealTimeTableObjects>> lineMap = lineRefMap.get(lineRefKey);
+        			Map<String, LinkedList<com.reise.ruter.DataObjects.RealTimeTableObject>> lineMap = lineRefMap.get(lineRefKey);
 					mLineID = lineRefKey;
         			for (String lineKey : lineMap.keySet()) {
 	        			viewLines = LayoutInflater.from(RealTimeTableActivity.this).inflate(R.layout.view_real_time_lines, null);
 	        			
 	            		LinearLayout layoutTimeList = (LinearLayout) viewLines.findViewById(R.id.layout_time_list);
-	            		LinkedList<RealTimeTableObjects> RTTObjectsList = lineMap.get(lineKey);
+	            		LinkedList<com.reise.ruter.DataObjects.RealTimeTableObject> RTTObjectsList = lineMap.get(lineKey);
 	            		
-	            		mRealTimeTableObject = RTTObjectsList.getFirst();
+	            		com.reise.ruter.DataObjects.RealTimeTableObject realTimeTableObject = RTTObjectsList.getFirst();
 	            		// Set Lineref
 	            		TextView textLineRef = (TextView) viewLines.findViewById(R.id.text_line_ref);
-	            		textLineRef.setText(mRealTimeTableObject.getPublishedLineName());
+	            		textLineRef.setText(realTimeTableObject.getPublishedLineName());
 	            		
 	            		//Set LineName
 	            		TextView textLineName = (TextView) viewLines.findViewById(R.id.text_line_name);
-	            		textLineName.setText(mRealTimeTableObject.getDestinationName());
+	            		textLineName.setText(realTimeTableObject.getDestinationName());
 	            		
 	            		// Set time list
 	            		for (int i = 0; i < RTTObjectsList.size(); i++) {
-	            			mRealTimeTableObject = RTTObjectsList.get(i);
+	            			realTimeTableObject = RTTObjectsList.get(i);
 	            			
 	            			View viewRealTimeObject = LayoutInflater.from(RealTimeTableActivity.this).inflate(R.layout.view_real_time_objects, null);
 
-	            			
-	            			Button RealTimeButton = (Button) viewRealTimeObject.findViewById(R.id.button_real_time);
+	            			Button realTimeButton = (Button) viewRealTimeObject.findViewById(R.id.button_real_time);
+							realTimeButton.setId(mButtonID);
+							mButtonID = mButtonID + 1;
 	            			TextView textOrginTime = (TextView) viewRealTimeObject.findViewById(R.id.text_orgin_time);
 
 	            			//Add button text
 	            			Calendar realTime = GregorianCalendar.getInstance(); // creates a new calendar instance
-	            			realTime.setTime(mRealTimeTableObject.getExpectedDepartureTime());   // assigns calendar to given date
+	            			realTime.setTime(realTimeTableObject.getExpectedDepartureTime());   // assigns calendar to given date
 	            			
 	            			long departureTimeInMillis = realTime.getTimeInMillis();
 	            			long nowInMillis =  GregorianCalendar.getInstance().getTimeInMillis();
@@ -304,35 +315,36 @@ public class RealTimeTableActivity extends ActionBarActivity {
 	            			long waitingTime = departureTimeInMillis - nowInMillis;
 	            			if(waitingTime/(1000*60) == 0){
                                 // TODO Hardcode
-	            				RealTimeButton.setText(RealTimeTableActivity.this.getResources().getString(R.string.now));
-                                RealTimeButton.setTextColor(getResources().getColor(R.color.redRealTime));
+	            				realTimeButton.setText(RealTimeTableActivity.this.getResources().getString(R.string.now));
+                                realTimeButton.setTextColor(getResources().getColor(R.color.redRealTime));
 	            			}
 	            			else if(waitingTime/(1000*60) < 10){
-	            				RealTimeButton.setText(Long.toString(waitingTime / (1000 * 60)) + " " + RealTimeTableActivity.this.getResources().getString(R.string.min));
+	            				realTimeButton.setText(Long.toString(waitingTime / (1000 * 60)) + " " + RealTimeTableActivity.this.getResources().getString(R.string.min));
                                 if(waitingTime/(1000*60) < 3){
-                                    RealTimeButton.setTextColor(getResources().getColor(R.color.redRealTime));
+                                    realTimeButton.setTextColor(getResources().getColor(R.color.redRealTime));
                                 }
 	            			}
 	            			else{
 		            			int hour = realTime.get(Calendar.HOUR_OF_DAY);
 		            			int minute = realTime.get(Calendar.MINUTE);
-		            			RealTimeButton.setText(String.format("%02d", hour) + ":" + String.format("%02d", minute));
+		            			realTimeButton.setText(String.format("%02d", hour) + ":" + String.format("%02d", minute));
 	            			}
 
+							mRealTimeobjects.put(realTimeButton.getId(), realTimeTableObject);
+
 							// Click listener
-							// TODO add the listerner
-							RealTimeButton.setOnClickListener(new OnClickListener() {
+							realTimeButton.setOnClickListener(new OnClickListener() {
 								@Override
 								public void onClick(View v) {
 									Intent i = new Intent(RealTimeTableActivity.this, LineStops.class);
-									i.putExtra(KEY_STRING, mRealTimeTableObject);
+									i.putExtra(KEY_STRING, mRealTimeobjects.get(v.getId()));
 									startActivity(i);
 								}
 							});
 	            			
 	            			// Add orgin time to text
 	            			Calendar orginTime = GregorianCalendar.getInstance(); // creates a new calendar instance
-	            			orginTime.setTime(mRealTimeTableObject.getAimedDepartureTime());   // assigns calendar to given date
+	            			orginTime.setTime(realTimeTableObject.getAimedDepartureTime());   // assigns calendar to given date
 	            			
 		            		int hour = orginTime.get(Calendar.HOUR_OF_DAY);
 		            		int minute = orginTime.get(Calendar.MINUTE);
@@ -340,7 +352,7 @@ public class RealTimeTableActivity extends ActionBarActivity {
 	            			
 	            			layoutTimeList.addView(viewRealTimeObject);
                             if(i == 0){
-                                String colorString = mRealTimeTableObject.getLineColor();
+                                String colorString = realTimeTableObject.getLineColor();
 
                                 textLineRef.setBackgroundColor(Color.parseColor("#" + colorString));
                                 textLineName.setBackgroundColor(Color.parseColor("#" + colorString));
@@ -359,7 +371,7 @@ public class RealTimeTableActivity extends ActionBarActivity {
     	private void parseJSONArrayToRealTimeObjects(JSONArray jArray){
     		try {
     			for(int i = 0; i < jArray.length(); i++){
-    				RealTimeTableObjects RTTObject = new RealTimeTableObjects();
+    				com.reise.ruter.DataObjects.RealTimeTableObject RTTObject = new RealTimeTableObject();
     				JSONObject json = jArray.getJSONObject(i);
     				
     				JSONObject Extensions = json.getJSONObject(DeparturesField.EXTENSIONS);
@@ -381,32 +393,32 @@ public class RealTimeTableActivity extends ActionBarActivity {
     				String destinationName = RTTObject.getDestinationName();
     				
     				// Set in platform to table
-    				Map<Integer, Map<String, LinkedList<RealTimeTableObjects>>> lineRefMap;
+    				Map<Integer, Map<String, LinkedList<com.reise.ruter.DataObjects.RealTimeTableObject>>> lineRefMap;
     				if(mRealTimeMap.containsKey(platformName)){
     					 lineRefMap = mRealTimeMap.get(platformName);
     				}
     				else{
-    					mRealTimeMap.put(platformName, new LinkedHashMap<Integer, Map<String, LinkedList<RealTimeTableObjects>>>());
+    					mRealTimeMap.put(platformName, new LinkedHashMap<Integer, Map<String, LinkedList<com.reise.ruter.DataObjects.RealTimeTableObject>>>());
     					lineRefMap = mRealTimeMap.get(platformName);
     				}
     				
     				// Set in lineRef to table
-    				Map<String, LinkedList<RealTimeTableObjects>> lineMap;
+    				Map<String, LinkedList<com.reise.ruter.DataObjects.RealTimeTableObject>> lineMap;
     				if(lineRefMap.containsKey(lineRef)){
     					 lineMap = lineRefMap.get(lineRef);
     				}
     				else{
-    					lineRefMap.put(lineRef, new LinkedHashMap<String, LinkedList<RealTimeTableObjects>>());
+    					lineRefMap.put(lineRef, new LinkedHashMap<String, LinkedList<com.reise.ruter.DataObjects.RealTimeTableObject>>());
     					lineMap = lineRefMap.get(lineRef);
     				}
     				
     				// Set in lines to tables
-    				LinkedList<RealTimeTableObjects> RTTObjectsList;
+    				LinkedList<com.reise.ruter.DataObjects.RealTimeTableObject> RTTObjectsList;
     				if(lineMap.containsKey(destinationName)){
     					RTTObjectsList = lineMap.get(destinationName);
 	   				}
 	   				else{
-	   					lineMap.put(destinationName, new LinkedList<RealTimeTableObjects>());
+	   					lineMap.put(destinationName, new LinkedList<com.reise.ruter.DataObjects.RealTimeTableObject>());
 	   					RTTObjectsList = lineMap.get(destinationName);
 	   				}
     				
@@ -420,5 +432,4 @@ public class RealTimeTableActivity extends ActionBarActivity {
     	}
     
 	}
-
 }

@@ -29,17 +29,24 @@ public class Variables {
 	}
 	
 	public static class DeparturesField{
-		public static String MONITORED_VEHICLE_JOURNEY = "MonitoredVehicleJourney";
-		public static String MONITORED_CALL = "MonitoredCall";
-		public static String DESTINATION_NAME = "DestinationName";
-		public static String DESTINATION_REF = "DestinationRef";
-		public static String DEPARTURE_PLATFORM_NAME = "DeparturePlatformName";
-		public static String LINE_REF = "LineRef";
-		public static String EXPECTED_DEPARTURE_TIME = "ExpectedDepartureTime";
-		public static String AIMED_DEPARTURE_TIME = "AimedDepartureTime";
-		public static String LINE_COLOUR = "LineColour";
+
 		public static String EXTENSIONS = "Extensions";
-		public static String PUBLISHED_LINE_NAME = "PublishedLineName";
+			public static String LINE_COLOUR = "LineColour";
+			public static String DEVIATIONS = "Deviations";
+				public static String DEVIATION = "Deviation";
+					public static String DEVIATION_HEADER = "Header";
+					public static String DEVIATION_ID = "ID";
+
+		public static String MONITORED_VEHICLE_JOURNEY = "MonitoredVehicleJourney";
+			public static String DESTINATION_NAME = "DestinationName";
+			public static String DESTINATION_REF = "DestinationRef";
+			public static String DIRECTION_REF = "DirectionRef";
+			public static String LINE_REF = "LineRef";
+			public static String MONITORED_CALL = "MonitoredCall";
+				public static String AIMED_DEPARTURE_TIME = "AimedDepartureTime";
+				public static String DEPARTURE_PLATFORM_NAME = "DeparturePlatformName";
+				public static String EXPECTED_DEPARTURE_TIME = "ExpectedDepartureTime";
+			public static String PUBLISHED_LINE_NAME = "PublishedLineName";
 		
 	}
 
