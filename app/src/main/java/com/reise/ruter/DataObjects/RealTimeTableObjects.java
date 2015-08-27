@@ -9,8 +9,8 @@ public class RealTimeTableObjects {
 	private String departurePlatformName;
 	private String lineRef;
 	private int destinationRef;
-	private Date expectedDepartureTime;
-	private Date aimedDepartureTime;
+	private long expectedDepartureTime;
+	private long aimedDepartureTime;
 	private String lineColor;
 	private String publishedLineName;
 	
@@ -48,11 +48,11 @@ public class RealTimeTableObjects {
 	}
 
 	public Date getExpectedDepartureTime() {
-		return expectedDepartureTime;
+		return new Date(expectedDepartureTime);
 	}
 
 	public void setExpectedDepartureTime(String expectedDepartureTime) {
-		this.expectedDepartureTime = stringToDate(expectedDepartureTime);
+		this.expectedDepartureTime = stringToDate(expectedDepartureTime).getTime();
 		
 	}
 	
@@ -84,11 +84,11 @@ public class RealTimeTableObjects {
 	}
 
 	public Date getAimedDepartureTime() {
-		return aimedDepartureTime;
+		return new Date(aimedDepartureTime);
 	}
 
 	public void setAimedDepartureTime(String aimedDepartureTime) {
-		this.aimedDepartureTime = stringToDate(aimedDepartureTime);
+		this.aimedDepartureTime = stringToDate(aimedDepartureTime).getTime();
 	}
 
 	
