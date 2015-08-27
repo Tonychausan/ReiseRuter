@@ -10,51 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f6995465-11b6-4be9-be30-338a71827960" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/SupportClasses/ReiseRuterDbHelper.java" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-hdpi\textfield_default.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-mdpi\textfield_default.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xhdpi\textfield_default.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\drawable-xxhdpi\textfield_default.9.png" afterPath="" />
-      <change type="MOVED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\java\com\reise\ruter\data\JSONParser.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/SupportClasses/JSONParser.java" />
-      <change type="MOVED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\java\com\reise\ruter\data\Place.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/DataObjects/Place.java" />
-      <change type="MOVED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\java\com\reise\ruter\data\RealTimeTableObjects.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/DataObjects/RealTimeTableObjects.java" />
-      <change type="MOVED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\java\com\reise\ruter\data\RuterApiReader.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/SupportClasses/RuterApiReader.java" />
-      <change type="MOVED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\java\com\reise\ruter\data\TravelSearchObject.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/DataObjects/TravelSearchObject.java" />
-      <change type="MOVED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\java\com\reise\ruter\supportClass\SlidingTabLayout.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/SupportUI/SlidingTabLayout.java" />
-      <change type="MOVED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\java\com\reise\ruter\supportClass\SlidingTabStrip.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/SupportUI/SlidingTabStrip.java" />
-      <change type="MOVED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\java\com\reise\ruter\support\AnimationSupport.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/SupportUI/AnimationSupport.java" />
-      <change type="MOVED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\java\com\reise\ruter\support\ConnectionDetector.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/SupportClasses/ConnectionDetector.java" />
-      <change type="MOVED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\java\com\reise\ruter\support\CoordinateConversion.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/SupportClasses/CoordinateConversion.java" />
-      <change type="MOVED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\java\com\reise\ruter\support\TimeHolder.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/SupportClasses/TimeHolder.java" />
-      <change type="MOVED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\java\com\reise\ruter\support\Variables.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/SupportClasses/Variables.java" />
-      <change type="MOVED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\menu\actionbar_get_realtime.xml" afterPath="$PROJECT_DIR$/app/src/main/res/menu/real_time_table_activity.xml" />
-      <change type="MOVED" beforePath="C:\Users\Tony Chau\Development\Android\AndroidStudio\Workspace\ReiseRuter\app\src\main\res\menu\main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/menu/main_activity.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/cache.properties.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/gradle_project_sync_data.bin" afterPath="$PROJECT_DIR$/build/intermediates/gradle_project_sync_data.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/RealTime/PickStopInAreaFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/RealTime/PickStopInAreaFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/PlaceChooserFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/PlaceChooserFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/list/PlaceListAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/list/PlaceListAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/RealTime/RealTimeFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/RealTime/RealTimeFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/RealTime/Tables/RealTimeTableActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/RealTime/Tables/RealTimeTableActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/mainActivity/SlidingTabFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/mainActivity/SlidingTabFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/TravelPlanner/TimePickerFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/TravelPlanner/TimePickerFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/TravelPlanner/TimePickerFragment.java" afterPath="$PROJECT_DIR$/app/src/main/res/layout/TravelPlanner/TimePickerFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/TravelPlanner/TravelPlannerFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/TravelPlanner/TravelPlannerFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/TravelPlanner/TravelPlannerFragment.java" afterPath="$PROJECT_DIR$/app/src/main/res/layout/TravelPlanner/TravelPlannerFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/TravelPlanner/TravelPlannerPlaceChooserActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/TravelPlanner/TravelPlannerPlaceChooserActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/TravelPlanner/TravelPlannerPlaceChooserActivity.java" afterPath="$PROJECT_DIR$/app/src/main/res/layout/TravelPlanner/TravelPlannerPlaceChooserActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/TravelPlanner/TravelPlannerPlaceChooserFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/TravelPlanner/TravelPlannerPlaceChooserFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/TravelPlanner/TravelPlannerPlaceChooserFragment.java" afterPath="$PROJECT_DIR$/app/src/main/res/layout/TravelPlanner/TravelPlannerPlaceChooserFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local.properties" afterPath="$PROJECT_DIR$/local.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/sliding_tab_fragment.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/sliding_tab_fragment.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/view_no_connection.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/view_no_connection.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/view_real_time_lines.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/view_real_time_lines.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/view_real_time_platforms.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/view_real_time_platforms.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/SupportClasses/ReiseRuterDbHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/SupportClasses/ReiseRuterDbHelper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ReiseRuter.iws" />
@@ -95,10 +55,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="view_real_time_lines.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="view_real_time_lines.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_real_time_lines.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.586207">
+            <state vertical-scroll-proportion="0.23130435">
               <caret line="29" column="19" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
               <folding />
             </state>
@@ -126,13 +86,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PlaceChooserFragment.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PlaceChooserFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/PlaceChooserFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.56869566">
-              <caret line="404" column="66" selection-start-line="404" selection-start-column="66" selection-end-line="404" selection-end-column="66" />
+            <state vertical-scroll-proportion="-6.586207">
+              <caret line="36" column="57" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="57" />
               <folding>
-                <element signature="imports" expanded="true" />
                 <element signature="e#2863#2870#0" expanded="true" />
                 <element signature="e#4580#4677#0" expanded="true" />
                 <element signature="e#4676#4677#0" expanded="true" />
@@ -146,10 +105,10 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/SupportClasses/ReiseRuterDbHelper.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="35" column="62" selection-start-line="35" selection-start-column="62" selection-end-line="35" selection-end-column="62" />
+              <caret line="104" column="9" selection-start-line="104" selection-start-column="9" selection-end-line="104" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2628#2635#0" expanded="true" />
+                <element signature="e#2859#2866#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -159,7 +118,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="24" column="61" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="61" />
+              <caret line="24" column="61" selection-start-line="24" selection-start-column="61" selection-end-line="24" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -169,7 +128,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/DataObjects/Place.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="32" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
+              <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -1684,9 +1643,9 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/SupportClasses/JSONParser.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/SupportClasses/Variables.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/SupportClasses/ReiseRuterDbHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/RealTime/Tables/RealTimeTableActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/PlaceChooserFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/reise/ruter/SupportClasses/ReiseRuterDbHelper.java" />
       </list>
     </option>
   </component>
@@ -2089,7 +2048,7 @@
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="192.168.32.102:5555" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="192.168.40.143:5555" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_21_x86" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/app/libs/maps.jar" />
     <property name="android.project.structure.last.selected" value="app" />
@@ -2373,7 +2332,13 @@
       <option name="project" value="LOCAL" />
       <updated>1440581644363</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Database init">
+      <created>1440656101220</created>
+      <option name="number" value="00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1440656101220</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2432,7 +2397,8 @@
     <MESSAGE value="still working&#10;" />
     <MESSAGE value="Everything seem to be working" />
     <MESSAGE value="Name changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Name changes" />
+    <MESSAGE value="Database init" />
+    <option name="LAST_COMMIT_MESSAGE" value="Database init" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2815,17 +2781,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_real_time_lines.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.586207">
-          <caret line="29" column="19" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/RealTime/Tables/RealTimeTableActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="26.827587">
@@ -2842,11 +2797,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/PlaceChooserFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="61" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="61" />
-          <folding />
+        <state vertical-scroll-proportion="-6.586207">
+          <caret line="36" column="57" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="57" />
+          <folding>
+            <element signature="e#2863#2870#0" expanded="true" />
+            <element signature="e#4580#4677#0" expanded="true" />
+            <element signature="e#4676#4677#0" expanded="true" />
+            <element signature="e#5619#5627#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2858,37 +2818,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/SupportClasses/ReiseRuterDbHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="62" selection-start-line="35" selection-start-column="62" selection-end-line="35" selection-end-column="62" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2628#2635#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/DataObjects/Place.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="32" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
+          <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/PlaceChooserFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.56869566">
-          <caret line="404" column="66" selection-start-line="404" selection-start-column="66" selection-end-line="404" selection-end-column="66" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="61" selection-start-line="24" selection-start-column="61" selection-end-line="24" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/reise/ruter/SupportClasses/ReiseRuterDbHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="104" column="9" selection-start-line="104" selection-start-column="9" selection-end-line="104" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2863#2870#0" expanded="true" />
-            <element signature="e#4580#4677#0" expanded="true" />
-            <element signature="e#4676#4677#0" expanded="true" />
-            <element signature="e#5619#5627#0" expanded="true" />
+            <element signature="e#2859#2866#0" expanded="true" />
           </folding>
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_real_time_lines.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23130435">
+          <caret line="29" column="19" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
   </component>

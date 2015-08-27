@@ -17,7 +17,7 @@ import java.util.List;
 public class ReiseRuterDbHelper extends SQLiteOpenHelper {
     // All Static variables
     // Database Version: If you change the database schema, you must increment the database version.
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // DATATYPES
     private static final String DATATYPE_TEXT = "TEXT";
@@ -34,6 +34,7 @@ public class ReiseRuterDbHelper extends SQLiteOpenHelper {
         private static final String KEY_ID = "id";
         private static final String KEY_NAME = "name";
         private static final String KEY_DISTRICT = "district";
+        private static final String KEY_PLACE_TYPE = "place_type";
 
     }
 
@@ -45,8 +46,10 @@ public class ReiseRuterDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_FAVORITES + "("
-                + TableFavorites.KEY_ID + " " + DATATYPE_INT + " PRIMARY KEY," + TableFavorites.KEY_NAME + " " + DATATYPE_TEXT + ","
-                + TableFavorites.KEY_DISTRICT + " " + DATATYPE_TEXT + ")";
+                + TableFavorites.KEY_ID + " " + DATATYPE_INT + " PRIMARY KEY,"
+                + TableFavorites.KEY_NAME + " " + DATATYPE_TEXT + ","
+                + TableFavorites.KEY_DISTRICT + " " + DATATYPE_TEXT + ","
+                + TableFavorites.KEY_PLACE_TYPE+ " " + DATATYPE_TEXT + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -69,6 +72,7 @@ public class ReiseRuterDbHelper extends SQLiteOpenHelper {
         values.put(TableFavorites.KEY_ID, place.getId());
         values.put(TableFavorites.KEY_NAME, place.getName());
         values.put(TableFavorites.KEY_DISTRICT, place.getDistrict());
+        values.put(TableFavorites.KEY_PLACE_TYPE, place.getPlaceType());
 
         // Inserting Row
         db.insert(TABLE_FAVORITES, null, values);
@@ -94,7 +98,7 @@ public class ReiseRuterDbHelper extends SQLiteOpenHelper {
                 Place place = new Place(Integer.parseInt(cursor.getString(0)),
                         cursor.getString(1),
                         cursor.getString(2),
-                        null);
+                        cursor.getString(3));
                 // Adding place to list
                 favoriteList.add(place);
             } while (cursor.moveToNext());
