@@ -9,7 +9,7 @@ import android.text.format.DateFormat;
 import android.widget.TimePicker;
 
 import com.reise.ruter.R;
-import com.reise.ruter.support.TimeHolder;
+import com.reise.ruter.SupportClasses.TimeHolder;
 
 import java.util.Calendar;
 

@@ -21,6 +21,10 @@
             <item>Favorites</item>
         </string-array>
 
+    <!-- Real-Time table -->
+    <string name="no_realtime_data">No real-time data available</string>
+    <string name="button_no_realtime_back">Back</string>
+
     <!-- No connection view -->
     <string name="no_connection_header">No network connection</string>
     <string name="no_connection_info">Please check your connection or find a location with better coverage, and try again</string>
@@ -40,9 +44,7 @@
     <string name="choose_destination">Choose your destination</string>
     <string name="choose_start">Choose your start place</string>
 
-    <!-- Real-Time table -->
-    <string name="no_realtime_data">No real-time data available</string>
-    <string name="button_no_realtime_back">Back</string>
+
 
 
     <string name="departure">Depart after:</string>
@@ -57,14 +59,10 @@
     <string name="max_walk">Maximum walking time</string>
     <string name="min">min</string>
 
-    <string name="try_again">Try again</string>
-
     <string name="time_picker_setButton">Set</string>
     <string name="time_picker_cancelButton">Cancel</string>
     <string name="advance_settings">Advance settings</string>
     <string name="transport_header">Transport</string>
-    <string name="no_internet_info">Please check your connection or find a location with better coverage, and try again</string>
-    <string name="no_internet_header">No network connection</string>
     <string name="no_search_match">No place(s) matched your search.</string>
 
     <string name="now">now</string>

@@ -27,19 +27,21 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.location.LocationServices;
-import com.reise.ruter.data.Place;
-import com.reise.ruter.data.RuterApiReader;
+import com.reise.ruter.DataObjects.Place;
+import com.reise.ruter.SupportClasses.ReiseRuterDbHelper;
+import com.reise.ruter.SupportClasses.RuterApiReader;
 import com.reise.ruter.list.PlaceListAdapter;
-import com.reise.ruter.support.ConnectionDetector;
-import com.reise.ruter.support.CoordinateConversion;
-import com.reise.ruter.support.Variables.PlaceField;
-import com.reise.ruter.support.Variables.PlaceType;
+import com.reise.ruter.SupportClasses.ConnectionDetector;
+import com.reise.ruter.SupportClasses.CoordinateConversion;
+import com.reise.ruter.SupportClasses.Variables.PlaceField;
+import com.reise.ruter.SupportClasses.Variables.PlaceType;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class PlaceChooserFragment extends Fragment implements ConnectionCallbacks, OnConnectionFailedListener {
 	private static int SEARCH_THRESHOLD = 2;
@@ -93,6 +95,9 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 	private Boolean mShowStreets = true;
 	private Boolean mShowPOI = true;
 	private Boolean mIsRealTime = false;
+
+	// database handler
+	ReiseRuterDbHelper db;
 	
 	protected abstract void selectPlace(int position);
 
@@ -107,6 +112,9 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
     
     public void setup(){
         buildGoogleApiClient();
+
+		// database
+		db = new ReiseRuterDbHelper(getActivity());
 
 		// Nearby or Favorite
 		mListChooser = (Spinner) view.findViewById(R.id.spinner_search_main);
@@ -353,6 +361,8 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 			}
 			else if(mShowListType == ListType.FAVORITE){
 				// TODO add favorite alternative
+
+
 			}
 
     		return jArrayPlaces;
@@ -367,6 +377,14 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
                     mLastSearchLength = SEARCH_THRESHOLD;
                     mPlaceListLayout.setVisibility(View.GONE);
     			}
+				else {
+					List<Place> favoriteList = db.getFavorites();
+					for (Place place : favoriteList){
+						mPlaceAdapter.add(place);
+						mPlaceAdapter.notifyDataSetChanged();
+					}
+
+				}
     		}
     		else{
 	    		JSONObject json;

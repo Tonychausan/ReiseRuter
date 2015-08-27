@@ -23,7 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.reise.ruter.supportClass.SlidingTabLayout;
+import com.reise.ruter.SupportUI.SlidingTabLayout;
 import com.reise.ruter.R;
 
 public class SlidingTabFragment extends Fragment {

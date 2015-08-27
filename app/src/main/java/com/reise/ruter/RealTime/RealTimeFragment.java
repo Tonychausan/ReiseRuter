@@ -4,8 +4,8 @@ import com.reise.ruter.RealTime.PickStopInAreaFragment.OnPlaceSelectListener;
 import com.reise.ruter.RealTime.Tables.RealTimeTableActivity;
 import com.reise.ruter.PlaceChooserFragment;
 import com.reise.ruter.R;
-import com.reise.ruter.data.Place;
-import com.reise.ruter.support.Variables.PlaceType;
+import com.reise.ruter.DataObjects.Place;
+import com.reise.ruter.SupportClasses.Variables.PlaceType;
 
 import android.content.Context;
 import android.content.Intent;

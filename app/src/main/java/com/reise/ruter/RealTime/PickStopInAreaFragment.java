@@ -10,7 +10,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.reise.ruter.R;
-import com.reise.ruter.data.Place;
+import com.reise.ruter.DataObjects.Place;
 import com.reise.ruter.list.PlaceListAdapter;
 
 import java.util.ArrayList;

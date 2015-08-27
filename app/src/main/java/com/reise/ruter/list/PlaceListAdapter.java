@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.reise.ruter.R;
-import com.reise.ruter.data.Place;
+import com.reise.ruter.DataObjects.Place;
 
 import java.util.ArrayList;
 

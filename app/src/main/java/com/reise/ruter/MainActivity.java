@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.reise.ruter.SupportClasses.ReiseRuterDbHelper;
 import com.reise.ruter.mainActivity.*;
 
 
@@ -21,6 +22,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
+        ReiseRuterDbHelper db = new ReiseRuterDbHelper(this);
+
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             SlidingTabFragment fragment = new SlidingTabFragment();
@@ -31,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main_activity, menu);
         return true;
     }
 

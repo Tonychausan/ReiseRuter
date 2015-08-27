@@ -1,6 +1,5 @@
 package com.reise.ruter.RealTime.Tables;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -24,12 +23,13 @@ import android.widget.Toast;
 
 import com.reise.ruter.R;
 import com.reise.ruter.RealTime.RealTimeFragment;
-import com.reise.ruter.data.Place;
-import com.reise.ruter.data.RealTimeTableObjects;
-import com.reise.ruter.data.RuterApiReader;
-import com.reise.ruter.support.ConnectionDetector;
-import com.reise.ruter.support.Variables;
-import com.reise.ruter.support.Variables.DeparturesField;
+import com.reise.ruter.DataObjects.Place;
+import com.reise.ruter.DataObjects.RealTimeTableObjects;
+import com.reise.ruter.SupportClasses.ReiseRuterDbHelper;
+import com.reise.ruter.SupportClasses.RuterApiReader;
+import com.reise.ruter.SupportClasses.ConnectionDetector;
+import com.reise.ruter.SupportClasses.Variables;
+import com.reise.ruter.SupportClasses.Variables.DeparturesField;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,54 +43,79 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class RealTimeTableActivity extends ActionBarActivity {
-	private Place place;
-	private Activity thisActivity = this;
-    ActionBar actionBar;
+
+	// Place to fetch REAL_TIME data from
+	private Place mPlace;
+
+    private ActionBar mActionBar;
+
+	// Main view is the view shown when everything is working
+	private ViewGroup mMainView;
+
+	// Progress bar while fetching data
+	private RelativeLayout mProgressBarLayout;
+
+	// No connection Layoit
+	private LinearLayout mNoConnectionLayout;
+
+	// No Real time data layout
+	private RelativeLayout mNoRealTimeDataLayout;
+	private Button mNoRealTimeDataBackButton;
+
+	// Layout for refresh when scrolling past the top
+    private SwipeRefreshLayout mRealtimeTableRefreshSwipe;
+
+	// platformKey -> lineRefKey -> lineKey -> time
+	Map<String, Map<Integer, Map<String, LinkedList<RealTimeTableObjects>>>> mRealTimeMap;
 	
-	private ViewGroup viewMain;
-	private RelativeLayout layoutProgressBar;
-	private RelativeLayout layoutNoRealTimeData;
-	private LinearLayout layoutNoConnection;
-	private Button buttonNoRealTimeData;
-    private SwipeRefreshLayout swipeRealtimeTable;
-	
-	Map<String, Map<Integer, Map<String, LinkedList<RealTimeTableObjects>>>> realTimeMap;
-	
-	private AsyncTask<Place, Place, JSONArray> mTask = null;
-	private ConnectionDetector connectionDetector;
-	
+	private AsyncTask<Place, Place, JSONArray> mTask;
+
+	// Connection support class
+	private ConnectionDetector mConnectionDetector;
+
+	// database handler
+	ReiseRuterDbHelper db;
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    // Inflate the menu items for use in the action bar
 	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.actionbar_get_realtime, menu);
-
-
+	    inflater.inflate(R.menu.real_time_table_activity, menu);
 
 	    return super.onCreateOptionsMenu(menu);
-
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case android.R.id.home: 
-            onBackPressed();
-            return true;
-        case R.id.action_refresh_realtime:
-        	if(mTask != null){
-    			mTask.cancel(true);
-    		}
-        	
-        	// Toast clicked refresh
-        	Context context = getApplicationContext();
-        	CharSequence text = Variables.REFRESH_TOAST;
-        	int duration = Toast.LENGTH_SHORT;
-        	Toast toast = Toast.makeText(context, text, duration);
-        	toast.show();
-        	
-        	realTimeMap.clear();
-        	addList(place);
+
+		Context context = getApplicationContext();
+		int duration = Toast.LENGTH_SHORT;
+		CharSequence text;
+		Toast toast;
+
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				onBackPressed();
+				return true;
+
+			case R.id.action_refresh_realtime:
+				if(mTask != null){
+					mTask.cancel(true);
+				}
+				// Toast clicked refresh
+				text = Variables.REFRESH_TOAST;
+				toast = Toast.makeText(context, text, duration);
+				toast.show();
+
+				mRealTimeMap.clear();
+				addList(mPlace);
+				break;
+			case R.id.action_favorite:
+				db.addFavorite(mPlace);
+				text = "Favorite";
+				toast = Toast.makeText(context, text, duration);
+				toast.show();
+				break;
         }
 
 	    return super.onOptionsItemSelected(item);
@@ -100,56 +125,58 @@ public class RealTimeTableActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		db = new ReiseRuterDbHelper(this);
+
 		Intent intent = getIntent();
 		
-		place = intent.getParcelableExtra(RealTimeFragment.KEY_STRING);
+		mPlace = intent.getParcelableExtra(RealTimeFragment.KEY_STRING);
 
-        actionBar = getSupportActionBar();
-        actionBar.setTitle(place.getName());
-        actionBar.setSubtitle(place.getDistrict());
+        mActionBar = getSupportActionBar();
+        mActionBar.setTitle(mPlace.getName());
+        mActionBar.setSubtitle(mPlace.getDistrict());
 
         setContentView(R.layout.real_time_table_activity);
-		viewMain = (ViewGroup) findViewById(R.id.layout_platform_list);
+		mMainView = (ViewGroup) findViewById(R.id.layout_platform_list);
 		
 		//No connection layout
-		connectionDetector = new ConnectionDetector(this.getApplicationContext());
-		layoutNoConnection = (LinearLayout) findViewById(R.id.layout_no_internet);
-		Button buttonTryAgainConnection = (Button) layoutNoConnection.findViewById(R.id.button_try_again);
+		mConnectionDetector = new ConnectionDetector(this.getApplicationContext());
+		mNoConnectionLayout = (LinearLayout) findViewById(R.id.layout_no_internet);
+		Button buttonTryAgainConnection = (Button) mNoConnectionLayout.findViewById(R.id.button_try_again);
         buttonTryAgainConnection.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				addList(place);
+				addList(mPlace);
 			}
         });
 		
 		
-		layoutProgressBar = (RelativeLayout) findViewById(R.id.layout_realtimetable_progress);
+		mProgressBarLayout = (RelativeLayout) findViewById(R.id.layout_realtimetable_progress);
 
-		layoutNoRealTimeData = (RelativeLayout) findViewById(R.id.layout_no_realtime_data);
-		buttonNoRealTimeData = (Button) findViewById(R.id.button_no_realtime_data);
-		buttonNoRealTimeData.setOnClickListener(new OnClickListener(){
+		mNoRealTimeDataLayout = (RelativeLayout) findViewById(R.id.layout_no_realtime_data);
+		mNoRealTimeDataBackButton = (Button) findViewById(R.id.button_no_realtime_data);
+		mNoRealTimeDataBackButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				onBackPressed();
 			}
-        });
+		});
 		
-		realTimeMap = new TreeMap<String, Map<Integer, Map<String, LinkedList<RealTimeTableObjects>>>>();
+		mRealTimeMap = new TreeMap<String, Map<Integer, Map<String, LinkedList<RealTimeTableObjects>>>>();
 
-		layoutProgressBar.setVisibility(View.VISIBLE);
-		addList(place);
+		mProgressBarLayout.setVisibility(View.VISIBLE);
+		addList(mPlace);
 
-        swipeRealtimeTable = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_real_time_table);
-        swipeRealtimeTable.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if(mTask != null){
-                    mTask.cancel(true);
-                }
-                realTimeMap.clear();
-                addList(place);
-            }
-        });
+        mRealtimeTableRefreshSwipe = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_real_time_table);
+        mRealtimeTableRefreshSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				if (mTask != null) {
+					mTask.cancel(true);
+				}
+				mRealTimeMap.clear();
+				addList(mPlace);
+			}
+		});
 	}
 	
 	/*
@@ -175,21 +202,21 @@ public class RealTimeTableActivity extends ActionBarActivity {
 
     	@Override
     	protected void onPostExecute(JSONArray jArray) {
-    		layoutNoConnection.setVisibility(View.GONE);
-    		layoutProgressBar.setVisibility(View.GONE);
-    		layoutNoRealTimeData.setVisibility(View.GONE);
+    		mNoConnectionLayout.setVisibility(View.GONE);
+    		mProgressBarLayout.setVisibility(View.GONE);
+    		mNoRealTimeDataLayout.setVisibility(View.GONE);
     		
     		//Check connection
     		if(jArray == null){
-    			if(!connectionDetector.isConnectingToInternet()){
-    				layoutNoConnection.setVisibility(View.VISIBLE);
+    			if(!mConnectionDetector.isConnectingToInternet()){
+    				mNoConnectionLayout.setVisibility(View.VISIBLE);
     				return;
     			}
     		}
     		
     		//Check if any data
     		if(jArray.length() == 0){
-    			layoutNoRealTimeData.setVisibility(View.VISIBLE);
+    			mNoRealTimeDataLayout.setVisibility(View.VISIBLE);
     			return;
     		}
     		
@@ -199,12 +226,12 @@ public class RealTimeTableActivity extends ActionBarActivity {
     		View viewLines;
     		
     		// Iterate through the platforms
-    		layoutProgressBar.setVisibility(View.GONE);
-        	viewMain.removeAllViews();
-    		for (String platformKey : realTimeMap.keySet()) {
-    			Map<Integer, Map<String, LinkedList<RealTimeTableObjects>>> lineRefMap = realTimeMap.get(platformKey);
+    		mProgressBarLayout.setVisibility(View.GONE);
+        	mMainView.removeAllViews();
+    		for (String platformKey : mRealTimeMap.keySet()) {
+    			Map<Integer, Map<String, LinkedList<RealTimeTableObjects>>> lineRefMap = mRealTimeMap.get(platformKey);
     			
-    			viewPlatforms = LayoutInflater.from(thisActivity).inflate(R.layout.view_real_time_platforms, null);
+    			viewPlatforms = LayoutInflater.from(RealTimeTableActivity.this).inflate(R.layout.view_real_time_platforms, null);
         		TextView textPlatformHeader = (TextView) viewPlatforms.findViewById(R.id.text_platform_header);
         		textPlatformHeader.setText(Variables.PLATFORM + platformKey);
 
@@ -214,7 +241,7 @@ public class RealTimeTableActivity extends ActionBarActivity {
         		for (Integer lineRefKey : lineRefMap.keySet()){
         			Map<String, LinkedList<RealTimeTableObjects>> lineMap = lineRefMap.get(lineRefKey);
         			for (String lineKey : lineMap.keySet()) {
-	        			viewLines = LayoutInflater.from(thisActivity).inflate(R.layout.view_real_time_lines, null);
+	        			viewLines = LayoutInflater.from(RealTimeTableActivity.this).inflate(R.layout.view_real_time_lines, null);
 	        			
 	            		LinearLayout layoutTimeList = (LinearLayout) viewLines.findViewById(R.id.layout_time_list);
 	            		LinkedList<RealTimeTableObjects> RTTObjectsList = lineMap.get(lineKey);
@@ -232,7 +259,7 @@ public class RealTimeTableActivity extends ActionBarActivity {
 	            		for (int i = 0; i < RTTObjectsList.size(); i++) {
 	            			realTimeTableObject = RTTObjectsList.get(i);
 	            			
-	            			View viewRealTimeObject = LayoutInflater.from(thisActivity).inflate(R.layout.view_real_time_objects, null);
+	            			View viewRealTimeObject = LayoutInflater.from(RealTimeTableActivity.this).inflate(R.layout.view_real_time_objects, null);
 
 	            			
 	            			Button buttonRealTime = (Button) viewRealTimeObject.findViewById(R.id.button_real_time);
@@ -248,11 +275,11 @@ public class RealTimeTableActivity extends ActionBarActivity {
 	            			long waitingTime = departureTimeInMillis - nowInMillis;
 	            			if(waitingTime/(1000*60) == 0){
                                 // TODO Hardcode
-	            				buttonRealTime.setText(thisActivity.getResources().getString(R.string.now));
+	            				buttonRealTime.setText(RealTimeTableActivity.this.getResources().getString(R.string.now));
                                 buttonRealTime.setTextColor(getResources().getColor(R.color.redRealTime));
 	            			}
 	            			else if(waitingTime/(1000*60) < 10){
-	            				buttonRealTime.setText(Long.toString(waitingTime / (1000 * 60)) + " " + thisActivity.getResources().getString(R.string.min));
+	            				buttonRealTime.setText(Long.toString(waitingTime / (1000 * 60)) + " " + RealTimeTableActivity.this.getResources().getString(R.string.min));
                                 if(waitingTime/(1000*60) < 3){
                                     buttonRealTime.setTextColor(getResources().getColor(R.color.redRealTime));
                                 }
@@ -283,10 +310,10 @@ public class RealTimeTableActivity extends ActionBarActivity {
 	        		}
 
         		}
-                viewMain.addView(viewPlatforms);
+                mMainView.addView(viewPlatforms);
     		}
 
-            swipeRealtimeTable.setRefreshing(false);
+            mRealtimeTableRefreshSwipe.setRefreshing(false);
     	}
     	
     	private void parseJSONArrayToRealTimeObjects(JSONArray jArray){
@@ -315,12 +342,12 @@ public class RealTimeTableActivity extends ActionBarActivity {
     				
     				// Set in platform to table
     				Map<Integer, Map<String, LinkedList<RealTimeTableObjects>>> lineRefMap;
-    				if(realTimeMap.containsKey(platformName)){
-    					 lineRefMap = realTimeMap.get(platformName);
+    				if(mRealTimeMap.containsKey(platformName)){
+    					 lineRefMap = mRealTimeMap.get(platformName);
     				}
     				else{
-    					realTimeMap.put(platformName, new LinkedHashMap<Integer, Map<String, LinkedList<RealTimeTableObjects>>>());
-    					lineRefMap = realTimeMap.get(platformName);
+    					mRealTimeMap.put(platformName, new LinkedHashMap<Integer, Map<String, LinkedList<RealTimeTableObjects>>>());
+    					lineRefMap = mRealTimeMap.get(platformName);
     				}
     				
     				// Set in lineRef to table

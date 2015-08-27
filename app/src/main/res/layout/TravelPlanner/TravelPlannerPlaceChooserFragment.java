@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.reise.ruter.PlaceChooserFragment;
 import com.reise.ruter.R;
-import com.reise.ruter.data.Place;
+import com.reise.ruter.DataObjects.Place;
 
 /*
  * This class is the fragment part of the activity of the same name

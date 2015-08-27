@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 
 import com.reise.ruter.R;
 import com.reise.ruter.TravelPlanner.TravelPlannerPlaceChooserFragment.OnPlaceSelectListener;
-import com.reise.ruter.data.Place;
+import com.reise.ruter.DataObjects.Place;
 
 /*
  * Placer chooser dialog for start and destination in travel planner

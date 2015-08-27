@@ -28,11 +28,11 @@ import com.reise.ruter.R;
 import com.reise.ruter.TravelPlanner.TimePickerFragment;
 import com.reise.ruter.TravelPlanner.TravelPlannerPlaceChooserActivity;
 import com.reise.ruter.TravelPlanner.TripListActivity;
-import com.reise.ruter.data.Place;
-import com.reise.ruter.data.TravelSearchObject;
-import com.reise.ruter.support.AnimationSupport;
-import com.reise.ruter.support.TimeHolder;
-import com.reise.ruter.support.Variables;
+import com.reise.ruter.DataObjects.Place;
+import com.reise.ruter.DataObjects.TravelSearchObject;
+import com.reise.ruter.SupportUI.AnimationSupport;
+import com.reise.ruter.SupportClasses.TimeHolder;
+import com.reise.ruter.SupportClasses.Variables;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
