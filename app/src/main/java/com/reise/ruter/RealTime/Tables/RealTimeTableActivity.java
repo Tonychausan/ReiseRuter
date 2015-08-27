@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.reise.ruter.MainActivity;
 import com.reise.ruter.R;
 import com.reise.ruter.RealTime.RealTimeFragment;
 import com.reise.ruter.DataObjects.Place;
@@ -65,6 +66,12 @@ public class RealTimeTableActivity extends ActionBarActivity {
 	// Layout for refresh when scrolling past the top
     private SwipeRefreshLayout mRealtimeTableRefreshSwipe;
 
+	// The menu
+	private Menu menu;
+
+	// LineID
+	private int mLineID;
+
 	// platformKey -> lineRefKey -> lineKey -> time
 	Map<String, Map<Integer, Map<String, LinkedList<RealTimeTableObjects>>>> mRealTimeMap;
 	
@@ -81,6 +88,13 @@ public class RealTimeTableActivity extends ActionBarActivity {
 	    // Inflate the menu items for use in the action bar
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.real_time_table_activity, menu);
+
+		this.menu = menu;
+
+		if (db.isInFavorites(mPlace))
+			menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_action_important));
+		else
+			menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_action_not_important));
 
 	    return super.onCreateOptionsMenu(menu);
 	}
@@ -111,11 +125,21 @@ public class RealTimeTableActivity extends ActionBarActivity {
 				addList(mPlace);
 				break;
 			case R.id.action_favorite:
-				db.addFavorite(mPlace);
-				text = "Favorite";
+				if (db.isInFavorites(mPlace)) {
+					// If favorite, remove from favorite
+					text = "Remove favorite";
+					db.removeFavorit(mPlace);
+					menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_action_not_important));
+				}
+				else {
+					// If not favorite, remove from add as favorite
+					text = "Add Favorite";
+					db.addFavorite(mPlace);
+					menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_action_important));
+				}
+
 				toast = Toast.makeText(context, text, duration);
 				toast.show();
-				break;
         }
 
 	    return super.onOptionsItemSelected(item);
@@ -237,9 +261,10 @@ public class RealTimeTableActivity extends ActionBarActivity {
 
                 ViewGroup viewLineList = (ViewGroup) viewPlatforms.findViewById(R.id.layout_line_list);
 
-
+				// lineRefKey = LineID
         		for (Integer lineRefKey : lineRefMap.keySet()){
         			Map<String, LinkedList<RealTimeTableObjects>> lineMap = lineRefMap.get(lineRefKey);
+					mLineID = lineRefKey;
         			for (String lineKey : lineMap.keySet()) {
 	        			viewLines = LayoutInflater.from(RealTimeTableActivity.this).inflate(R.layout.view_real_time_lines, null);
 	        			
@@ -262,7 +287,7 @@ public class RealTimeTableActivity extends ActionBarActivity {
 	            			View viewRealTimeObject = LayoutInflater.from(RealTimeTableActivity.this).inflate(R.layout.view_real_time_objects, null);
 
 	            			
-	            			Button buttonRealTime = (Button) viewRealTimeObject.findViewById(R.id.button_real_time);
+	            			Button RealTimeButton = (Button) viewRealTimeObject.findViewById(R.id.button_real_time);
 	            			TextView textOrginTime = (TextView) viewRealTimeObject.findViewById(R.id.text_orgin_time);
 
 	            			//Add button text
@@ -275,20 +300,30 @@ public class RealTimeTableActivity extends ActionBarActivity {
 	            			long waitingTime = departureTimeInMillis - nowInMillis;
 	            			if(waitingTime/(1000*60) == 0){
                                 // TODO Hardcode
-	            				buttonRealTime.setText(RealTimeTableActivity.this.getResources().getString(R.string.now));
-                                buttonRealTime.setTextColor(getResources().getColor(R.color.redRealTime));
+	            				RealTimeButton.setText(RealTimeTableActivity.this.getResources().getString(R.string.now));
+                                RealTimeButton.setTextColor(getResources().getColor(R.color.redRealTime));
 	            			}
 	            			else if(waitingTime/(1000*60) < 10){
-	            				buttonRealTime.setText(Long.toString(waitingTime / (1000 * 60)) + " " + RealTimeTableActivity.this.getResources().getString(R.string.min));
+	            				RealTimeButton.setText(Long.toString(waitingTime / (1000 * 60)) + " " + RealTimeTableActivity.this.getResources().getString(R.string.min));
                                 if(waitingTime/(1000*60) < 3){
-                                    buttonRealTime.setTextColor(getResources().getColor(R.color.redRealTime));
+                                    RealTimeButton.setTextColor(getResources().getColor(R.color.redRealTime));
                                 }
 	            			}
 	            			else{
 		            			int hour = realTime.get(Calendar.HOUR_OF_DAY);
 		            			int minute = realTime.get(Calendar.MINUTE);
-		            			buttonRealTime.setText(String.format("%02d", hour) + ":" + String.format("%02d", minute));
+		            			RealTimeButton.setText(String.format("%02d", hour) + ":" + String.format("%02d", minute));
 	            			}
+
+							// Click listener
+							// TODO add the listerner
+							RealTimeButton.setOnClickListener(new OnClickListener() {
+								@Override
+								public void onClick(View v) {
+									Intent i = new Intent(RealTimeTableActivity.this, MainActivity.class);
+									startActivity(i);
+								}
+							});
 	            			
 	            			// Add orgin time to text
 	            			Calendar orginTime = GregorianCalendar.getInstance(); // creates a new calendar instance

@@ -79,7 +79,12 @@ public class ReiseRuterDbHelper extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-    public void removeFavorit(int id){
+    public void removeFavorit(Place place){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        String selectQuery = "delete from " + TABLE_FAVORITES + " where " + TableFavorites.KEY_ID + "='" + place.getId() + "'";
+        db.execSQL(selectQuery);
     }
 
     public List<Place> getFavorites() {
@@ -103,9 +108,22 @@ public class ReiseRuterDbHelper extends SQLiteOpenHelper {
                 favoriteList.add(place);
             } while (cursor.moveToNext());
         }
-
-        // return contact list
+        cursor.close();
         return favoriteList;
+    }
+
+    public Boolean isInFavorites(Place place){
+        String selectQuery = "Select * from " + TABLE_FAVORITES + " where " + TableFavorites.KEY_ID + " = " + place.getId();
+
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
     }
     //END FAVORITE TABLE
 

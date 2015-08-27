@@ -361,8 +361,6 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 			}
 			else if(mShowListType == ListType.FAVORITE){
 				// TODO add favorite alternative
-
-
 			}
 
     		return jArrayPlaces;
