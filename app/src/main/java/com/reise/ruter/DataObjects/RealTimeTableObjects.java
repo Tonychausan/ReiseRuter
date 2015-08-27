@@ -1,10 +1,13 @@
 package com.reise.ruter.DataObjects;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class RealTimeTableObjects {
+public class RealTimeTableObjects implements Parcelable{
 	private String destinationName;
 	private String departurePlatformName;
 	private String lineRef;
@@ -13,7 +16,33 @@ public class RealTimeTableObjects {
 	private long aimedDepartureTime;
 	private String lineColor;
 	private String publishedLineName;
-	
+
+
+	public RealTimeTableObjects(){
+	}
+
+	protected RealTimeTableObjects(Parcel in) {
+		destinationName = in.readString();
+		departurePlatformName = in.readString();
+		lineRef = in.readString();
+		destinationRef = in.readInt();
+		expectedDepartureTime = in.readLong();
+		aimedDepartureTime = in.readLong();
+		lineColor = in.readString();
+		publishedLineName = in.readString();
+	}
+
+	public static final Creator<RealTimeTableObjects> CREATOR = new Creator<RealTimeTableObjects>() {
+		@Override
+		public RealTimeTableObjects createFromParcel(Parcel in) {
+			return new RealTimeTableObjects(in);
+		}
+
+		@Override
+		public RealTimeTableObjects[] newArray(int size) {
+			return new RealTimeTableObjects[size];
+		}
+	};
 
 	public String getDeparturePlatformName() {
 		return departurePlatformName;
@@ -91,5 +120,21 @@ public class RealTimeTableObjects {
 		this.aimedDepartureTime = stringToDate(aimedDepartureTime).getTime();
 	}
 
-	
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(destinationName);
+		dest.writeString(departurePlatformName);
+		dest.writeString(lineRef);
+		dest.writeInt(destinationRef);
+		dest.writeLong(expectedDepartureTime);
+		dest.writeLong(aimedDepartureTime);
+		dest.writeString(lineColor);
+		dest.writeString(publishedLineName);
+	}
 }

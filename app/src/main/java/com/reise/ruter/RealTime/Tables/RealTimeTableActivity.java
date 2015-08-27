@@ -21,7 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.reise.ruter.MainActivity;
+import com.reise.ruter.LineStops;
 import com.reise.ruter.R;
 import com.reise.ruter.RealTime.RealTimeFragment;
 import com.reise.ruter.DataObjects.Place;
@@ -44,9 +44,13 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class RealTimeTableActivity extends ActionBarActivity {
+	public static final String KEY_STRING = "RealTimeTableActivity";
 
 	// Place to fetch REAL_TIME data from
 	private Place mPlace;
+
+	// Realtime object
+	private RealTimeTableObjects mRealTimeTableObject;
 
     private ActionBar mActionBar;
 
@@ -271,18 +275,18 @@ public class RealTimeTableActivity extends ActionBarActivity {
 	            		LinearLayout layoutTimeList = (LinearLayout) viewLines.findViewById(R.id.layout_time_list);
 	            		LinkedList<RealTimeTableObjects> RTTObjectsList = lineMap.get(lineKey);
 	            		
-	            		RealTimeTableObjects realTimeTableObject = RTTObjectsList.getFirst();
+	            		mRealTimeTableObject = RTTObjectsList.getFirst();
 	            		// Set Lineref
 	            		TextView textLineRef = (TextView) viewLines.findViewById(R.id.text_line_ref);
-	            		textLineRef.setText(realTimeTableObject.getPublishedLineName());
+	            		textLineRef.setText(mRealTimeTableObject.getPublishedLineName());
 	            		
 	            		//Set LineName
 	            		TextView textLineName = (TextView) viewLines.findViewById(R.id.text_line_name);
-	            		textLineName.setText(realTimeTableObject.getDestinationName());
+	            		textLineName.setText(mRealTimeTableObject.getDestinationName());
 	            		
 	            		// Set time list
 	            		for (int i = 0; i < RTTObjectsList.size(); i++) {
-	            			realTimeTableObject = RTTObjectsList.get(i);
+	            			mRealTimeTableObject = RTTObjectsList.get(i);
 	            			
 	            			View viewRealTimeObject = LayoutInflater.from(RealTimeTableActivity.this).inflate(R.layout.view_real_time_objects, null);
 
@@ -292,7 +296,7 @@ public class RealTimeTableActivity extends ActionBarActivity {
 
 	            			//Add button text
 	            			Calendar realTime = GregorianCalendar.getInstance(); // creates a new calendar instance
-	            			realTime.setTime(realTimeTableObject.getExpectedDepartureTime());   // assigns calendar to given date 
+	            			realTime.setTime(mRealTimeTableObject.getExpectedDepartureTime());   // assigns calendar to given date
 	            			
 	            			long departureTimeInMillis = realTime.getTimeInMillis();
 	            			long nowInMillis =  GregorianCalendar.getInstance().getTimeInMillis();
@@ -320,14 +324,15 @@ public class RealTimeTableActivity extends ActionBarActivity {
 							RealTimeButton.setOnClickListener(new OnClickListener() {
 								@Override
 								public void onClick(View v) {
-									Intent i = new Intent(RealTimeTableActivity.this, MainActivity.class);
+									Intent i = new Intent(RealTimeTableActivity.this, LineStops.class);
+									i.putExtra(KEY_STRING, mRealTimeTableObject);
 									startActivity(i);
 								}
 							});
 	            			
 	            			// Add orgin time to text
 	            			Calendar orginTime = GregorianCalendar.getInstance(); // creates a new calendar instance
-	            			orginTime.setTime(realTimeTableObject.getAimedDepartureTime());   // assigns calendar to given date 
+	            			orginTime.setTime(mRealTimeTableObject.getAimedDepartureTime());   // assigns calendar to given date
 	            			
 		            		int hour = orginTime.get(Calendar.HOUR_OF_DAY);
 		            		int minute = orginTime.get(Calendar.MINUTE);
@@ -335,7 +340,7 @@ public class RealTimeTableActivity extends ActionBarActivity {
 	            			
 	            			layoutTimeList.addView(viewRealTimeObject);
                             if(i == 0){
-                                String colorString = realTimeTableObject.getLineColor();
+                                String colorString = mRealTimeTableObject.getLineColor();
 
                                 textLineRef.setBackgroundColor(Color.parseColor("#" + colorString));
                                 textLineName.setBackgroundColor(Color.parseColor("#" + colorString));

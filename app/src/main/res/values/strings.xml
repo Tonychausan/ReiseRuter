@@ -30,12 +30,19 @@
     <string name="no_connection_info">Please check your connection or find a location with better coverage, and try again</string>
     <string name="no_connection_button">Try again</string>
 
+    <!-- Activity Titles-->
+    <string name="title_activity_choose_place">ChoosePlace</string>
+    <string name="title_activity_realtime">RealTime</string>
+    <string name="title_activity_linestop">Line Stop List</string>>
 
 
 
 
+    <!--
 
-    <!-- String to edit -->
+                    String to edit
+
+    -->
     <string name="action_settings">Settings</string>
 
     <!-- Travel Planner -->
@@ -95,7 +102,6 @@
         <item>Train</item>
     </string-array>
 
-    <string name="title_activity_choose_place">ChoosePlace</string>
-    <string name="title_activity_realtime">RealTime!</string>
+
 
 </resources>
