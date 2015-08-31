@@ -3,6 +3,12 @@ package com.reise.ruter.DataObjects;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.reise.ruter.SupportClasses.Variables.PlaceField;
+import com.reise.ruter.SupportClasses.Variables.PlaceType;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Place implements Parcelable {
 	private int id;
 	private String name;
@@ -10,14 +16,42 @@ public class Place implements Parcelable {
 	private String placeType;
 	private Object[] stops;
 	private boolean realTimeStop;
-	
+
+	private int X;
+	private int Y;
+
+	private int zone;
+
+	public Place(){
+		setRealTimeStop(false);
+		stops = null;
+	}
+
 	public Place(int id, String name, String district, String placeType){
+		this();
 		setId(id);
 		setName(name);
 		setDistrict(district);
 		setPlaceType(placeType);
-		setRealTimeStop(false);
-		stops = null;
+	}
+
+	public Place(JSONObject jPlace) throws JSONException {
+		this(jPlace.getInt(PlaceField.ID),
+				jPlace.getString(PlaceField.NAME),
+				jPlace.getString(PlaceField.DISTRICT),
+				jPlace.getString(PlaceField.PLACE_TYPE));
+
+		if(placeType == PlaceType.AREA){
+			JSONObject jCoor = jPlace.getJSONObject(PlaceField.CENTER);
+			X = jCoor.getInt(PlaceField.X);
+			Y = jCoor.getInt(PlaceField.Y);
+
+		}
+		else if(placeType == PlaceType.STOP){
+			X = jPlace.getInt(PlaceField.X);
+			Y = jPlace.getInt(PlaceField.Y);
+			zone = jPlace.getInt(PlaceField.ZONE);
+		}
 	}
 	
 	public Place(Parcel in) {
@@ -60,6 +94,15 @@ public class Place implements Parcelable {
 
 	public void setStops(Place[] stops) {
 		this.stops = stops;
+	}
+
+
+	public int getX() {
+		return X;
+	}
+
+	public int getY() {
+		return Y;
 	}
 	
 	@Override

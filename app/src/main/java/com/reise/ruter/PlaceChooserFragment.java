@@ -395,7 +395,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 		    		try {
 		    			for(int i = 0; i < jArray.length(); i++){
 		    				json = jArray.getJSONObject(i);
-		    				place = getPlace(json);
+		    				place = new Place(json);
 		    				
 		    				// If AREA get all stop in area
 		    				if(place.getPlaceType().equals(PlaceType.AREA)){
@@ -406,7 +406,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 		    					Place stop;
 		    					for(int k = 0; k < nStops; k++){
 		    						jObjStop = jArrayStops.getJSONObject(k);
-		    						stop = getPlace(jObjStop);
+		    						stop = new Place(jObjStop);
 		    						stops[k] = stop;
 		    					}
 		    					place.setStops(stops);
@@ -444,13 +444,6 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 	    		}
     		}
     		mProgressBar.setVisibility(View.GONE);
-    	}
-    	
-    	private Place getPlace(JSONObject jObject) throws JSONException {
-    		return new Place(jObject.getInt(PlaceField.ID),
-					jObject.getString(PlaceField.NAME),
-					jObject.getString(PlaceField.DISTRICT),
-					jObject.getString(PlaceField.PLACE_TYPE));
     	}
     }
 

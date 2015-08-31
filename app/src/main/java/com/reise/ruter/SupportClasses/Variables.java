@@ -25,6 +25,10 @@ public class Variables {
 		public static String DISTRICT = "District";
 		public static String PLACE_TYPE = "PlaceType";
 		public static String STOPS = "Stops";
+		public static String CENTER = "Center";
+			public static String X = "X";
+			public static String Y = "Y";
+		public static String ZONE = "Zone";
 		public static String REAL_TIME_STOP = "RealTimeStop";
 	}
 	

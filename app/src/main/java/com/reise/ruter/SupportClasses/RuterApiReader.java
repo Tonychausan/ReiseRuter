@@ -56,6 +56,13 @@ public class RuterApiReader {
 		JSONArray jArray = jParser.getJSONArrayFromUrl(url);
 		return jArray;
 	}
+
+	public static JSONArray GetStopsByLineID(int id){
+		JSONParser jParser = new JSONParser();
+		String url = "http://reisapi.ruter.no/Line/GetStopsByLineID/" + id + "?json=true";
+		JSONArray jArray = jParser.getJSONArrayFromUrl(url);
+		return jArray;
+	}
 	
 	
 	
