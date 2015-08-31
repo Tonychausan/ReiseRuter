@@ -16,9 +16,10 @@ public class RealTimeTableObject implements Parcelable{
 	private long aimedDepartureTime;
 	private String lineColor;
 	private String publishedLineName;
-
+	private Object[] deviations;
 
 	public RealTimeTableObject(){
+		deviations = null;
 	}
 
 	protected RealTimeTableObject(Parcel in) {
@@ -30,6 +31,7 @@ public class RealTimeTableObject implements Parcelable{
 		aimedDepartureTime = in.readLong();
 		lineColor = in.readString();
 		publishedLineName = in.readString();
+		deviations = in.readArray(Deviation.class.getClassLoader());
 	}
 
 	public static final Creator<RealTimeTableObject> CREATOR = new Creator<RealTimeTableObject>() {
@@ -121,6 +123,15 @@ public class RealTimeTableObject implements Parcelable{
 	}
 
 
+	public Object[] getDeviations() {
+		return deviations;
+	}
+
+	public void setDeviations(Deviation[] deviations) {
+		this.deviations = deviations;
+	}
+
+
 	@Override
 	public int describeContents() {
 		return 0;
@@ -136,5 +147,6 @@ public class RealTimeTableObject implements Parcelable{
 		dest.writeLong(aimedDepartureTime);
 		dest.writeString(lineColor);
 		dest.writeString(publishedLineName);
+		dest.writeArray(deviations);
 	}
 }

@@ -33,9 +33,8 @@ public class Variables {
 		public static String EXTENSIONS = "Extensions";
 			public static String LINE_COLOUR = "LineColour";
 			public static String DEVIATIONS = "Deviations";
-				public static String DEVIATION = "Deviation";
-					public static String DEVIATION_HEADER = "Header";
-					public static String DEVIATION_ID = "ID";
+				public static String DEVIATION_HEADER = "Header";
+				public static String DEVIATION_ID = "ID";
 
 		public static String MONITORED_VEHICLE_JOURNEY = "MonitoredVehicleJourney";
 			public static String DESTINATION_NAME = "DestinationName";

@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.reise.ruter.DataObjects.Deviation;
 import com.reise.ruter.LineStops;
 import com.reise.ruter.R;
 import com.reise.ruter.RealTime.RealTimeFragment;
@@ -36,6 +37,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -374,8 +376,21 @@ public class RealTimeTableActivity extends ActionBarActivity {
     				com.reise.ruter.DataObjects.RealTimeTableObject RTTObject = new RealTimeTableObject();
     				JSONObject json = jArray.getJSONObject(i);
     				
-    				JSONObject Extensions = json.getJSONObject(DeparturesField.EXTENSIONS);
-    				RTTObject.setLineColor(Extensions.getString(DeparturesField.LINE_COLOUR));
+    				JSONObject extensions = json.getJSONObject(DeparturesField.EXTENSIONS);
+    				RTTObject.setLineColor(extensions.getString(DeparturesField.LINE_COLOUR));
+
+					JSONArray jArrayDeviations = extensions.getJSONArray(DeparturesField.DEVIATIONS);
+					int nDeviations = jArrayDeviations.length();
+					Deviation[] deviations = new Deviation[nDeviations];
+					Deviation deviation;
+					for(int j = 0; j < jArrayDeviations.length(); j++){
+						deviation = new Deviation();
+						JSONObject jObjDeviation = jArrayDeviations.getJSONObject(j);
+						deviation.setId(jObjDeviation.getInt(DeparturesField.DEVIATION_ID));
+						deviation.setHeader(jObjDeviation.getString(DeparturesField.DEVIATION_HEADER));
+						deviations[j] = deviation;
+					}
+					RTTObject.setDeviations(deviations);
     				
     				JSONObject MonitoredVehicleJourney = json.getJSONObject(DeparturesField.MONITORED_VEHICLE_JOURNEY);
     				RTTObject.setLineRef(MonitoredVehicleJourney.getString(DeparturesField.LINE_REF));

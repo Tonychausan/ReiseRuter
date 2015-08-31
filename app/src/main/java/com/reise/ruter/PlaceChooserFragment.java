@@ -404,7 +404,6 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 		    					JSONObject jObjStop;
 		    					Place[] stops = new Place[nStops];
 		    					Place stop;
-		    					
 		    					for(int k = 0; k < nStops; k++){
 		    						jObjStop = jArrayStops.getJSONObject(k);
 		    						stop = getPlace(jObjStop);

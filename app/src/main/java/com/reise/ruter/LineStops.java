@@ -1,3 +1,5 @@
+//TODO to get deviations http://devi.trafikanten.no/devirest.svc/json/deviationids/{ID}
+
 package com.reise.ruter;
 
 import android.content.Intent;
@@ -7,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.reise.ruter.DataObjects.Deviation;
 import com.reise.ruter.DataObjects.RealTimeTableObject;
 import com.reise.ruter.RealTime.Tables.RealTimeTableActivity;
 
@@ -25,8 +28,11 @@ public class LineStops extends ActionBarActivity {
 		mRealTimeObj = intent.getParcelableExtra(RealTimeTableActivity.KEY_STRING);
 
         TextView text = (TextView) findViewById(R.id.textView);
-        text.setText(mRealTimeObj.getDestinationName());
-
+        if (mRealTimeObj.getDeviations().length == 0)
+            text.setText(mRealTimeObj.getDestinationName());
+        else {
+            text.setText(((Deviation) mRealTimeObj.getDeviations()[0]).getHeader());
+        }
 
     }
 
