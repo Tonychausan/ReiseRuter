@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.reise.ruter.SupportClasses.Variables.PlaceField;
 import com.reise.ruter.SupportClasses.Variables.PlaceType;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,6 +47,17 @@ public class Place implements Parcelable {
 			X = jCoor.getInt(PlaceField.X);
 			Y = jCoor.getInt(PlaceField.Y);
 
+			JSONArray jArrayStops = jPlace.getJSONArray(PlaceField.STOPS);
+			int nStops = jArrayStops.length();
+			JSONObject jObjStop;
+			stops = new Place[nStops];
+			Place stop;
+			for(int k = 0; k < nStops; k++){
+				jObjStop = jArrayStops.getJSONObject(k);
+				stop = new Place(jObjStop);
+				stops[k] = stop;
+			}
+
 		}
 		else if(placeType == PlaceType.STOP){
 			X = jPlace.getInt(PlaceField.X);
@@ -61,6 +73,10 @@ public class Place implements Parcelable {
 		placeType = in.readString();
 		stops = in.readArray(Place.class.getClassLoader());
 		realTimeStop = in.readByte() != 0;
+
+		X = in.readInt();
+		Y = in.readInt();
+		zone = in.readInt();
 	}
 
 	public int getId() {
@@ -96,13 +112,16 @@ public class Place implements Parcelable {
 		this.stops = stops;
 	}
 
-
 	public int getX() {
 		return X;
 	}
 
 	public int getY() {
 		return Y;
+	}
+
+	public int getZone() {
+		return zone;
 	}
 	
 	@Override
@@ -117,7 +136,11 @@ public class Place implements Parcelable {
 		dest.writeString(district);
 		dest.writeString(placeType);
 		dest.writeArray(stops);
-		dest.writeByte((byte) (realTimeStop ? 1 : 0)); 
+		dest.writeByte((byte) (realTimeStop ? 1 : 0));
+
+		dest.writeInt(X);
+		dest.writeInt(Y);
+		dest.writeInt(zone);
 	}
 	
 
