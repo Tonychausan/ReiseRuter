@@ -34,104 +34,6 @@ public class RealTimeTableObject implements Parcelable{
 		deviations = in.readArray(Deviation.class.getClassLoader());
 	}
 
-	public static final Creator<RealTimeTableObject> CREATOR = new Creator<RealTimeTableObject>() {
-		@Override
-		public RealTimeTableObject createFromParcel(Parcel in) {
-			return new RealTimeTableObject(in);
-		}
-
-		@Override
-		public RealTimeTableObject[] newArray(int size) {
-			return new RealTimeTableObject[size];
-		}
-	};
-
-	public String getDeparturePlatformName() {
-		return departurePlatformName;
-	}
-
-	public void setDeparturePlatformName(String departurePlatformName) {
-		this.departurePlatformName = departurePlatformName;
-	}
-
-	public String getDestinationName() {
-		return destinationName;
-	}
-
-	public void setDestinationName(String destinationName) {
-		this.destinationName = destinationName;
-	}
-
-	public String getLineRef() {
-		return lineRef;
-	}
-
-	public void setLineRef(String lineRef) {
-		this.lineRef = lineRef;
-	}
-
-	public int getDestinationRef() {
-		return destinationRef;
-	}
-
-	public void setDestinationRef(int destinationRef) {
-		this.destinationRef = destinationRef;
-	}
-
-	public Date getExpectedDepartureTime() {
-		return new Date(expectedDepartureTime);
-	}
-
-	public void setExpectedDepartureTime(String expectedDepartureTime) {
-		this.expectedDepartureTime = stringToDate(expectedDepartureTime).getTime();
-		
-	}
-	
-	public String getLineColor() {
-		return lineColor;
-	}
-
-	public void setLineColor(String lineColor) {
-		this.lineColor = lineColor;
-	}
-	
-	public Date stringToDate(String dateInString){
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-		Date date = null;
-		try {
-			date = formatter.parse(dateInString.substring(0, 21));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return date;
-	}
-
-	public String getPublishedLineName() {
-		return publishedLineName;
-	}
-
-	public void setPublishedLineName(String publishedLineName) {
-		this.publishedLineName = publishedLineName;
-	}
-
-	public Date getAimedDepartureTime() {
-		return new Date(aimedDepartureTime);
-	}
-
-	public void setAimedDepartureTime(String aimedDepartureTime) {
-		this.aimedDepartureTime = stringToDate(aimedDepartureTime).getTime();
-	}
-
-
-	public Object[] getDeviations() {
-		return deviations;
-	}
-
-	public void setDeviations(Deviation[] deviations) {
-		this.deviations = deviations;
-	}
-
-
 	@Override
 	public int describeContents() {
 		return 0;
@@ -149,4 +51,97 @@ public class RealTimeTableObject implements Parcelable{
 		dest.writeString(publishedLineName);
 		dest.writeArray(deviations);
 	}
+
+	public static final Creator<RealTimeTableObject> CREATOR = new Creator<RealTimeTableObject>() {
+		@Override
+		public RealTimeTableObject createFromParcel(Parcel in) {
+			return new RealTimeTableObject(in);
+		}
+
+		@Override
+		public RealTimeTableObject[] newArray(int size) {
+			return new RealTimeTableObject[size];
+		}
+	};
+
+
+	// Getter and setters
+	public String getDestinationName() {
+		return destinationName;
+	}
+	public void setDestinationName(String destinationName) {
+		this.destinationName = destinationName;
+	}
+
+
+
+	public String getDeparturePlatformName() {
+		return departurePlatformName;
+	}
+	public void setDeparturePlatformName(String departurePlatformName) {
+		this.departurePlatformName = departurePlatformName;
+	}
+
+	public String getLineRef() {
+		return lineRef;
+	}
+	public void setLineRef(String lineRef) {
+		this.lineRef = lineRef;
+	}
+
+	public int getDestinationRef() {
+		return destinationRef;
+	}
+	public void setDestinationRef(int destinationRef) {
+		this.destinationRef = destinationRef;
+	}
+
+	public Date getExpectedDepartureTime() {
+		return new Date(expectedDepartureTime);
+	}
+	public void setExpectedDepartureTime(String expectedDepartureTime) {
+		this.expectedDepartureTime = stringToDate(expectedDepartureTime).getTime();
+	}
+	
+	public String getLineColor() {
+		return lineColor;
+	}
+	public void setLineColor(String lineColor) {
+		this.lineColor = lineColor;
+	}
+
+	public String getPublishedLineName() {
+		return publishedLineName;
+	}
+	public void setPublishedLineName(String publishedLineName) {
+		this.publishedLineName = publishedLineName;
+	}
+
+	public Date getAimedDepartureTime() {
+		return new Date(aimedDepartureTime);
+	}
+	public void setAimedDepartureTime(String aimedDepartureTime) {
+		this.aimedDepartureTime = stringToDate(aimedDepartureTime).getTime();
+	}
+
+
+	public Object[] getDeviations() {
+		return deviations;
+	}
+	public void setDeviations(Deviation[] deviations) {
+		this.deviations = deviations;
+	}
+
+	public Date stringToDate(String dateInString){
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		Date date = null;
+		try {
+			date = formatter.parse(dateInString.substring(0, 21));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return date;
+	}
+
+
 }

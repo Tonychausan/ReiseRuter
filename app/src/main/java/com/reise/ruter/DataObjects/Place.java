@@ -42,7 +42,7 @@ public class Place implements Parcelable {
 				jPlace.getString(PlaceField.DISTRICT),
 				jPlace.getString(PlaceField.PLACE_TYPE));
 
-		if(placeType == PlaceType.AREA){
+		if(placeType.equals(PlaceType.AREA)){
 			JSONObject jCoor = jPlace.getJSONObject(PlaceField.CENTER);
 			X = jCoor.getInt(PlaceField.X);
 			Y = jCoor.getInt(PlaceField.Y);
@@ -59,7 +59,7 @@ public class Place implements Parcelable {
 			}
 
 		}
-		else if(placeType == PlaceType.STOP){
+		else if(placeType.equals(PlaceType.STOP)){
 			X = jPlace.getInt(PlaceField.X);
 			Y = jPlace.getInt(PlaceField.Y);
 			zone = jPlace.getInt(PlaceField.ZONE);
