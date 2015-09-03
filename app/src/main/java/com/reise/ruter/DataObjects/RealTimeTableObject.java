@@ -3,6 +3,12 @@ package com.reise.ruter.DataObjects;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.reise.ruter.SupportClasses.Variables.DeparturesField;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,6 +26,37 @@ public class RealTimeTableObject implements Parcelable{
 
 	public RealTimeTableObject(){
 		deviations = null;
+	}
+
+	public RealTimeTableObject(JSONObject jObj) throws JSONException {
+		JSONObject extensions = jObj.getJSONObject(DeparturesField.EXTENSIONS);
+		setLineColor(extensions.getString(DeparturesField.LINE_COLOUR));
+
+		JSONArray jArrayDeviations = extensions.getJSONArray(DeparturesField.DEVIATIONS);
+		int nDeviations = jArrayDeviations.length();
+		Deviation[] deviations = new Deviation[nDeviations];
+		Deviation deviation;
+		for(int j = 0; j < jArrayDeviations.length(); j++){
+			deviation = new Deviation();
+			JSONObject jObjDeviation = jArrayDeviations.getJSONObject(j);
+			deviation.setId(jObjDeviation.getInt(DeparturesField.DEVIATION_ID));
+			deviation.setHeader(jObjDeviation.getString(DeparturesField.DEVIATION_HEADER));
+			deviations[j] = deviation;
+		}
+		setDeviations(deviations);
+
+		JSONObject MonitoredVehicleJourney = jObj.getJSONObject(DeparturesField.MONITORED_VEHICLE_JOURNEY);
+		setLineRef(MonitoredVehicleJourney.getString(DeparturesField.LINE_REF));
+		setDestinationName(MonitoredVehicleJourney.getString(DeparturesField.DESTINATION_NAME));
+		setDestinationRef(MonitoredVehicleJourney.getInt(DeparturesField.DESTINATION_REF));
+		setPublishedLineName(MonitoredVehicleJourney.getString(DeparturesField.PUBLISHED_LINE_NAME));
+
+		JSONObject MonitoredCall = MonitoredVehicleJourney.getJSONObject(DeparturesField.MONITORED_CALL);
+		setDeparturePlatformName(MonitoredCall.getString(DeparturesField.DEPARTURE_PLATFORM_NAME));
+		setExpectedDepartureTime(MonitoredCall.getString(DeparturesField.EXPECTED_DEPARTURE_TIME));
+		setAimedDepartureTime(MonitoredCall.getString(DeparturesField.AIMED_DEPARTURE_TIME));
+
+
 	}
 
 	protected RealTimeTableObject(Parcel in) {
@@ -65,6 +102,8 @@ public class RealTimeTableObject implements Parcelable{
 	};
 
 
+
+
 	// Getter and setters
 	public String getDestinationName() {
 		return destinationName;
@@ -72,8 +111,6 @@ public class RealTimeTableObject implements Parcelable{
 	public void setDestinationName(String destinationName) {
 		this.destinationName = destinationName;
 	}
-
-
 
 	public String getDeparturePlatformName() {
 		return departurePlatformName;
@@ -124,7 +161,6 @@ public class RealTimeTableObject implements Parcelable{
 		this.aimedDepartureTime = stringToDate(aimedDepartureTime).getTime();
 	}
 
-
 	public Object[] getDeviations() {
 		return deviations;
 	}
@@ -142,6 +178,4 @@ public class RealTimeTableObject implements Parcelable{
 		}
 		return date;
 	}
-
-
 }

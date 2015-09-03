@@ -21,7 +21,7 @@ public class Place implements Parcelable {
 	private int X;
 	private int Y;
 
-	private int zone;
+	private String zone;
 
 	public Place(){
 		setRealTimeStop(false);
@@ -62,7 +62,7 @@ public class Place implements Parcelable {
 		else if(placeType.equals(PlaceType.STOP)){
 			X = jPlace.getInt(PlaceField.X);
 			Y = jPlace.getInt(PlaceField.Y);
-			zone = jPlace.getInt(PlaceField.ZONE);
+			zone = jPlace.getString(PlaceField.ZONE);
 		}
 	}
 	
@@ -76,7 +76,7 @@ public class Place implements Parcelable {
 
 		X = in.readInt();
 		Y = in.readInt();
-		zone = in.readInt();
+		zone = in.readString();
 	}
 
 	public int getId() {
@@ -120,7 +120,7 @@ public class Place implements Parcelable {
 		return Y;
 	}
 
-	public int getZone() {
+	public String getZone() {
 		return zone;
 	}
 	
@@ -140,7 +140,7 @@ public class Place implements Parcelable {
 
 		dest.writeInt(X);
 		dest.writeInt(Y);
-		dest.writeInt(zone);
+		dest.writeString(zone);
 	}
 	
 

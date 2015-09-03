@@ -3,21 +3,40 @@
 package com.reise.ruter;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.reise.ruter.DataObjects.Deviation;
+import com.reise.ruter.DataObjects.Place;
 import com.reise.ruter.DataObjects.RealTimeTableObject;
 import com.reise.ruter.RealTime.Tables.RealTimeTableActivity;
+import com.reise.ruter.SupportClasses.CoordinateConversion;
+import com.reise.ruter.SupportClasses.RuterApiReader;
+import com.reise.ruter.SupportClasses.Variables.PlaceType;
+import com.reise.ruter.SupportClasses.Variables.PlaceField;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.ListIterator;
 
 /**
  * Created by Tony Chau on 27/08/2015.
  */
 public class LineStops extends ActionBarActivity {
-    RealTimeTableObject mRealTimeObj;
+    private RealTimeTableObject mRealTimeObj;
+    private ArrayList<Place> mStops;
+    private TextView mTextView;
+    private ActionBar mActionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +46,13 @@ public class LineStops extends ActionBarActivity {
         Intent intent = getIntent();
 		mRealTimeObj = intent.getParcelableExtra(RealTimeTableActivity.KEY_STRING);
 
-        TextView text = (TextView) findViewById(R.id.textView);
-        if (mRealTimeObj.getDeviations().length == 0)
-            text.setText(mRealTimeObj.getDestinationName());
-        else {
-            text.setText(((Deviation) mRealTimeObj.getDeviations()[0]).getHeader());
-        }
+        mActionBar = getSupportActionBar();
+        mActionBar.setTitle(mRealTimeObj.getLineRef() + " " +mRealTimeObj.getDestinationName());
 
+        mTextView = (TextView) findViewById(R.id.textView);
+        mStops = new ArrayList();
+
+        new SyncTask().execute();
     }
 
     @Override
@@ -54,6 +73,50 @@ public class LineStops extends ActionBarActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private class SyncTask extends AsyncTask<String, String, JSONArray> {
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected JSONArray doInBackground(String... args) {
+            //JSONArray jArrayStops = RuterApiReader.GetStopsByLineID(mRealTimeObj.getLineRef());
+            JSONArray jArrayStops = RuterApiReader.GetStopsByLineID("401");
+            return jArrayStops;
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jArrayStops) {
+            JSONObject jObjStop;
+            try {
+                for (int i = 0; i < jArrayStops.length(); i++) {
+                    jObjStop = jArrayStops.getJSONObject(i);
+                    jObjStop.put(PlaceField.PLACE_TYPE, PlaceType.STOP);
+
+                    Place stop = new Place(jObjStop);
+                    mStops.add(stop);
+                }
+            } catch (JSONException e) {
+                    e.printStackTrace();
+            }
+
+            if(mStops.size() == 0){
+
+            }
+            else if (mStops.get(0).getId() == mRealTimeObj.getDestinationRef())
+                Collections.reverse(mStops);
+            else if (mStops.get(mStops.size()-1).getId() != mRealTimeObj.getDestinationRef())
+                Collections.reverse(mStops);
+
+            String text = "";
+            for (int i = 0; i < mStops.size(); i++) {
+                text = text + "|||||" + mStops.get(i).getName();
+            }
+
+            mTextView.setText(text);
+        }
     }
 
 

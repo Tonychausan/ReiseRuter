@@ -373,35 +373,8 @@ public class RealTimeTableActivity extends ActionBarActivity {
     	private void parseJSONArrayToRealTimeObjects(JSONArray jArray){
     		try {
     			for(int i = 0; i < jArray.length(); i++){
-    				com.reise.ruter.DataObjects.RealTimeTableObject RTTObject = new RealTimeTableObject();
-    				JSONObject json = jArray.getJSONObject(i);
-    				
-    				JSONObject extensions = json.getJSONObject(DeparturesField.EXTENSIONS);
-    				RTTObject.setLineColor(extensions.getString(DeparturesField.LINE_COLOUR));
-
-					JSONArray jArrayDeviations = extensions.getJSONArray(DeparturesField.DEVIATIONS);
-					int nDeviations = jArrayDeviations.length();
-					Deviation[] deviations = new Deviation[nDeviations];
-					Deviation deviation;
-					for(int j = 0; j < jArrayDeviations.length(); j++){
-						deviation = new Deviation();
-						JSONObject jObjDeviation = jArrayDeviations.getJSONObject(j);
-						deviation.setId(jObjDeviation.getInt(DeparturesField.DEVIATION_ID));
-						deviation.setHeader(jObjDeviation.getString(DeparturesField.DEVIATION_HEADER));
-						deviations[j] = deviation;
-					}
-					RTTObject.setDeviations(deviations);
-    				
-    				JSONObject MonitoredVehicleJourney = json.getJSONObject(DeparturesField.MONITORED_VEHICLE_JOURNEY);
-    				RTTObject.setLineRef(MonitoredVehicleJourney.getString(DeparturesField.LINE_REF));
-    				RTTObject.setDestinationName(MonitoredVehicleJourney.getString(DeparturesField.DESTINATION_NAME));
-    				RTTObject.setDestinationRef(MonitoredVehicleJourney.getInt(DeparturesField.DESTINATION_REF));
-    				RTTObject.setPublishedLineName(MonitoredVehicleJourney.getString(DeparturesField.PUBLISHED_LINE_NAME));
-    				
-    				JSONObject MonitoredCall = MonitoredVehicleJourney.getJSONObject(DeparturesField.MONITORED_CALL);
-    				RTTObject.setDeparturePlatformName(MonitoredCall.getString(DeparturesField.DEPARTURE_PLATFORM_NAME));
-    				RTTObject.setExpectedDepartureTime(MonitoredCall.getString(DeparturesField.EXPECTED_DEPARTURE_TIME));
-    				RTTObject.setAimedDepartureTime(MonitoredCall.getString(DeparturesField.AIMED_DEPARTURE_TIME));
+    				JSONObject jObjRealTime = jArray.getJSONObject(i);
+					RealTimeTableObject RTTObject = new RealTimeTableObject(jObjRealTime);
     				
     				String platformName = RTTObject.getDeparturePlatformName();
     				int lineRef = Integer.parseInt(RTTObject.getLineRef());
