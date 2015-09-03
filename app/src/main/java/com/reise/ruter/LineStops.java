@@ -82,8 +82,7 @@ public class LineStops extends ActionBarActivity {
 
         @Override
         protected JSONArray doInBackground(String... args) {
-            //JSONArray jArrayStops = RuterApiReader.GetStopsByLineID(mRealTimeObj.getLineRef());
-            JSONArray jArrayStops = RuterApiReader.GetStopsByLineID("401");
+            JSONArray jArrayStops = RuterApiReader.GetStopsByLineID(mRealTimeObj.getLineRef());
             return jArrayStops;
         }
 
