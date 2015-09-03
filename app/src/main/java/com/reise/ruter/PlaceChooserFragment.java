@@ -20,6 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TabHost;
+import android.widget.TabWidget;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -47,6 +49,10 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 	private static int SEARCH_THRESHOLD = 2;
 
 	private String[] mListChooserValues;
+	private String[] mListChooserTabLabels;
+	private TabHost mListChooserTab;
+	private TabHost.TabSpec mListChooserTabSpec;
+
 	private enum ListType {
 		NEARBY, FAVORITE, SEARCH;
 	}
@@ -110,8 +116,8 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
         super.onCreate(savedInstanceState);
     }
     
-    public void setup(){
-        buildGoogleApiClient();
+    public void setup() {
+		buildGoogleApiClient();
 
 		// database
 		db = new ReiseRuterDbHelper(getActivity());
@@ -120,7 +126,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 		mListChooser = (Spinner) view.findViewById(R.id.spinner_search_main);
 
 		// No result Layouts
-    	mNoConnectionLayout = (LinearLayout) view.findViewById(R.id.layout_no_internet);
+		mNoConnectionLayout = (LinearLayout) view.findViewById(R.id.layout_no_internet);
 		mTryAgainConnectionButton = (Button) view.findViewById(R.id.button_try_again);
 
 		// RealTime Search
@@ -135,7 +141,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 
 		// Setup connection-related code
 		mConnectionDetector = new ConnectionDetector(getActivity().getApplicationContext());
-        mTryAgainConnectionButton.setOnClickListener(new OnClickListener() {
+		mTryAgainConnectionButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				placeSearch();
@@ -143,7 +149,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 		});
 
 		// Make initial search progressbar invisible
-        mProgressBar.setVisibility(View.GONE);
+		mProgressBar.setVisibility(View.GONE);
 
 		// Add TextChangedListener to the Search-bar
 		mSearchBar.addTextChangedListener(new TextWatcher() {
@@ -162,7 +168,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 		});
 
 		// Make search button empty the search-bar when the pushed
-        mSearchButton.setOnClickListener(new OnClickListener() {
+		mSearchButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				mSearchBar.setText("");
@@ -170,14 +176,14 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 		});
 
 		// Add alternatives as NEARBY and FAVORITE for the realtime list
-		mListChooserValues= getResources().getStringArray(R.array.PlaceChooserFragment_listChooserSpinnerValues);
-       	ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mListChooserValues);
-       	arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-       	mListChooser.setAdapter(arrayAdapter);
+		mListChooserValues = getResources().getStringArray(R.array.PlaceChooserFragment_listChooserValues);
+		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mListChooserValues);
+		arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		mListChooser.setAdapter(arrayAdapter);
 
 		// Setup the place list adapter
 		mPlaceAdapter = new PlaceListAdapter(this.getActivity(), mPlaces);
-        mListChooser.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+		mListChooser.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 				if (mSearchTask != null) {
@@ -194,7 +200,50 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 
 			}
 		});
-    }
+
+		// Setup labels for tabs
+		mListChooserTabLabels = getResources().getStringArray(R.array.PlaceChooserFragment_listChooserValues);
+		mListChooserTab = (TabHost) view.findViewById(android.R.id.tabhost);
+		mListChooserTab.setup();
+
+		int[] tabId = {R.id.tab_nearby, R.id.tab_favorite};
+
+		for (int i = 0; i < mListChooserTabLabels.length; i++) {
+			mListChooserTabSpec = mListChooserTab.newTabSpec(mListChooserTabLabels[i]);
+			mListChooserTabSpec.setContent(tabId[i]);
+			mListChooserTabSpec.setIndicator(mListChooserTabLabels[i]);
+			mListChooserTab.addTab(mListChooserTabSpec);
+		}
+
+		TabWidget widget = mListChooserTab.getTabWidget();
+
+		for (int i = 0; i < widget.getChildCount(); i++) {
+			View v = widget.getChildAt(i);
+			// Look for the title view to ensure this is an indicator and not a divider.
+			TextView tv = (TextView) v.findViewById(android.R.id.title);
+		}
+
+		mListChooserTab.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+			@Override
+			public void onTabChanged(String tabId) {
+				if (mSearchTask != null) {
+					mSearchTask.cancel(true);
+				}
+				mPlaceAdapter.clear();
+
+				if (mListChooserTabLabels[0] == tabId){
+					mShowListType = ListType.NEARBY;
+				}
+				else if (mListChooserTabLabels[1] == tabId){
+					mShowListType = ListType.FAVORITE;
+				}
+
+				mSearchTask = new SyncTask().execute("");
+				mPlaceAdapter.notifyDataSetChanged();
+
+			}
+		});
+	}
 
     private synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())

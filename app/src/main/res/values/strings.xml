@@ -16,7 +16,7 @@
         <string name="search_progress_info">Search in progress</string>
 
         <!-- Spinner values -->
-        <string-array name="PlaceChooserFragment_listChooserSpinnerValues">
+        <string-array name="PlaceChooserFragment_listChooserValues">
             <item>Nearby</item>
             <item>Favorites</item>
         </string-array>

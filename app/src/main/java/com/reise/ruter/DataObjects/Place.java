@@ -24,16 +24,16 @@ public class Place implements Parcelable {
 	private String zone;
 
 	public Place(){
-		setRealTimeStop(false);
+		this.realTimeStop = false;
 		stops = null;
 	}
 
 	public Place(int id, String name, String district, String placeType){
 		this();
-		setId(id);
-		setName(name);
-		setDistrict(district);
-		setPlaceType(placeType);
+		this.id = id;
+		this.name = name;
+		this.district = district;
+		this.placeType = placeType;
 	}
 
 	public Place(JSONObject jPlace) throws JSONException {

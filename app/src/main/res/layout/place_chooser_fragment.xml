@@ -3,7 +3,8 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:minHeight="400dp" >
-    
+
+    <!-- Search bar -->
     <LinearLayout
 		android:layout_width="fill_parent" 
 		android:layout_height="wrap_content"
@@ -18,8 +19,6 @@
             android:gravity="right"
             android:background="@drawable/real_time_line_list_background"
             android:layout_margin="5dp">
-
-
 
             <ImageButton
                 android:id="@+id/imagebutton_search_place"
@@ -42,7 +41,6 @@
                 android:hint="@string/search"
                 android:layout_margin="@dimen/blockMargin">
             </EditText>
-
         </RelativeLayout>
 
         <TextView
@@ -53,10 +51,10 @@
 	        android:textSize="10sp"
 	        android:layout_marginLeft="10dp"
 	        android:layout_marginTop="-7dp"/>
-
     </LinearLayout>
+    <!-- Search bar END-->
 
-
+    <!-- Search List -->
     <LinearLayout
         android:id="@+id/layout_place_list"
 		android:layout_width="fill_parent" 
@@ -67,11 +65,45 @@
         android:layout_margin="@dimen/blockMargin"
         >
 
+        <TabHost
+            android:id="@android:id/tabhost"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TabWidget
+                    android:id="@android:id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+                </TabWidget>
+                <FrameLayout
+                    android:id="@android:id/tabcontent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+                    <FrameLayout
+                        android:id="@+id/tab_nearby"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+                    <FrameLayout
+                        android:id="@+id/tab_favorite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+            </LinearLayout>
+        </TabHost>
+
         <Spinner
             android:id="@+id/spinner_search_main"
             android:layout_width="fill_parent"
             android:layout_height="40dp"/>
-
 
 	    <ListView
 	        android:id="@+id/list_search_stops"
@@ -96,6 +128,7 @@
                 android:padding="20dp"/>
         </LinearLayout>
 
+        <!-- Progress bar -->
         <RelativeLayout
             android:id="@+id/layout_search_progress"
             android:layout_width="fill_parent"
@@ -115,14 +148,12 @@
                 android:layout_below="@id/search_progress_bar"
                 android:text="@string/search_progress_info"
                 android:gravity="center_horizontal"/>
-
         </RelativeLayout>
-
+        <!-- Progress bar END -->
 
     </LinearLayout>
-    
-    
-    
+    <!-- Search List END -->
+
     <include layout="@layout/view_no_connection"/>
 
    
