@@ -12,14 +12,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
@@ -50,8 +48,9 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 
 	private String[] mListChooserValues;
 	private String[] mListChooserTabLabels;
-	private TabHost mListChooserTab;
+	private TabHost mListChooserTabHost;
 	private TabHost.TabSpec mListChooserTabSpec;
+	private ListType mListChooserTabValue;
 
 	private enum ListType {
 		NEARBY, FAVORITE, SEARCH;
@@ -62,9 +61,6 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 
 	// Adapter for the places
 	protected PlaceListAdapter mPlaceAdapter;
-
-	// Nearby or Favorite
-	private Spinner mListChooser;
 
 	// No connection layout
 	private LinearLayout mNoConnectionLayout;
@@ -122,9 +118,6 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 		// database
 		db = new ReiseRuterDbHelper(getActivity());
 
-		// Nearby or Favorite
-		mListChooser = (Spinner) view.findViewById(R.id.spinner_search_main);
-
 		// No result Layouts
 		mNoConnectionLayout = (LinearLayout) view.findViewById(R.id.layout_no_internet);
 		mTryAgainConnectionButton = (Button) view.findViewById(R.id.button_try_again);
@@ -144,7 +137,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 		mTryAgainConnectionButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				placeSearch();
+				placeSearch(mShowListType);
 			}
 		});
 
@@ -155,7 +148,10 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 		mSearchBar.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void afterTextChanged(Editable s) {
-				placeSearch();
+				if(mSearchBar.getText().length() >= SEARCH_THRESHOLD)
+					placeSearch(ListType.SEARCH);
+				else
+					placeSearch(mListChooserTabValue);
 			}
 
 			@Override
@@ -175,47 +171,24 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 			}
 		});
 
-		// Add alternatives as NEARBY and FAVORITE for the realtime list
-		mListChooserValues = getResources().getStringArray(R.array.PlaceChooserFragment_listChooserValues);
-		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mListChooserValues);
-		arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		mListChooser.setAdapter(arrayAdapter);
-
 		// Setup the place list adapter
 		mPlaceAdapter = new PlaceListAdapter(this.getActivity(), mPlaces);
-		mListChooser.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-				if (mSearchTask != null) {
-					mSearchTask.cancel(true);
-				}
-				mPlaceAdapter.clear();
-				mShowListType = getValueFromListChooser(mListChooser.getSelectedItem().toString(), mListChooserValues);
-				mSearchTask = new SyncTask().execute("");
-				mPlaceAdapter.notifyDataSetChanged();
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> parentView) {
-
-			}
-		});
 
 		// Setup labels for tabs
 		mListChooserTabLabels = getResources().getStringArray(R.array.PlaceChooserFragment_listChooserValues);
-		mListChooserTab = (TabHost) view.findViewById(android.R.id.tabhost);
-		mListChooserTab.setup();
+		mListChooserTabHost = (TabHost) view.findViewById(android.R.id.tabhost);
+		mListChooserTabHost.setup();
 
 		int[] tabId = {R.id.tab_nearby, R.id.tab_favorite};
 
 		for (int i = 0; i < mListChooserTabLabels.length; i++) {
-			mListChooserTabSpec = mListChooserTab.newTabSpec(mListChooserTabLabels[i]);
+			mListChooserTabSpec = mListChooserTabHost.newTabSpec(mListChooserTabLabels[i]);
 			mListChooserTabSpec.setContent(tabId[i]);
 			mListChooserTabSpec.setIndicator(mListChooserTabLabels[i]);
-			mListChooserTab.addTab(mListChooserTabSpec);
+			mListChooserTabHost.addTab(mListChooserTabSpec);
 		}
 
-		TabWidget widget = mListChooserTab.getTabWidget();
+		TabWidget widget = mListChooserTabHost.getTabWidget();
 
 		for (int i = 0; i < widget.getChildCount(); i++) {
 			View v = widget.getChildAt(i);
@@ -223,26 +196,13 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 			TextView tv = (TextView) v.findViewById(android.R.id.title);
 		}
 
-		mListChooserTab.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+		mListChooserTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
 			@Override
 			public void onTabChanged(String tabId) {
-				if (mSearchTask != null) {
-					mSearchTask.cancel(true);
-				}
-				mPlaceAdapter.clear();
-
-				if (mListChooserTabLabels[0] == tabId){
-					mShowListType = ListType.NEARBY;
-				}
-				else if (mListChooserTabLabels[1] == tabId){
-					mShowListType = ListType.FAVORITE;
-				}
-
-				mSearchTask = new SyncTask().execute("");
-				mPlaceAdapter.notifyDataSetChanged();
-
+				placeSearch(getShowListFromChooser(tabId));
 			}
 		});
+		placeSearch(ListType.NEARBY);
 	}
 
     private synchronized void buildGoogleApiClient() {
@@ -302,77 +262,66 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
     /**
      * Connect to the Ruter API to search for places with the current given search in the search-bar
      */
-    public void placeSearch(){
+    public void placeSearch(ListType listType){
+		// IF there is another search task running in the background cancel it
+		if(mSearchTask != null)
+			mSearchTask.cancel(true);
+
 		// Assume there is connection, so remove no connection layouts
     	mNoConnectionLayout.setVisibility(View.GONE);
 		mNoMatchLayout.setVisibility(View.GONE);
 
 		// Get search text from the search-bar
 		String searchText = mSearchBar.getText().toString();
-
 		// Search have to be longer than the SEARCH_THRESHOLD to give results
 		int searchLength = searchText.length();
-		if(mSearchTask != null){
-			// IF there is another search task running in the background cancel it
-			mSearchTask.cancel(true);
-		}
-		if(searchLength >= SEARCH_THRESHOLD){
-			// IF the search text is longer than the given threshold, start search
 
-			// enable "remove search text" button
+		// Activating/deactivating the "remove search text" button
+		if(searchLength >= 1)
 			enableSearchButton(true);
+		else
+			enableSearchButton(false);
+
+		if(listType == ListType.SEARCH){
+			// IF the search text is longer than the given threshold, start search
 
 			// make Nearby/Favorite list invisible
 			mSearchInfo.setVisibility(View.GONE);
-			mListChooser.setVisibility(View.GONE);
+			mListChooserTabHost.setVisibility(View.GONE);
 
 			// clean/empty the list adapter
 			mPlaceAdapter.clear();
-
-			// Show search from search text
-			mShowListType = ListType.SEARCH;
 
 			// Start a new search task, with the current search text
 			mSearchTask = new SyncTask().execute(searchText);
 			mPlaceAdapter.notifyDataSetChanged();
 		}
-		else{
-            if(searchLength >= 1){
-				// enable remove current search text button
-				enableSearchButton(true);
-			}
-            else{ // if searchLength = 0
-				// disable remove current search text button, because search is empty anyway...
-				enableSearchButton(false);
-			}
-            if (mLastSearchLength >= SEARCH_THRESHOLD){
-				// IF search before edit was longer than threshold
-				// enable search info and nearby/favorite list, and remove progressbar
-                mSearchInfo.setVisibility(View.VISIBLE);
-                mListChooser.setVisibility(View.VISIBLE);
-                mProgressBar.setVisibility(View.GONE);
+		else if(mShowListType != listType){
+			mListChooserTabValue = listType;
+			// enable search info and nearby/favorite list, and remove progressbar
+			mSearchInfo.setVisibility(View.VISIBLE);
+			mListChooserTabHost.setVisibility(View.VISIBLE);
+			mProgressBar.setVisibility(View.GONE);
 
-				// clean/empty the list adapter
-                mPlaceAdapter.clear();
+			// clean/empty the list adapter
+			mPlaceAdapter.clear();
 
-				// Start search task for nearby/favorite
-				mShowListType = getValueFromListChooser(mListChooser.getSelectedItem().toString(), mListChooserValues);
-                mSearchTask = new SyncTask().execute("");
-                mPlaceAdapter.notifyDataSetChanged();
-            }
+			mSearchTask = new SyncTask().execute();
+			mPlaceAdapter.notifyDataSetChanged();
 		}
+		mShowListType = listType;
         mLastSearchLength = searchLength;
+
     }
 
-	public ListType getValueFromListChooser(String s, String[] validStrings){
-		if (s.equals(validStrings[0].toString()))
+	public ListType getShowListFromChooser(String s){
+		if (s.equals(mListChooserTabLabels[0]))
 			return ListType.NEARBY;
-		else if (s.equals(validStrings[1].toString()))
+		else if (s.equals(mListChooserTabLabels[1]))
 			return ListType.FAVORITE;
 		else
 			return null;
 	}
-
 
 	public void enableSearchButton(Boolean enable){
 		mSearchButton.setEnabled(enable);
@@ -431,16 +380,14 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 						mPlaceAdapter.add(place);
 						mPlaceAdapter.notifyDataSetChanged();
 					}
-
 				}
     		}
     		else{
 	    		JSONObject json;
 				Place place;
 				int nrOfPlaces = jArray.length();
-				if(nrOfPlaces == 0){
+				if(nrOfPlaces == 0)
 					mNoMatchLayout.setVisibility(View.VISIBLE);
-				}
 				else {
 		    		try {
 		    			for(int i = 0; i < jArray.length(); i++){
