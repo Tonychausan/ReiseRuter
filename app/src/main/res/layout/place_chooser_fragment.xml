@@ -100,16 +100,23 @@
             </LinearLayout>
         </TabHost>
 
-        <Spinner
-            android:id="@+id/spinner_search_main"
-            android:layout_width="fill_parent"
-            android:layout_height="40dp"/>
-
 	    <ListView
 	        android:id="@+id/list_search_stops"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content" >
     	</ListView>
+
+        <ListView
+            android:id="@+id/list_nearby_stops"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
+
+        <ListView
+            android:id="@+id/list_favorite_stops"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
 
         <LinearLayout
             android:id="@+id/layout_no_search_match"
