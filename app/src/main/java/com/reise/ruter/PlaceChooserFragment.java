@@ -61,6 +61,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 
 	// Adapter for the places
 	protected PlaceListAdapter mPlaceAdapter;
+	private PlaceListAdapter mFavoritePlaceAdapter;
 
 	// No connection layout
 	private LinearLayout mNoConnectionLayout;
@@ -71,6 +72,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 	private ImageButton mSearchButton;
 	private TextView mSearchInfo;
 	private ListView mPlaceListView;
+	private ListView mFavoritePlaceListView;
 	private RelativeLayout mProgressBar;
 	private LinearLayout mPlaceListLayout;
 
@@ -80,11 +82,10 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
     // Loaction support variables
     private Location mLastLocation = null;
 
-	private Fragment thisFragment = this;
-	private int mLastSearchLength = SEARCH_THRESHOLD;
-
-	// List of places with the given search, or from nearby/favorite
+	// List of places with the given search or from nearby
 	private ArrayList<Place> mPlaces = new ArrayList<Place>();
+	// List of places for favorite
+	private ArrayList<Place> mFavoritePlaces = new ArrayList<Place>();
 
 	// The asynchronous search task done in the background
 	private AsyncTask<String, String, JSONArray> mSearchTask = null;
@@ -173,6 +174,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 
 		// Setup the place list adapter
 		mPlaceAdapter = new PlaceListAdapter(this.getActivity(), mPlaces);
+		mFavoritePlaceAdapter = new PlaceListAdapter(this.getActivity(), mFavoritePlaces);
 
 		// Setup labels for tabs
 		mListChooserTabLabels = getResources().getStringArray(R.array.PlaceChooserFragment_listChooserValues);
@@ -202,6 +204,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 				placeSearch(getShowListFromChooser(tabId));
 			}
 		});
+		mShowListType = ListType.SEARCH;
 		placeSearch(ListType.NEARBY);
 	}
 
@@ -257,6 +260,16 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 				 selectPlace(position);
 			 }
 		 });
+
+		// Setup the listview for favorite places
+		mFavoritePlaceListView = (ListView) view.findViewById(R.id.list_favorite_stops);
+		mFavoritePlaceListView.setAdapter(mFavoritePlaceAdapter);
+		mFavoritePlaceListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				selectPlace(position);
+			}
+		});
 	}
     
     /**
@@ -282,36 +295,35 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 		else
 			enableSearchButton(false);
 
-		if(listType == ListType.SEARCH){
-			// IF the search text is longer than the given threshold, start search
+		setListVisible(listType);
 
+		if(listType == ListType.SEARCH){
 			// make Nearby/Favorite list invisible
 			mSearchInfo.setVisibility(View.GONE);
 			mListChooserTabHost.setVisibility(View.GONE);
 
-			// clean/empty the list adapter
-			mPlaceAdapter.clear();
+			cleanAdapters();
 
 			// Start a new search task, with the current search text
 			mSearchTask = new SyncTask().execute(searchText);
-			mPlaceAdapter.notifyDataSetChanged();
 		}
 		else if(mShowListType != listType){
 			mListChooserTabValue = listType;
+
 			// enable search info and nearby/favorite list, and remove progressbar
 			mSearchInfo.setVisibility(View.VISIBLE);
 			mListChooserTabHost.setVisibility(View.VISIBLE);
 			mProgressBar.setVisibility(View.GONE);
 
-			// clean/empty the list adapter
-			mPlaceAdapter.clear();
-
-			mSearchTask = new SyncTask().execute();
-			mPlaceAdapter.notifyDataSetChanged();
+			mFavoritePlaceAdapter.clear();
+			if (listType == ListType.FAVORITE)
+				mSearchTask = new SyncTask().execute();
+			else if(mShowListType == ListType.SEARCH) {
+				cleanAdapters();
+				mSearchTask = new SyncTask().execute();
+			}
 		}
 		mShowListType = listType;
-        mLastSearchLength = searchLength;
-
     }
 
 	public ListType getShowListFromChooser(String s){
@@ -329,6 +341,26 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 			mSearchButton.setImageResource(R.drawable.ic_action_remove);
 		else
 			mSearchButton.setImageResource(R.drawable.ic_action_search);
+	}
+
+	public void cleanAdapters(){
+		mPlaceAdapter.clear();
+		mFavoritePlaceAdapter.clear();
+	}
+
+	public void setListVisible(ListType listType){
+		if(listType == ListType.FAVORITE) {
+			if (mPlaceListView != null)
+				mPlaceListView.setVisibility(View.GONE);
+			if(mFavoritePlaceListView != null)
+				mFavoritePlaceListView.setVisibility(View.VISIBLE);
+		}
+		else {
+			if(mFavoritePlaceListView != null)
+				mFavoritePlaceListView.setVisibility(View.GONE);
+			if (mPlaceListView != null)
+				mPlaceListView.setVisibility(View.VISIBLE);
+		}
 	}
 
     private class SyncTask extends AsyncTask<String, String, JSONArray> {
@@ -371,14 +403,16 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
     		if(jArray == null){
     			if(!mConnectionDetector.isConnectingToInternet()){
     				mNoConnectionLayout.setVisibility(View.VISIBLE);
-                    mLastSearchLength = SEARCH_THRESHOLD;
                     mPlaceListLayout.setVisibility(View.GONE);
     			}
-				else {
+				else if(mShowListType == ListType.FAVORITE){
 					List<Place> favoriteList = db.getFavorites();
 					for (Place place : favoriteList){
-						mPlaceAdapter.add(place);
-						mPlaceAdapter.notifyDataSetChanged();
+						if (isCancelled())
+							break;
+
+						mFavoritePlaceAdapter.add(place);
+						mFavoritePlaceAdapter.notifyDataSetChanged();
 					}
 				}
     		}
@@ -391,22 +425,16 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 				else {
 		    		try {
 		    			for(int i = 0; i < jArray.length(); i++){
+							if (isCancelled())
+								break;
+
 		    				json = jArray.getJSONObject(i);
 		    				place = new Place(json);
 		    				
 		    				// If AREA get all stop in area
 		    				if(place.getPlaceType().equals(PlaceType.AREA)){
 		    					JSONArray jArrayStops = json.getJSONArray(PlaceField.STOPS);
-		    					int nStops = jArrayStops.length();
-		    					JSONObject jObjStop;
-		    					Place[] stops = new Place[nStops];
-		    					Place stop;
-		    					for(int k = 0; k < nStops; k++){
-		    						jObjStop = jArrayStops.getJSONObject(k);
-		    						stop = new Place(jObjStop);
-		    						stops[k] = stop;
-		    					}
-		    					place.setStops(stops);
+								place.setStops(jArrayStops);
 		    				}
 		    				else if(place.getPlaceType().equals(PlaceType.STREET)){	
 		    					//TODO implement street alternative
