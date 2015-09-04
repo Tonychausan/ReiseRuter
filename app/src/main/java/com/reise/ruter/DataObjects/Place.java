@@ -111,6 +111,16 @@ public class Place implements Parcelable {
 	public void setStops(Place[] stops) {
 		this.stops = stops;
 	}
+	public void setStops(JSONArray jArrayStops) throws JSONException {
+		int nStops = jArrayStops.length();
+		JSONObject jObjStop;
+		Place stop;
+		for(int k = 0; k < nStops; k++){
+			jObjStop = jArrayStops.getJSONObject(k);
+			stop = new Place(jObjStop);
+			stops[k] = stop;
+		}
+	}
 
 	public int getX() {
 		return X;
