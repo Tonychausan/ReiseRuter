@@ -73,6 +73,23 @@ public class JSONParser {
 		// return JSON String
 		return jArray;  
 	}
+
+	public String getStringFromUrl(String url){
+		InputStream content = null;
+		try {
+			HttpGet httpGet = new HttpGet(url);
+			HttpClient httpclient = new DefaultHttpClient();
+			// Execute HTTP Get Request
+			HttpResponse response = httpclient.execute(httpGet);
+			content = response.getEntity().getContent();
+			json = getStringFromInputStream(content);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		}
+		return json;
+	}
   
 	private String getStringFromInputStream(InputStream is) {
 		BufferedReader br = null;

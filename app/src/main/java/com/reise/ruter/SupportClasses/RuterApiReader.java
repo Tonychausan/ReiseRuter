@@ -63,6 +63,12 @@ public class RuterApiReader {
 		JSONArray jArray = jParser.getJSONArrayFromUrl(url);
 		return jArray;
 	}
+
+	public static Boolean GetPong(){
+		JSONParser jParser = new JSONParser();
+		String url = "http://reisapi.ruter.no/Heartbeat/Index?json=true";
+		return jParser.getStringFromUrl(url).equals("\"Pong\"") ;
+	}
 	
 	
 	

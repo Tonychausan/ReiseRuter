@@ -42,7 +42,7 @@ public class TravelPlannerPlaceChooserFragment extends PlaceChooserFragment {
 
 	@Override
 	protected void selectPlace(int position) {
-		Place selectedPlace = mPlaceAdapter.getItem(position);
+		Place selectedPlace = getAdapter().getItem(position);
 		callback.onSelectPlace(selectedPlace);
 	}
 }

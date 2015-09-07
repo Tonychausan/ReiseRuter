@@ -21,6 +21,9 @@
             <item>Favorites</item>
         </string-array>
 
+        <!-- No Match View -->
+        <string name="no_search_match">No place(s) matched your search.</string>
+
     <!-- Real-Time table -->
     <string name="no_realtime_data">No real-time data available</string>
     <string name="button_no_realtime_back">Back</string>
@@ -34,6 +37,7 @@
     <string name="title_activity_choose_place">ChoosePlace</string>
     <string name="title_activity_realtime">RealTime</string>
     <string name="title_activity_linestop">Line Stop List</string>>
+
 
 
 
@@ -70,7 +74,7 @@
     <string name="time_picker_cancelButton">Cancel</string>
     <string name="advance_settings">Advance settings</string>
     <string name="transport_header">Transport</string>
-    <string name="no_search_match">No place(s) matched your search.</string>
+
 
     <string name="now">now</string>
 

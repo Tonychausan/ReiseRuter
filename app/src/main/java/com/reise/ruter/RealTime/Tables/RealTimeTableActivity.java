@@ -21,7 +21,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.reise.ruter.DataObjects.Deviation;
 import com.reise.ruter.LineStops;
 import com.reise.ruter.R;
 import com.reise.ruter.RealTime.RealTimeFragment;
@@ -31,13 +30,11 @@ import com.reise.ruter.SupportClasses.ReiseRuterDbHelper;
 import com.reise.ruter.SupportClasses.RuterApiReader;
 import com.reise.ruter.SupportClasses.ConnectionDetector;
 import com.reise.ruter.SupportClasses.Variables;
-import com.reise.ruter.SupportClasses.Variables.DeparturesField;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -92,6 +89,7 @@ public class RealTimeTableActivity extends ActionBarActivity {
 
 	// Connection support class
 	private ConnectionDetector mConnectionDetector;
+	private Boolean mIsConnected;
 
 	// database handler
 	ReiseRuterDbHelper db;
@@ -184,6 +182,7 @@ public class RealTimeTableActivity extends ActionBarActivity {
         buttonTryAgainConnection.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
+				mProgressBarLayout.setVisibility(View.VISIBLE);
 				addList(mPlace);
 			}
         });
@@ -210,10 +209,6 @@ public class RealTimeTableActivity extends ActionBarActivity {
         mRealtimeTableRefreshSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 			@Override
 			public void onRefresh() {
-				if (mTask != null) {
-					mTask.cancel(true);
-				}
-				mRealTimeMap.clear();
 				addList(mPlace);
 			}
 		});
@@ -223,19 +218,27 @@ public class RealTimeTableActivity extends ActionBarActivity {
 	 * Add the real time table list
 	 */
 	public void addList(Place place){
+		if(mTask != null)
+			mTask.cancel(true);
 		mTask = new SyncTask().execute(place);
     }
+
+	public void noConnection(){
+		mRealTimeMap.clear();
+		mNoConnectionLayout.setVisibility(View.VISIBLE);
+		mRealtimeTableRefreshSwipe.setVisibility(View.GONE);
+	}
 	
 	
 	private class SyncTask extends AsyncTask<Place, Place, JSONArray> {
     	@Override
     	protected void onPreExecute() {
     		super.onPreExecute();
-    		
     	}
 	
     	@Override
     	protected JSONArray doInBackground(Place... args) {
+			mIsConnected = mConnectionDetector.isConnectingToInternet();
     		JSONArray jArray = RuterApiReader.getDepartures(args[0]);
     		return jArray;
     	}
@@ -245,18 +248,20 @@ public class RealTimeTableActivity extends ActionBarActivity {
     		mNoConnectionLayout.setVisibility(View.GONE);
     		mProgressBarLayout.setVisibility(View.GONE);
     		mNoRealTimeDataLayout.setVisibility(View.GONE);
+
+			mMainView.removeAllViews();
     		
     		//Check connection
-    		if(jArray == null){
-    			if(!mConnectionDetector.isConnectingToInternet()){
-    				mNoConnectionLayout.setVisibility(View.VISIBLE);
-    				return;
-    			}
+    		if(!mIsConnected){
+				mNoConnectionLayout.setVisibility(View.VISIBLE);
+				mRealtimeTableRefreshSwipe.setRefreshing(false);
+				return;
     		}
     		
     		//Check if any data
     		if(jArray.length() == 0){
     			mNoRealTimeDataLayout.setVisibility(View.VISIBLE);
+				mRealtimeTableRefreshSwipe.setRefreshing(false);
     			return;
     		}
     		
@@ -267,8 +272,10 @@ public class RealTimeTableActivity extends ActionBarActivity {
     		
     		// Iterate through the platforms
     		mProgressBarLayout.setVisibility(View.GONE);
-        	mMainView.removeAllViews();
     		for (String platformKey : mRealTimeMap.keySet()) {
+				if (isCancelled())
+					return;
+
     			Map<Integer, Map<String, LinkedList<com.reise.ruter.DataObjects.RealTimeTableObject>>> lineRefMap = mRealTimeMap.get(platformKey);
     			
     			viewPlatforms = LayoutInflater.from(RealTimeTableActivity.this).inflate(R.layout.view_real_time_platforms, null);
@@ -279,9 +286,15 @@ public class RealTimeTableActivity extends ActionBarActivity {
 
 				// lineRefKey = LineID
         		for (Integer lineRefKey : lineRefMap.keySet()){
+					if (isCancelled())
+						return;
+
         			Map<String, LinkedList<com.reise.ruter.DataObjects.RealTimeTableObject>> lineMap = lineRefMap.get(lineRefKey);
 					mLineID = lineRefKey;
         			for (String lineKey : lineMap.keySet()) {
+						if (isCancelled())
+							return;
+
 	        			viewLines = LayoutInflater.from(RealTimeTableActivity.this).inflate(R.layout.view_real_time_lines, null);
 	        			
 	            		LinearLayout layoutTimeList = (LinearLayout) viewLines.findViewById(R.id.layout_time_list);
@@ -298,6 +311,9 @@ public class RealTimeTableActivity extends ActionBarActivity {
 	            		
 	            		// Set time list
 	            		for (int i = 0; i < RTTObjectsList.size(); i++) {
+							if (isCancelled())
+								return;
+
 	            			realTimeTableObject = RTTObjectsList.get(i);
 	            			
 	            			View viewRealTimeObject = LayoutInflater.from(RealTimeTableActivity.this).inflate(R.layout.view_real_time_objects, null);
@@ -364,7 +380,7 @@ public class RealTimeTableActivity extends ActionBarActivity {
 	        		}
 
         		}
-                mMainView.addView(viewPlatforms);
+				mMainView.addView(viewPlatforms);
     		}
 
             mRealtimeTableRefreshSwipe.setRefreshing(false);
@@ -373,6 +389,9 @@ public class RealTimeTableActivity extends ActionBarActivity {
     	private void parseJSONArrayToRealTimeObjects(JSONArray jArray){
     		try {
     			for(int i = 0; i < jArray.length(); i++){
+					if (isCancelled())
+						break;
+
     				JSONObject jObjRealTime = jArray.getJSONObject(i);
 					RealTimeTableObject RTTObject = new RealTimeTableObject(jObjRealTime);
     				

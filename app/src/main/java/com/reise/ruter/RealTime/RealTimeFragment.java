@@ -6,6 +6,7 @@ import com.reise.ruter.PlaceChooserFragment;
 import com.reise.ruter.R;
 import com.reise.ruter.DataObjects.Place;
 import com.reise.ruter.SupportClasses.Variables.PlaceType;
+import com.reise.ruter.list.PlaceListAdapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -35,7 +36,7 @@ public class RealTimeFragment extends PlaceChooserFragment implements OnPlaceSel
 
 	@Override
 	protected void selectPlace(int position){
-		Place place = mPlaceAdapter.getItem(position);
+		Place place = getAdapter().getItem(position);
 
 		//if place is an AREA open dialog to choose a stop in area
 		if(place.getPlaceType().equals(PlaceType.AREA)){

@@ -6,6 +6,7 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.BoringLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -57,11 +59,14 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 	}
 	private ListType mShowListType;
 
+	private Boolean mRefreshLists;
+
     protected GoogleApiClient mGoogleApiClient;
 
 	// Adapter for the places
-	protected PlaceListAdapter mPlaceAdapter;
+	private PlaceListAdapter mPlaceAdapter;
 	private PlaceListAdapter mFavoritePlaceAdapter;
+	private PlaceListAdapter mNearbyPlaceAdapter;
 
 	// No connection layout
 	private LinearLayout mNoConnectionLayout;
@@ -73,6 +78,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 	private TextView mSearchInfo;
 	private ListView mPlaceListView;
 	private ListView mFavoritePlaceListView;
+	private ListView mNearbyPlaceListView;
 	private RelativeLayout mProgressBar;
 	private LinearLayout mPlaceListLayout;
 
@@ -82,15 +88,17 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
     // Loaction support variables
     private Location mLastLocation = null;
 
-	// List of places with the given search or from nearby
+	// List of places
 	private ArrayList<Place> mPlaces = new ArrayList<Place>();
-	// List of places for favorite
 	private ArrayList<Place> mFavoritePlaces = new ArrayList<Place>();
+	private ArrayList<Place> mNearbyPlaces = new ArrayList<Place>();
 
 	// The asynchronous search task done in the background
 	private AsyncTask<String, String, JSONArray> mSearchTask = null;
 
+	// Check the internet connection
 	private ConnectionDetector mConnectionDetector;
+	private Boolean mIsConnected;
 
 	protected View view;
 
@@ -101,7 +109,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 
 	// database handler
 	ReiseRuterDbHelper db;
-	
+
 	protected abstract void selectPlace(int position);
 
 	protected void setView(View view){
@@ -138,7 +146,9 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 		mTryAgainConnectionButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				placeSearch(mShowListType);
+				ListType showListType = mShowListType;
+				mShowListType = null;
+				placeSearch(showListType);
 			}
 		});
 
@@ -175,6 +185,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 		// Setup the place list adapter
 		mPlaceAdapter = new PlaceListAdapter(this.getActivity(), mPlaces);
 		mFavoritePlaceAdapter = new PlaceListAdapter(this.getActivity(), mFavoritePlaces);
+		mNearbyPlaceAdapter = new PlaceListAdapter(this.getActivity(), mNearbyPlaces);
 
 		// Setup labels for tabs
 		mListChooserTabLabels = getResources().getStringArray(R.array.PlaceChooserFragment_listChooserValues);
@@ -204,7 +215,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 				placeSearch(getShowListFromChooser(tabId));
 			}
 		});
-		mShowListType = ListType.SEARCH;
+		mRefreshLists = true;
 		placeSearch(ListType.NEARBY);
 	}
 
@@ -270,6 +281,16 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 				selectPlace(position);
 			}
 		});
+
+		// Setup the listview for NEARBY places
+		mNearbyPlaceListView = (ListView) view.findViewById(R.id.list_nearby_stops);
+		mNearbyPlaceListView.setAdapter(mNearbyPlaceAdapter);
+		mNearbyPlaceListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				selectPlace(position);
+			}
+		});
 	}
     
     /**
@@ -280,7 +301,12 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 		if(mSearchTask != null)
 			mSearchTask.cancel(true);
 
-		// Assume there is connection, so remove no connection layouts
+		mPlaceListLayout.setVisibility(View.VISIBLE);
+
+		ListType preListType = mShowListType;
+		mShowListType = listType;
+
+		// Assume there is connection and that we find matches
     	mNoConnectionLayout.setVisibility(View.GONE);
 		mNoMatchLayout.setVisibility(View.GONE);
 
@@ -302,28 +328,28 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 			mSearchInfo.setVisibility(View.GONE);
 			mListChooserTabHost.setVisibility(View.GONE);
 
-			cleanAdapters();
-
 			// Start a new search task, with the current search text
+			mPlaceAdapter.clear();
 			mSearchTask = new SyncTask().execute(searchText);
 		}
-		else if(mShowListType != listType){
-			mListChooserTabValue = listType;
+		else if(preListType != mShowListType || !mIsConnected){
 
 			// enable search info and nearby/favorite list, and remove progressbar
 			mSearchInfo.setVisibility(View.VISIBLE);
 			mListChooserTabHost.setVisibility(View.VISIBLE);
 			mProgressBar.setVisibility(View.GONE);
 
-			mFavoritePlaceAdapter.clear();
-			if (listType == ListType.FAVORITE)
-				mSearchTask = new SyncTask().execute();
-			else if(mShowListType == ListType.SEARCH) {
-				cleanAdapters();
-				mSearchTask = new SyncTask().execute();
+			switch (listType) {
+				case NEARBY: mNearbyPlaceAdapter.clear();
+					break;
+				case FAVORITE: mFavoritePlaceAdapter.clear();
+					break;
 			}
+			mSearchTask = new SyncTask().execute();
+
+			mListChooserTabValue = listType;
 		}
-		mShowListType = listType;
+
     }
 
 	public ListType getShowListFromChooser(String s){
@@ -346,6 +372,7 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 	public void cleanAdapters(){
 		mPlaceAdapter.clear();
 		mFavoritePlaceAdapter.clear();
+		mNearbyPlaceAdapter.clear();
 	}
 
 	public void setListVisible(ListType listType){
@@ -354,28 +381,44 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 				mPlaceListView.setVisibility(View.GONE);
 			if(mFavoritePlaceListView != null)
 				mFavoritePlaceListView.setVisibility(View.VISIBLE);
+			if (mNearbyPlaceListView != null)
+				mNearbyPlaceListView.setVisibility(View.GONE);
+		}
+		else if(listType == ListType.NEARBY){
+			if(mFavoritePlaceListView != null)
+				mFavoritePlaceListView.setVisibility(View.GONE);
+			if (mPlaceListView != null)
+				mPlaceListView.setVisibility(View.GONE);
+			if (mNearbyPlaceListView != null)
+				mNearbyPlaceListView.setVisibility(View.VISIBLE);
 		}
 		else {
 			if(mFavoritePlaceListView != null)
 				mFavoritePlaceListView.setVisibility(View.GONE);
 			if (mPlaceListView != null)
 				mPlaceListView.setVisibility(View.VISIBLE);
+			if (mNearbyPlaceListView != null)
+				mNearbyPlaceListView.setVisibility(View.GONE);
 		}
 	}
 
     private class SyncTask extends AsyncTask<String, String, JSONArray> {
+
+
     	@Override
     	protected void onPreExecute() {
     		super.onPreExecute();
 			// Before search, set progressbar visible
     		mProgressBar.setVisibility(View.VISIBLE);
+
     	}
 	
     	@Override
     	protected JSONArray doInBackground(String... args) {
-    		JSONArray jArrayPlaces = null;
+			JSONArray jArrayPlaces = null;
+			mIsConnected = mConnectionDetector.isConnectingToInternet();
+
     		if(mShowListType == ListType.SEARCH){
-				// Make search in Ruter API
     			jArrayPlaces  = RuterApiReader.getPlaces(args[0]);
     		}
 			else if(mShowListType == ListType.NEARBY){
@@ -391,7 +434,6 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 			}
 			else if(mShowListType == ListType.FAVORITE){
 				// TODO add favorite alternative
-
 			}
 
     		return jArrayPlaces;
@@ -400,21 +442,18 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
     	@Override
     	protected void onPostExecute(JSONArray jArray) {
             mPlaceListLayout.setVisibility(View.VISIBLE);
-    		if(jArray == null){
-    			if(!mConnectionDetector.isConnectingToInternet()){
-    				mNoConnectionLayout.setVisibility(View.VISIBLE);
-                    mPlaceListLayout.setVisibility(View.GONE);
-    			}
-				else if(mShowListType == ListType.FAVORITE){
+			if(!mIsConnected){
+				mNoConnectionLayout.setVisibility(View.VISIBLE);
+				mPlaceListLayout.setVisibility(View.GONE);
+			}
+    		else if(mShowListType == ListType.FAVORITE){
 					List<Place> favoriteList = db.getFavorites();
 					for (Place place : favoriteList){
 						if (isCancelled())
 							break;
-
 						mFavoritePlaceAdapter.add(place);
 						mFavoritePlaceAdapter.notifyDataSetChanged();
 					}
-				}
     		}
     		else{
 	    		JSONObject json;
@@ -430,13 +469,13 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 
 		    				json = jArray.getJSONObject(i);
 		    				place = new Place(json);
-		    				
+
 		    				// If AREA get all stop in area
 		    				if(place.getPlaceType().equals(PlaceType.AREA)){
 		    					JSONArray jArrayStops = json.getJSONArray(PlaceField.STOPS);
 								place.setStops(jArrayStops);
 		    				}
-		    				else if(place.getPlaceType().equals(PlaceType.STREET)){	
+		    				else if(place.getPlaceType().equals(PlaceType.STREET)){
 		    					//TODO implement street alternative
 		    					if(!mShowStreets){
 		    						continue;
@@ -455,45 +494,48 @@ public abstract class PlaceChooserFragment extends Fragment implements Connectio
 		    						continue;
 		    					}
 		    				}
-		    				
-		    				mPlaceAdapter.add(place);
-		    	    		mPlaceAdapter.notifyDataSetChanged();
+		    				if(mShowListType == ListType.SEARCH) {
+								mPlaceAdapter.add(place);
+								mPlaceAdapter.notifyDataSetChanged();
+							}
+							else if(mShowListType == ListType.NEARBY){
+								mNearbyPlaceAdapter.add(place);
+								mNearbyPlaceAdapter.notifyDataSetChanged();
+							}
 		    			}
 		    		} catch (JSONException e) {
 		    			e.printStackTrace();
 		    		}
 
-                    if(mPlaceAdapter.isEmpty()) {
+					if(mPlaceAdapter.isEmpty()) {
                         mNoMatchLayout.setVisibility(View.VISIBLE);
                     }
 	    		}
     		}
     		mProgressBar.setVisibility(View.GONE);
+
     	}
     }
 
 	// getters and setters
-	public Boolean getIsRealTime() {
-		return mIsRealTime;
-	}
-
 	public void setIsRealTime(Boolean mIsRealTime) {
 		this.mIsRealTime = mIsRealTime;
-	}
-
-	public Boolean getShowPOI() {
-		return mShowPOI;
 	}
 
 	public void setShowPOI(Boolean mShowPOI) {
 		this.mShowPOI = mShowPOI;
 	}
 
-	public Boolean getShowStreets() {
-		return mShowStreets;
-	}
-
 	public void setShowStreets(Boolean mShowStreets) {
 		this.mShowStreets = mShowStreets;
+	}
+
+	public PlaceListAdapter getAdapter(){
+		if (mShowListType == ListType.NEARBY)
+			return mNearbyPlaceAdapter;
+		else if (mShowListType == ListType.FAVORITE)
+			return mFavoritePlaceAdapter;
+		else
+			return mPlaceAdapter;
 	}
 }
