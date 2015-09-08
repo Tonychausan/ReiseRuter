@@ -6,26 +6,46 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.reise.ruter.SupportClasses.ConnectionDetector;
+
 /**
  * Created by Tony Chau on 08/09/2015.
  */
 public abstract class NetworkActivity extends ActionBarActivity{
-    private LinearLayout mNoConnectionLayout;
+    protected LinearLayout mNoConnectionLayout;
+    protected ConnectionDetector mConnectionDetector;
+    protected Boolean mIsConnected;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void setupNoConnectionObjects(){
+        mConnectionDetector = new ConnectionDetector(this.getApplicationContext());
 
+        // Layout
         mNoConnectionLayout = (LinearLayout) findViewById(R.id.layout_no_internet);
         Button buttonTryAgainConnection = (Button) mNoConnectionLayout.findViewById(R.id.button_try_again);
         buttonTryAgainConnection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NoConnectionButtonOnClick();
+                noConnectionButtonOnClick();
             }
         });
     }
 
-    protected abstract void NoConnectionButtonOnClick();
+    protected void showNoConnectionView(boolean enable) {
+        if(enable)
+            mNoConnectionLayout.setVisibility(View.VISIBLE);
+        else
+            mNoConnectionLayout.setVisibility(View.GONE);
+
+    }
+
+    protected void checkConnection(){
+        mIsConnected = mConnectionDetector.isConnectingToInternet();
+    }
+
+    protected boolean isConnected(){
+        return mIsConnected;
+    }
+
+    protected abstract void noConnectionButtonOnClick();
 
 }

@@ -2,23 +2,22 @@
 
 package com.reise.ruter;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.reise.ruter.DataObjects.Deviation;
 import com.reise.ruter.DataObjects.Place;
 import com.reise.ruter.DataObjects.RealTimeTableObject;
 import com.reise.ruter.RealTime.Tables.RealTimeTableActivity;
-import com.reise.ruter.SupportClasses.CoordinateConversion;
 import com.reise.ruter.SupportClasses.RuterApiReader;
 import com.reise.ruter.SupportClasses.Variables.PlaceType;
 import com.reise.ruter.SupportClasses.Variables.PlaceField;
@@ -29,28 +28,28 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.ListIterator;
 
 /**
  * Created by Tony Chau on 27/08/2015.
  */
-public class LineStops extends ActionBarActivity {
+public class LineStops extends NetworkActivity {
     private RealTimeTableObject mRealTimeObj;
     private ArrayList<Place> mStops;
     private TextView mTextView;
-    private ActionBar mActionBar;
 
-    // No connection Layoit
-    private LinearLayout mNoConnectionLayout;
-    private boolean mIsConnected;
+    DrawView drawView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.line_stops_activity);
+        drawView = new DrawView(this);
+        drawView.setBackgroundColor(Color.WHITE);
+        setContentView(drawView);
+        /*setContentView(R.layout.line_stops_activity);
+        setupNoConnectionObjects();
 
         Intent intent = getIntent();
-		mRealTimeObj = intent.getParcelableExtra(RealTimeTableActivity.KEY_STRING);
+		mRealTimeObj = intent.getParcelableExtra(RealTimeTableActivity.RTTOBJECT_KEY_STRING);
 
         mActionBar = getSupportActionBar();
         mActionBar.setTitle(mRealTimeObj.getLineRef() + " " +mRealTimeObj.getDestinationName());
@@ -58,16 +57,7 @@ public class LineStops extends ActionBarActivity {
         mTextView = (TextView) findViewById(R.id.textView);
         mStops = new ArrayList();
 
-        mNoConnectionLayout = (LinearLayout) findViewById(R.id.layout_no_internet);
-        Button buttonTryAgainConnection = (Button) mNoConnectionLayout.findViewById(R.id.button_try_again);
-        buttonTryAgainConnection.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        new SyncTask().execute();
+        new SyncTask().execute();*/
     }
 
     @Override
@@ -90,6 +80,11 @@ public class LineStops extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void noConnectionButtonOnClick() {
+
+    }
+
     private class SyncTask extends AsyncTask<String, String, JSONArray> {
         @Override
         protected void onPreExecute(){
@@ -98,19 +93,16 @@ public class LineStops extends ActionBarActivity {
 
         @Override
         protected JSONArray doInBackground(String... args) {
+            checkConnection();
             JSONArray jArrayStops = RuterApiReader.GetStopsByLineID(mRealTimeObj.getLineRef());
             return jArrayStops;
         }
 
         @Override
         protected void onPostExecute(JSONArray jArrayStops) {
-            mNoConnectionLayout.setVisibility(View.GONE);
-
-            //Check connection
-            if(!mIsConnected){
-                mNoConnectionLayout.setVisibility(View.VISIBLE);
+            showNoConnectionView(!isConnected());
+            if(!isConnected())
                 return;
-            }
 
             JSONObject jObjStop;
             try {
@@ -140,6 +132,23 @@ public class LineStops extends ActionBarActivity {
 
             mTextView.setText(text);
         }
+    }
+
+    public class DrawView extends View {
+        Paint paint = new Paint();
+
+        public DrawView(Context context) {
+            super(context);
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(20);
+        }
+
+        @Override
+        public void onDraw(Canvas canvas) {
+            canvas.drawLine(0, 0, 20, 20, paint);
+            canvas.drawLine(20, 0, 0, 20, paint);
+        }
+
     }
 
 

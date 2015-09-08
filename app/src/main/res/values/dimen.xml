@@ -3,4 +3,6 @@
 
     <dimen name="windowPadding">8dp</dimen>
     <dimen name="blockMargin">4dp</dimen>
+
+
 </resources>
