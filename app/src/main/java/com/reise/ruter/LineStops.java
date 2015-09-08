@@ -10,6 +10,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.reise.ruter.DataObjects.Deviation;
@@ -38,6 +40,10 @@ public class LineStops extends ActionBarActivity {
     private TextView mTextView;
     private ActionBar mActionBar;
 
+    // No connection Layoit
+    private LinearLayout mNoConnectionLayout;
+    private boolean mIsConnected;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +57,15 @@ public class LineStops extends ActionBarActivity {
 
         mTextView = (TextView) findViewById(R.id.textView);
         mStops = new ArrayList();
+
+        mNoConnectionLayout = (LinearLayout) findViewById(R.id.layout_no_internet);
+        Button buttonTryAgainConnection = (Button) mNoConnectionLayout.findViewById(R.id.button_try_again);
+        buttonTryAgainConnection.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         new SyncTask().execute();
     }
@@ -77,7 +92,8 @@ public class LineStops extends ActionBarActivity {
 
     private class SyncTask extends AsyncTask<String, String, JSONArray> {
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute(){
+
         }
 
         @Override
@@ -88,6 +104,14 @@ public class LineStops extends ActionBarActivity {
 
         @Override
         protected void onPostExecute(JSONArray jArrayStops) {
+            mNoConnectionLayout.setVisibility(View.GONE);
+
+            //Check connection
+            if(!mIsConnected){
+                mNoConnectionLayout.setVisibility(View.VISIBLE);
+                return;
+            }
+
             JSONObject jObjStop;
             try {
                 for (int i = 0; i < jArrayStops.length(); i++) {
